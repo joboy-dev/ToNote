@@ -6,27 +6,53 @@ const kYellowColor = Color(0xFFFFC901);
 const kDarkYellowColor = Color(0xFF958446);
 const kGreenColor = Color(0xFF51D89D);
 const kTextColor = Color(0xff1E1E1E);
+const kWhiteTextColor = Colors.white;
+const kGreyTextColor = Color.fromARGB(255, 126, 126, 126);
 // const kTextColor = Colors.white;
 const kButtonTextColor = Colors.white;
 const kBgColor = Color.fromARGB(255, 250, 250, 250);
 // const kBgColor = Color(0xff1E1E1E);
 const kRedColor = Color.fromARGB(255, 206, 15, 15);
-const kInactiveColor = Color.fromARGB(255, 185, 185, 185);
+const kInactiveColor = Color.fromARGB(255, 199, 199, 199);
+
+const kAnimationDuration1 = Duration(seconds: 1);
+const kAnimationDuration2 = Duration(seconds: 2);
+const kAnimationDuration3 = Duration(seconds: 3);
+const kAnimationDuration4 = Duration(seconds: 4);
+const kAnimationDuration5 = Duration(seconds: 5);
+
+const fontFamily = 'Poppins';
 
 const kAppBarTextStyle = TextStyle(
   fontSize: 20.0,
   fontWeight: FontWeight.bold,
   color: kTextColor,
+  fontFamily: fontFamily,
+);
+
+const kOtherAppBarTextStyle = TextStyle(
+  fontSize: 20.0,
+  fontWeight: FontWeight.bold,
+  color: kWhiteTextColor,
+  fontFamily: fontFamily,
 );
 
 const kNormalTextStyle = TextStyle(
   fontSize: 15.0,
   color: kTextColor,
+  fontFamily: fontFamily,
+);
+
+const kGreyNormalTextStyle = TextStyle(
+  fontSize: 15.0,
+  color: kGreyTextColor,
+  fontFamily: fontFamily,
 );
 
 const kTextFieldStyle = TextStyle(
   fontSize: 12.0,
   color: kTextColor,
+  fontFamily: fontFamily,
 );
 
 const kAppPadding = EdgeInsets.only(left: 15.0, right: 15.0, top: 15.0);

@@ -14,7 +14,7 @@ class CarouselContainer extends StatelessWidget {
     return Container(
       child: Column(
         children: [
-          SizedBox(height: 20.0),
+          SizedBox(height: 15.0),
           Container(
             decoration: BoxDecoration(
               // color: Colors.white,
@@ -34,13 +34,14 @@ class CarouselContainer extends StatelessWidget {
               fit: BoxFit.cover,
             ),
           ),
-          SizedBox(height: 40.0),
+          SizedBox(height: 30.0),
           Text(
             text,
             style: TextStyle(
               color: kTextColor,
               fontSize: 20.0,
-              fontWeight: FontWeight.w500,
+              fontFamily: 'Poppins',
+              fontWeight: FontWeight.bold,
             ),
             textAlign: TextAlign.center,
           ),

@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: kBgColor,
         timePickerTheme: TimePickerThemeData(),
       ),
-      initialRoute: GetStarted.id,
+      initialRoute: Onboarding.id,
       routes: {
         Onboarding.id: (context) => Onboarding(),
         GetStarted.id: (context) => GetStarted(),

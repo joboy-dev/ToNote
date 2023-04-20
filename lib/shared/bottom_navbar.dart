@@ -22,9 +22,24 @@ class _BottomNavBarState extends State<BottomNavBar> {
 
   // List of icon items
   final List<Widget> _items = [
-    Icon(FontAwesomeIcons.check, semanticLabel: 'Todo'),
-    Icon(FontAwesomeIcons.noteSticky, semanticLabel: 'Notes'),
-    Icon(FontAwesomeIcons.person, semanticLabel: 'Profile')
+    Icon(
+      FontAwesomeIcons.check,
+      semanticLabel: 'Todo',
+      size: 30.0,
+      color: kBgColor,
+    ),
+    Icon(
+      FontAwesomeIcons.noteSticky,
+      semanticLabel: 'Notes',
+      size: 30.0,
+      color: kBgColor,
+    ),
+    Icon(
+      Icons.person,
+      semanticLabel: 'Profile',
+      size: 30.0,
+      color: kBgColor,
+    )
   ];
 
   // List of screens
@@ -39,9 +54,11 @@ class _BottomNavBarState extends State<BottomNavBar> {
       bottomNavigationBar: CurvedNavigationBar(
         items: _items,
         index: _index,
-        backgroundColor: colors[_index],
-        height: 40.0,
-        animationCurve: Curves.bounceInOut,
+        color: colors[_index],
+        backgroundColor: kBgColor,
+        height: 75.0,
+        animationCurve: Curves.easeIn,
+        animationDuration: Duration(milliseconds: 300),
         onTap: (value) {
           setState(() {
             // assign current index the value in the on tap function

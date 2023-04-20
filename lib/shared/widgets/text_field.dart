@@ -15,6 +15,7 @@ class NameTextField extends StatelessWidget {
   String? initialValue;
   String hintText;
   Function(String value) onChanged;
+  // Function(String? newValue) onSaved;
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +36,7 @@ class NameTextField extends StatelessWidget {
       onChanged: onChanged,
       validator: (value) {
         if (value!.isEmpty) {
+          // disableButton = true;
           return 'This field cannot be empty';
         } else {
           return null;
@@ -49,10 +51,12 @@ class EmailTextField extends StatelessWidget {
     this.initialValue,
     this.readOnly,
     required this.onChanged,
+    // required this.disableButton,
   });
 
   final String? initialValue;
   bool? readOnly;
+  // bool disableButton;
 
   final Function(String value) onChanged;
 
@@ -91,12 +95,14 @@ class PasswordTextField extends StatelessWidget {
     required this.obscureText,
     required this.onChanged,
     required this.onTap,
+    // required this.disableButton,
   });
 
   String hintText;
   bool obscureText;
   Function(String value) onChanged;
   Function() onTap; // for gesture detector
+  // bool disableButton;
 
   @override
   Widget build(BuildContext context) {
@@ -134,7 +140,51 @@ class PasswordTextField extends StatelessWidget {
       onChanged: onChanged,
       validator: (value) {
         if (value!.length < 6) {
+          // disableButton = true;
           return 'Password must be greater than 6 characters';
+        } else {
+          return null;
+        }
+      },
+    );
+  }
+}
+
+class NormalTextField extends StatelessWidget {
+  NormalTextField({
+    super.key,
+    this.initialValue,
+    required this.hintText,
+    required this.onChanged,
+  });
+
+  String? initialValue;
+  String hintText;
+  Function(String value) onChanged;
+  // Function(String? newValue) onSaved;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      initialValue: initialValue,
+      style: kTextFieldStyle,
+      cursorColor: kYellowColor,
+      decoration: kTextFieldDecoration.copyWith(
+        hintText: hintText,
+        prefixIcon: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+          child: Icon(
+            Icons.person,
+            color: kYellowColor,
+          ),
+        ),
+      ),
+      // onSaved: onSaved,
+      onChanged: onChanged,
+      validator: (value) {
+        if (value!.isEmpty) {
+          // disableButton = true;
+          return 'This field cannot be empty';
         } else {
           return null;
         }
