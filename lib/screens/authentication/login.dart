@@ -97,11 +97,10 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
       });
       navigatorPushReplacementNamed(context, BottomNavBar.id);
       // navigatetoNextScreen();
+      showSnackbar(context, message);
     } else {
       setState(() {});
     }
-
-    showSnackbar(context, message);
   }
 
   // check if all formfields are not empty so as to update button state accordingly
