@@ -101,3 +101,38 @@ class ButtonIcon extends StatelessWidget {
     );
   }
 }
+
+class ButtonText extends StatelessWidget {
+  ButtonText({
+    super.key,
+    required this.firstText,
+    required this.secondText,
+    required this.onTap,
+  });
+
+  final String firstText, secondText;
+  final Function() onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: RichText(
+        text: TextSpan(
+          text: firstText,
+          style: kGreyNormalTextStyle,
+          children: [
+            TextSpan(
+              text: secondText,
+              style: kNormalTextStyle.copyWith(
+                color: kGreenColor,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+

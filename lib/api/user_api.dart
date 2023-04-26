@@ -1,10 +1,13 @@
 // ignore_for_file: avoid_print
 
+import 'dart:convert';
+
 import 'package:http/http.dart' as http;
+import 'package:todoey/models/user.dart';
+
+String baseUrl = 'https://todo-ey.onrender.com';
 
 class UserAPI {
-  String host = 'http://127.0.0.1:5100/';
-
   // function to create user account
   Future createAccount({
     required String firstName,
@@ -15,9 +18,12 @@ class UserAPI {
     String profilePic = '',
   }) async {
     try {
-      final endpoint = '$host/user/register/';
+      final endpoint = '$baseUrl/user/register/';
+      // parse endpoint as a Uri
       final url = Uri.parse(endpoint);
+      print(url);
 
+      // create map of json data
       Map<String, dynamic> jsonData = {
         'firstName': firstName,
         'lastName': lastName,
@@ -27,18 +33,31 @@ class UserAPI {
         'profilePic': profilePic,
       };
 
-      var response = await http.post(url, body: jsonData);
+      // create appropriate request -- in this case, a post request
+      var response = await http.post(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(jsonData),
+      );
+      print(response.statusCode);
+
+      // check if response status code is 200
       if (response.statusCode == 200) {
         // store response
-        var data = response.body;
+        var data = UserModel.fromJson(jsonDecode(response.body));
+        print(data);
+
         // return response
         return data;
       } else {
-        throw Exception('Failed');
+        throw Exception('----------EXCEPTION THROWN----------\nFailed');
       }
     } catch (e) {
-      print('-------------EXCEPTION------------');
+      print('-------------EXCEPTION THROWN------------');
       print(e.toString());
+      return e.toString();
     }
   }
 

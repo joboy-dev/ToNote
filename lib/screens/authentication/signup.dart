@@ -1,9 +1,11 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_build_context_synchronously
 
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:todoey/api/user_api.dart';
 import 'package:todoey/screens/authentication/login.dart';
+import 'package:todoey/screens/main/add_profile_picture_screen.dart';
 import 'package:todoey/shared/animations.dart';
 import 'package:todoey/shared/bottom_navbar.dart';
 import 'package:todoey/shared/constants.dart';
@@ -95,16 +97,33 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
     super.dispose();
   }
 
+  // initialize user api class
+  final UserAPI _userAPI = UserAPI();
+
   // function to validate the form fields
-  validateForm() {
+  validateForm() async {
     if (pword == pword2) {
       if (_formKey.currentState!.validate()) {
+        // create user account and store return value in a variable
+        // var data = await _userAPI.createAccount(
+        //   firstName: fName,
+        //   lastName: lName,
+        //   email: email,
+        //   password: pword,
+        //   password2: pword2,
+        // );
+        // // check for exception
+        // if (data == 'Connection refused') {
+        //   setState(() {
+        //     message =
+        //         'Your request could not be processed at this time. Please, try again later.';
+        //   });
+        // } else {
         setState(() {
-          message = 'Account created successfully. Login.';
+          message = 'Account created successfully. Add Profile Picture.';
         });
-        navigatorPushReplacementNamed(context, Login.id);
-      } else {
-        setState(() {});
+        navigatorPushNamed(context, AddProfilePicture.id);
+        // }
       }
     } else {
       message = 'Your passwords do not match. Try again';
@@ -112,7 +131,7 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
     showSnackbar(context, message);
   }
 
-  // check if all formfields are not empty so as to update button state accordingly
+  // check if all form fields are not empty so as to update button state accordingly
   updateButtonState() {
     setState(() {
       inactiveButton = fName.isEmpty ||
@@ -302,11 +321,22 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                           inactive: inactiveButton,
                         ),
                       ),
-                      SizedBox(
-                        height: 10.0,
-                      )
+                      SizedBox(height: 10.0),
 
-                      // RichText(text: text)
+                      SlideTransition(
+                        position: slideTransitionAnimation(
+                          dx: 0,
+                          dy: 5,
+                          animation: _animation2,
+                        ),
+                        child: ButtonText(
+                          firstText: 'Already have an account? ',
+                          secondText: 'Login',
+                          onTap: () {
+                            navigatorPushReplacementNamed(context, Login.id);
+                          },
+                        ),
+                      ),
                     ],
                   ),
                 ),

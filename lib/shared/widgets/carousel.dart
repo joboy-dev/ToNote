@@ -38,7 +38,7 @@ class CarouselContainer extends StatelessWidget {
           Text(
             text,
             style: TextStyle(
-              color: kTextColor,
+              color: kGreyTextColor,
               fontSize: 20.0,
               fontFamily: 'Poppins',
               fontWeight: FontWeight.bold,

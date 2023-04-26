@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:todoey/screens/authentication/signup.dart';
 import 'package:todoey/shared/animations.dart';
 import 'package:todoey/shared/bottom_navbar.dart';
 import 'package:todoey/shared/constants.dart';
@@ -240,7 +241,24 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                           buttonColor: kGreenColor,
                           inactive: inactiveButton,
                         ),
-                      )
+                      ),
+
+                      SizedBox(height: 10.0),
+
+                      SlideTransition(
+                        position: slideTransitionAnimation(
+                          dx: 2,
+                          dy: 0,
+                          animation: _animation2,
+                        ),
+                        child: ButtonText(
+                          firstText: 'Don\'t have an account? ',
+                          secondText: 'Sign up',
+                          onTap: () {
+                            navigatorPushReplacementNamed(context, SignUp.id);
+                          },
+                        ),
+                      ),
                     ],
                   ),
                 ),

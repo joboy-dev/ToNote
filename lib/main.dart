@@ -7,6 +7,7 @@ import 'package:todoey/provider/auth_provider.dart';
 import 'package:todoey/provider/todo_provider.dart';
 import 'package:todoey/screens/authentication/login.dart';
 import 'package:todoey/screens/authentication/signup.dart';
+import 'package:todoey/screens/main/add_profile_picture_screen.dart';
 import 'package:todoey/screens/onboarding/get_started.dart';
 import 'package:todoey/screens/onboarding/onboarding.dart';
 import 'package:todoey/shared/bottom_navbar.dart';
@@ -41,6 +42,7 @@ class ToDoEy extends StatelessWidget {
         GetStarted.id: (context) => GetStarted(),
         SignUp.id: (context) => SignUp(),
         Login.id: (context) => Login(),
+        AddProfilePicture.id:(context) => AddProfilePicture(),
         BottomNavBar.id: (context) => BottomNavBar()
       },
     );

@@ -18,8 +18,7 @@ class GetStarted extends StatefulWidget {
   State<GetStarted> createState() => _GetStartedState();
 }
 
-class _GetStartedState extends State<GetStarted>
-    with TickerProviderStateMixin {
+class _GetStartedState extends State<GetStarted> with TickerProviderStateMixin {
   List<CarouselContainer> carousel = [
     CarouselContainer(
       image: 'assets/images/onboarding1.png',
@@ -32,6 +31,10 @@ class _GetStartedState extends State<GetStarted>
     CarouselContainer(
       image: 'assets/images/onboarding3.png',
       text: 'Manage multiple tasks at once',
+    ),
+    CarouselContainer(
+      image: 'assets/images/onboarding4.png',
+      text: 'Take notes and ensure you remain up to date on various activities',
     ),
   ];
 
@@ -105,7 +108,7 @@ class _GetStartedState extends State<GetStarted>
                     );
                   }).toList(),
                   options: CarouselOptions(
-                    height: 555.0,
+                    height: 585.0,
                     enlargeCenterPage: true,
                     autoPlay: true,
                     aspectRatio: 16 / 9,
@@ -116,7 +119,6 @@ class _GetStartedState extends State<GetStarted>
                   ),
                 ),
               ),
-              SizedBox(height: 20.0),
               Padding(
                 padding: kAppPadding,
                 child: Column(
