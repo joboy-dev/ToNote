@@ -25,6 +25,10 @@ class _GetStartedState extends State<GetStarted> with TickerProviderStateMixin {
       text: 'Manage your tasks with efficiency',
     ),
     CarouselContainer(
+      image: 'assets/images/onboarding4.png',
+      text: 'Take notes and ensure you remain up to date on various activities',
+    ),
+    CarouselContainer(
       image: 'assets/images/onboarding2.png',
       text: 'Handle tasks wherever you are in the world',
     ),
@@ -32,15 +36,12 @@ class _GetStartedState extends State<GetStarted> with TickerProviderStateMixin {
       image: 'assets/images/onboarding3.png',
       text: 'Manage multiple tasks at once',
     ),
-    CarouselContainer(
-      image: 'assets/images/onboarding4.png',
-      text: 'Take notes and ensure you remain up to date on various activities',
-    ),
   ];
 
   late Animation<double> _animation1;
   late Animation<double> _animation2;
   late Animation<double> _animation3;
+  
   late AnimationController _controller1;
   late AnimationController _controller2;
 

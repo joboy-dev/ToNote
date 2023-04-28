@@ -9,6 +9,7 @@ import 'package:todoey/screens/main/add_profile_picture_screen.dart';
 import 'package:todoey/shared/animations.dart';
 import 'package:todoey/shared/bottom_navbar.dart';
 import 'package:todoey/shared/constants.dart';
+import 'package:todoey/shared/loader.dart';
 import 'package:todoey/shared/navigator.dart';
 import 'package:todoey/shared/widgets/button.dart';
 import 'package:todoey/shared/widgets/snackbar.dart';
@@ -100,35 +101,54 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
   // initialize user api class
   final UserAPI _userAPI = UserAPI();
 
+  bool _isLoading = false;
+
   // function to validate the form fields
   validateForm() async {
     if (pword == pword2) {
       if (_formKey.currentState!.validate()) {
-        // create user account and store return value in a variable
-        // var data = await _userAPI.createAccount(
-        //   firstName: fName,
-        //   lastName: lName,
-        //   email: email,
-        //   password: pword,
-        //   password2: pword2,
-        // );
-        // // check for exception
-        // if (data == 'Connection refused') {
-        //   setState(() {
-        //     message =
-        //         'Your request could not be processed at this time. Please, try again later.';
-        //   });
-        // } else {
+        // activate loading
         setState(() {
-          message = 'Account created successfully. Add Profile Picture.';
+          _isLoading = true;
         });
-        navigatorPushNamed(context, AddProfilePicture.id);
-        // }
+
+        // create user account and store return value in a variable
+        var data = await _userAPI.createAccount(
+          firstName: fName,
+          lastName: lName,
+          email: email,
+          password: pword,
+          password2: pword2,
+        );
+
+        // deactivate loading
+        setState(() {
+          _isLoading = false;
+        });
+
+        // check for exception
+        if (data == null) {
+          setState(() {
+            message =
+                'Your request could not be processed at this time. Please, try again later.';
+          });
+        } else {
+          setState(() {
+            message = 'Account created successfully. Add Profile Picture.';
+          });
+          navigatorPushNamed(context, AddProfilePicture.id);
+        }
+        showSnackbar(context, message);
       }
     } else {
+      // deactivate loading
+      setState(() {
+        _isLoading = false;
+      });
+
       message = 'Your passwords do not match. Try again';
+      showSnackbar(context, message);
     }
-    showSnackbar(context, message);
   }
 
   // check if all form fields are not empty so as to update button state accordingly
@@ -312,13 +332,23 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                           dy: 3,
                           animation: _animation2,
                         ),
-                        child: Button(
-                          buttonText: 'Create Account',
-                          onPressed: () {
-                            inactiveButton ? null : validateForm();
-                          },
-                          buttonColor: kGreenColor,
-                          inactive: inactiveButton,
+                        child: Row(
+                          children: [
+                            Expanded(
+                              flex: 2,
+                              child: Button(
+                                buttonText: 'Create Account',
+                                onPressed: () {
+                                  inactiveButton ? null : validateForm();
+                                },
+                                buttonColor: kGreenColor,
+                                inactive: inactiveButton,
+                              ),
+                            ),
+                            _isLoading
+                                ? Expanded(flex: 0, child: Loader(size: 20.0))
+                                : SizedBox(),
+                          ],
                         ),
                       ),
                       SizedBox(height: 10.0),

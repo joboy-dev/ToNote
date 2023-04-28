@@ -65,7 +65,7 @@ class ButtonIcon extends StatelessWidget {
     return MaterialButton(
       onPressed: onPressed,
       minWidth: double.infinity,
-      height: 40.0,
+      height: 50.0,
       color: buttonColor,
       focusColor: buttonColor.withOpacity(0.5),
       elevation: 2.0,
@@ -135,4 +135,3 @@ class ButtonText extends StatelessWidget {
     );
   }
 }
-

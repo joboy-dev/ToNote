@@ -95,14 +95,12 @@ class PasswordTextField extends StatelessWidget {
     required this.obscureText,
     required this.onChanged,
     required this.onTap,
-    // required this.disableButton,
   });
 
   String hintText;
   bool obscureText;
   Function(String value) onChanged;
   Function() onTap; // for gesture detector
-  // bool disableButton;
 
   @override
   Widget build(BuildContext context) {
@@ -139,12 +137,11 @@ class PasswordTextField extends StatelessWidget {
       ),
       onChanged: onChanged,
       validator: (value) {
-        if (value!.length < 6) {
-          // disableButton = true;
-          return 'Password must be greater than 6 characters';
-        } else {
-          return null;
-        }
+        return RegExp(
+                    r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$')
+                .hasMatch(value!)
+            ? null
+            : 'Your pasword should have an uppercase letter, lowercase letter, a symbol and number';
       },
     );
   }
