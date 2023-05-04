@@ -141,7 +141,7 @@ class PasswordTextField extends StatelessWidget {
                     r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$')
                 .hasMatch(value!)
             ? null
-            : 'Your pasword should have an uppercase letter, lowercase letter, a symbol and number';
+            : 'Your password should have an uppercase letter, lowercase letter, a symbol and number';
       },
     );
   }

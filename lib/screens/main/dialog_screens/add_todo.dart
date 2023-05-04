@@ -6,6 +6,7 @@ import 'package:todoey/provider/todo_provider.dart';
 import 'package:todoey/shared/constants.dart';
 import 'package:todoey/shared/navigator.dart';
 import 'package:todoey/shared/widgets/button.dart';
+import 'package:todoey/shared/widgets/dialog_header.dart';
 import 'package:todoey/shared/widgets/snackbar.dart';
 import 'package:todoey/shared/widgets/text_field.dart';
 
@@ -47,19 +48,12 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
       key: _formKey,
       child: Column(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(FontAwesomeIcons.plus, color: kGreenColor, size: 30.0),
-              SizedBox(width: 10.0),
-              Text(
-                'Add Todo',
-                style: kOtherAppBarTextStyle.copyWith(color: kGreenColor),
-              )
-            ],
+          DialogHeader(
+            headerText: 'Add Todo',
+            icon: FontAwesomeIcons.plus,
+            mainColor: kGreenColor,
           ),
-          SizedBox(height: 10.0),
-          Divider(),
+
           SizedBox(height: 10.0),
 
           // Normal Text Field
@@ -100,30 +94,13 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
 
           SizedBox(height: 20.0),
 
-          Row(
-            children: [
-              Expanded(
-                child: Button(
-                  buttonText: 'Cancel',
-                  onPressed: () {
-                    navigatorPop(context);
-                  },
-                  buttonColor: kRedColor,
-                  inactive: false,
-                ),
-              ),
-              SizedBox(width: 5.0),
-              Expanded(
-                child: Button(
-                  buttonText: 'Add Todo',
-                  onPressed: () {
-                    inactiveButton ? null : validateForm();
-                  },
-                  buttonColor: kGreenColor,
-                  inactive: inactiveButton,
-                ),
-              ),
-            ],
+          DoubleButton(
+            inactiveButton: inactiveButton,
+            button2Text: 'Add Todo',
+            button2Color: kGreenColor,
+            button2onPressed: () {
+              inactiveButton ? null : validateForm();
+            },
           )
         ],
       ),

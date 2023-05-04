@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:todoey/shared/constants.dart';
+import 'package:todoey/shared/navigator.dart';
 
 class Button extends StatelessWidget {
   final String buttonText;
@@ -84,6 +85,7 @@ class ButtonIcon extends StatelessWidget {
               color: kWhiteTextColor,
             ),
           ),
+          SizedBox(width: 5.0),
           Expanded(
             flex: 2,
             child: Text(
@@ -128,6 +130,82 @@ class ButtonText extends StatelessWidget {
                 color: kGreenColor,
                 fontWeight: FontWeight.bold,
               ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class DoubleButton extends StatelessWidget {
+  DoubleButton({
+    super.key,
+    required this.inactiveButton,
+    required this.button2Text,
+    required this.button2Color,
+    required this.button2onPressed,
+  });
+
+  final bool inactiveButton;
+  final String button2Text;
+  final Color button2Color;
+  Function() button2onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: Button(
+            buttonText: 'Cancel',
+            onPressed: () {
+              navigatorPop(context);
+            },
+            buttonColor: kRedColor,
+            inactive: false,
+          ),
+        ),
+        SizedBox(width: 5.0),
+        Expanded(
+          child: Button(
+            buttonText: button2Text,
+            onPressed: button2onPressed,
+            buttonColor: button2Color,
+            inactive: inactiveButton,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class IconTextButton extends StatelessWidget {
+  IconTextButton({
+    required this.text,
+    required this.icon,
+    required this.iconColor,
+    required this.onPressed,
+  });
+
+  final String text;
+  final IconData icon;
+  final Color iconColor;
+  final Function() onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onPressed,
+      child: Padding(
+        padding: const EdgeInsets.only(left: 10.0),
+        child: Row(
+          children: [
+            Icon(icon, color: iconColor),
+            SizedBox(width: 20.0),
+            Text(
+              text,
+              style: kGreyNormalTextStyle.copyWith(fontSize: 17.0),
             ),
           ],
         ),

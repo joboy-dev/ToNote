@@ -6,11 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:todoey/shared/constants.dart';
 import 'package:todoey/shared/navigator.dart';
 import 'package:todoey/shared/widgets/button.dart';
+import 'package:todoey/shared/widgets/dialog_header.dart';
 
 class UploadProfilePicture extends StatefulWidget {
-  UploadProfilePicture({super.key, required this.imageFile});
+  UploadProfilePicture({super.key, required this.image});
 
-  File imageFile;
+  dynamic image;
 
   @override
   State<UploadProfilePicture> createState() => _UploadProfilePictureState();
@@ -54,28 +55,27 @@ class _UploadProfilePictureState extends State<UploadProfilePicture>
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.upload_file, color: kYellowColor, size: 30.0),
-            SizedBox(width: 10.0),
-            Text(
-              'Upload Picture',
-              style: kOtherAppBarTextStyle.copyWith(color: kYellowColor),
-            )
-          ],
+        DialogHeader(
+          headerText: 'Add Picture',
+          icon: Icons.upload_file,
+          mainColor: kYellowColor,
         ),
-        SizedBox(height: 10.0),
-        Divider(),
+
         SizedBox(height: 10.0),
 
         // imege from file
-        Image.file(
-          widget.imageFile,
-          fit: BoxFit.contain,
-          opacity: _animation1,
-          width: double.infinity,
-          height: 250.0,
+        Container(
+          child: widget.image != null
+              ? Image(
+                  image: widget.image!,
+                  fit: BoxFit.contain,
+                  opacity: _animation1,
+                  width: double.infinity,
+                  height: 250.0,
+                )
+              : Center(
+                  child: Text('No image selected', style: kGreyNormalTextStyle),
+                ),
         ),
 
         SizedBox(height: 20.0),

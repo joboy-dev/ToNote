@@ -1,5 +1,8 @@
+import 'dart:io';
+
+/// THIS IS USED IN SIGNING UP OF THE USER
 class UserModel {
-  String firstName, lastName, email, password, password2, profilePic;
+  String firstName, lastName, email, password, password2;
 
   UserModel({
     required this.firstName,
@@ -7,17 +10,27 @@ class UserModel {
     required this.email,
     required this.password,
     required this.password2,
-    required this.profilePic,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
-      firstName: json['firstName'],
-      lastName: json['lastName'],
+      firstName: json['first_name'],
+      lastName: json['last_name'],
       email: json['email'],
       password: json['password'],
       password2: json['password2'],
-      profilePic: json['profilePic'],
     );
   }
+}
+
+/// USED IN GETTING USER DETAILS
+class User {
+  String firstName, lastName, email, profilePicture;
+
+  User({
+    required this.firstName,
+    required this.lastName,
+    required this.email,
+    required this.profilePicture,
+  });
 }

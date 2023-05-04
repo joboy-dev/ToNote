@@ -1,9 +1,11 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_build_context_synchronously
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_build_context_synchronously, no_leading_underscores_for_local_identifiers
 
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:todoey/api/user_api.dart';
+import 'package:todoey/backend/user/user_api.dart';
+import 'package:todoey/backend/user/user_view.dart';
+import 'package:todoey/models/user.dart';
 import 'package:todoey/screens/authentication/login.dart';
 import 'package:todoey/screens/main/add_profile_picture_screen.dart';
 import 'package:todoey/shared/animations.dart';
@@ -99,12 +101,20 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
   }
 
   // initialize user api class
-  final UserAPI _userAPI = UserAPI();
+  final UserView _userView = UserView();
 
   bool _isLoading = false;
 
   // function to validate the form fields
   validateForm() async {
+    final UserModel _newUser = UserModel(
+      firstName: fName,
+      lastName: lName,
+      email: email,
+      password: pword,
+      password2: pword2,
+    );
+
     if (pword == pword2) {
       if (_formKey.currentState!.validate()) {
         // activate loading
@@ -113,13 +123,7 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
         });
 
         // create user account and store return value in a variable
-        var data = await _userAPI.createAccount(
-          firstName: fName,
-          lastName: lName,
-          email: email,
-          password: pword,
-          password2: pword2,
-        );
+        var data = await _userView.createAccount(user: _newUser);
 
         // deactivate loading
         setState(() {
@@ -127,16 +131,21 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
         });
 
         // check for exception
-        if (data == null) {
+        if (data == 400) {
+          setState(() {
+            message =
+                'User with this email already exists. Try using another email.';
+          });
+        } else if (data == 201) {
+          setState(() {
+            message = 'Account created successfully. Login now.';
+          });
+          navigatorPushNamed(context, Login.id);
+        } else {
           setState(() {
             message =
                 'Your request could not be processed at this time. Please, try again later.';
           });
-        } else {
-          setState(() {
-            message = 'Account created successfully. Add Profile Picture.';
-          });
-          navigatorPushNamed(context, AddProfilePicture.id);
         }
         showSnackbar(context, message);
       }
@@ -332,11 +341,9 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                           dy: 3,
                           animation: _animation2,
                         ),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              flex: 2,
-                              child: Button(
+                        child: _isLoading
+                            ? Loader(size: 30.0)
+                            : Button(
                                 buttonText: 'Create Account',
                                 onPressed: () {
                                   inactiveButton ? null : validateForm();
@@ -344,12 +351,6 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                                 buttonColor: kGreenColor,
                                 inactive: inactiveButton,
                               ),
-                            ),
-                            _isLoading
-                                ? Expanded(flex: 0, child: Loader(size: 20.0))
-                                : SizedBox(),
-                          ],
-                        ),
                       ),
                       SizedBox(height: 10.0),
 

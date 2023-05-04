@@ -2,8 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:todoey/screens/onboarding/get_started.dart';
-import 'package:todoey/shared/loader.dart';
+import 'package:todoey/shared/constants.dart';
 import 'package:todoey/shared/navigator.dart';
+import 'package:todoey/wrapper.dart';
 
 class Onboarding extends StatefulWidget {
   const Onboarding({super.key});
@@ -24,7 +25,7 @@ class _OnboardingState extends State<Onboarding>
     // initialize animation controller
     controller = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 3),
+      duration: kAnimationDuration3,
     );
 
     // create animation
@@ -35,7 +36,7 @@ class _OnboardingState extends State<Onboarding>
     // check if animation is completed then navigate to the next screen
     animation.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
-        navigatorPushReplacementNamed(context, GetStarted.id);
+        navigatorPushReplacementNamed(context, Wrapper.id);
       }
     });
 

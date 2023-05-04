@@ -12,6 +12,9 @@ import 'package:todoey/screens/onboarding/get_started.dart';
 import 'package:todoey/screens/onboarding/onboarding.dart';
 import 'package:todoey/shared/bottom_navbar.dart';
 import 'package:todoey/shared/constants.dart';
+import 'package:todoey/wrapper.dart';
+
+import 'provider/user_provider.dart';
 
 void main() async {
   runApp(
@@ -19,6 +22,7 @@ void main() async {
       providers: [
         ChangeNotifierProvider(create: (_) => TodoProvider()),
         ChangeNotifierProvider(create: (_) => AuthProvider()),
+        ChangeNotifierProvider(create: (_) => UserProvider()),
       ],
       child: ToDoEy(),
     ),
@@ -38,11 +42,12 @@ class ToDoEy extends StatelessWidget {
       ),
       initialRoute: Onboarding.id,
       routes: {
+        Wrapper.id: (context) => Wrapper(),
         Onboarding.id: (context) => Onboarding(),
         GetStarted.id: (context) => GetStarted(),
         SignUp.id: (context) => SignUp(),
         Login.id: (context) => Login(),
-        AddProfilePicture.id:(context) => AddProfilePicture(),
+        AddProfilePicture.id: (context) => AddProfilePicture(),
         BottomNavBar.id: (context) => BottomNavBar()
       },
     );

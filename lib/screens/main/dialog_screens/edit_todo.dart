@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:todoey/shared/constants.dart';
 import 'package:todoey/shared/navigator.dart';
 import 'package:todoey/shared/widgets/button.dart';
+import 'package:todoey/shared/widgets/dialog_header.dart';
 import 'package:todoey/shared/widgets/snackbar.dart';
 import 'package:todoey/shared/widgets/text_field.dart';
 
@@ -42,19 +43,11 @@ class _EditTodoScreenState extends State<EditTodoScreen> {
       key: _formKey,
       child: Column(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(Icons.edit, color: kGreenColor, size: 30.0),
-              SizedBox(width: 10.0),
-              Text(
-                'Edit Todo',
-                style: kOtherAppBarTextStyle.copyWith(color: kGreenColor),
-              )
-            ],
+          DialogHeader(
+            headerText: 'Edit Todo',
+            icon: FontAwesomeIcons.pencil,
+            mainColor: kGreenColor,
           ),
-          SizedBox(height: 10.0),
-          Divider(),
           SizedBox(height: 10.0),
 
           // Normal Text Field

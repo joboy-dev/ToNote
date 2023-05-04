@@ -5,14 +5,15 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:todoey/shared/constants.dart';
 
 class Loader extends StatelessWidget {
-  Loader({super.key, required this.size});
+  Loader({super.key, required this.size, this.color});
 
   double size;
+  Color? color;
 
   @override
   Widget build(BuildContext context) {
     return SpinKitFadingCircle(
-      color: kDarkYellowColor,
+      color: color ?? kDarkYellowColor,
       size: size,
     );
   }

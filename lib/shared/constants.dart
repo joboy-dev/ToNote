@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 
+// COLORS
 const kYellowColor = Color(0xFFFFC901);
 const kDarkYellowColor = Color(0xFF958446);
 const kGreenColor = Color(0xFF51D89D);
@@ -15,14 +16,17 @@ const kBgColor = Color.fromARGB(255, 250, 250, 250);
 const kRedColor = Color.fromARGB(255, 206, 15, 15);
 const kInactiveColor = Color.fromARGB(255, 199, 199, 199);
 
+// ANIMATION DURATION
 const kAnimationDuration1 = Duration(seconds: 1);
 const kAnimationDuration2 = Duration(seconds: 2);
 const kAnimationDuration3 = Duration(seconds: 3);
 const kAnimationDuration4 = Duration(seconds: 4);
 const kAnimationDuration5 = Duration(seconds: 5);
 
+// FONT FAMILY
 const fontFamily = 'Poppins';
 
+// TEXT STYLE
 const kAppBarTextStyle = TextStyle(
   fontSize: 20.0,
   fontWeight: FontWeight.bold,
@@ -31,7 +35,7 @@ const kAppBarTextStyle = TextStyle(
 );
 
 const kOtherAppBarTextStyle = TextStyle(
-  fontSize: 20.0,
+  fontSize: 17.0,
   fontWeight: FontWeight.bold,
   color: kWhiteTextColor,
   fontFamily: fontFamily,
@@ -55,8 +59,10 @@ const kTextFieldStyle = TextStyle(
   fontFamily: fontFamily,
 );
 
+// APPLICATION GENERAL PADDING
 const kAppPadding = EdgeInsets.only(left: 15.0, right: 15.0, top: 15.0);
 
+// TEXT FIELD DECORATION
 var kTextFieldDecoration = InputDecoration(
   hintText: '',
   hintStyle: kTextFieldStyle.copyWith(color: Colors.black.withOpacity(0.5)),

@@ -1,10 +1,12 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:todoey/backend/user/user_view.dart';
 import 'package:todoey/screens/authentication/signup.dart';
 import 'package:todoey/shared/animations.dart';
 import 'package:todoey/shared/bottom_navbar.dart';
 import 'package:todoey/shared/constants.dart';
+import 'package:todoey/shared/loader.dart';
 import 'package:todoey/shared/navigator.dart';
 import 'package:todoey/shared/widgets/button.dart';
 import 'package:todoey/shared/widgets/snackbar.dart';
@@ -90,17 +92,43 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
     super.dispose();
   }
 
+  final UserView _userView = UserView();
+  bool _isLoading = false;
+
   // function to validate the form fields
-  validateForm() {
+  validateForm() async {
     if (_formKey.currentState!.validate()) {
+      // set loading to true
       setState(() {
-        message = 'Successfully logged in';
+        _isLoading = true;
       });
-      navigatorPushReplacementNamed(context, BottomNavBar.id);
-      // navigatetoNextScreen();
+
+      // login function
+      var data = await _userView.login(email: email, password: pword);
+
+      // set loading to false after login is complete
+      setState(() {
+        _isLoading = false;
+      });
+
+      // check for errors
+      if (data == 200) {
+        setState(() {
+          message = 'Welcome $email.';
+        });
+        navigatorPushReplacementNamed(context, BottomNavBar.id);
+      } else if (data == 400) {
+        setState(() {
+          message =
+              'Your credentials are incorrect. Check your email and password.';
+        });
+      } else {
+        setState(() {
+          message =
+              'Your request could not be processed at this time. Please, try again later.';
+        });
+      }
       showSnackbar(context, message);
-    } else {
-      setState(() {});
     }
   }
 
@@ -110,26 +138,6 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
       inactiveButton = email.isEmpty || pword.isEmpty;
     });
   }
-
-  // navigatetoNextScreen() {
-  //   _controller.forward().whenComplete(() {
-  //     Navigator.of(context).pushReplacement(
-  //       PageRouteBuilder(
-  //         pageBuilder: (context, animation, secondaryAnimation) =>
-  //             BottomNavBar(),
-  //         transitionsBuilder: (context, animation, secondaryAnimation, child) {
-  //           return ScaleTransition(
-  //             scale: Tween<double>(begin: 0.0, end: 1.0).animate(_animation),
-  //             child: RotationTransition(
-  //               turns: Tween<double>(begin: 0.5, end: 1.0).animate(_animation),
-  //               child: child,
-  //             ),
-  //           );
-  //         },
-  //       ),
-  //     );
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -233,14 +241,16 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                           dy: 0,
                           animation: _animation2,
                         ),
-                        child: Button(
-                          buttonText: 'Login',
-                          onPressed: () {
-                            inactiveButton ? null : validateForm();
-                          },
-                          buttonColor: kGreenColor,
-                          inactive: inactiveButton,
-                        ),
+                        child: _isLoading
+                            ? Loader(size: 30.0)
+                            : Button(
+                                buttonText: 'Login',
+                                onPressed: () {
+                                  inactiveButton ? null : validateForm();
+                                },
+                                buttonColor: kGreenColor,
+                                inactive: inactiveButton,
+                              ),
                       ),
 
                       SizedBox(height: 10.0),
