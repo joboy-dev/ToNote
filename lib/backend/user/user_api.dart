@@ -10,6 +10,7 @@ import 'package:http/http.dart' as http;
 import 'package:todoey/backend/endpoints.dart';
 import 'package:todoey/services/user/token_storage.dart';
 import 'package:todoey/provider/auth_provider.dart';
+import 'package:todoey/services/shared_preferences/user_shared_preferences.dart';
 
 /// THIS VIEW IS PUT IN PLACE TO HANDLE USER RELATED RESPONSES
 class UserAPI {
@@ -20,6 +21,9 @@ class UserAPI {
 
   // Initialize token storage class
   final TokenStorage tokenStorage = TokenStorage();
+
+  // initialize user shared preferences
+  final UserSharedPreferences _userSharedPreferences = UserSharedPreferences();
 
   var endpoint = '';
 
@@ -137,6 +141,9 @@ class UserAPI {
 
         // clear the token and set it to null
         _authProvider.clearToken();
+
+        // clear cached data
+        _userSharedPreferences.clearCache();
 
         return response.statusCode;
       } else if (response.statusCode == 400) {
@@ -262,7 +269,7 @@ class UserAPI {
     }
   }
 
-  /// FUNCTION TO HANDLE GETTING USER PROFILE PICTURE RESPONSES
+  /// FUNCTION TO HANDLE UPLOADING USER PROFILE PICTURE RESPONSES
   Future uploadUserProfilePicture({required File file}) async {
     try {
       // get user token
@@ -274,8 +281,11 @@ class UserAPI {
         'Content-Type': 'application/json',
       };
 
+      // Make a multi part request since we are using a file
       var request =
           http.MultipartRequest('POST', Uri.parse(getUploadPictureEndpoint));
+
+      // add file path to the request
       request.files.add(await http.MultipartFile.fromPath('file', file.path));
 
       var response = await request.send();

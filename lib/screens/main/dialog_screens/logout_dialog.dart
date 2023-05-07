@@ -51,7 +51,7 @@ class _LogoutDialogState extends State<LogoutDialog> {
       children: [
         DialogHeader(
           headerText: 'Logout',
-          icon: Icons.warning,
+          icon: Icons.logout_rounded,
           mainColor: kRedColor,
         ),
         SizedBox(height: 10.0),

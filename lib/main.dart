@@ -8,6 +8,11 @@ import 'package:todoey/provider/todo_provider.dart';
 import 'package:todoey/screens/authentication/login.dart';
 import 'package:todoey/screens/authentication/signup.dart';
 import 'package:todoey/screens/main/add_profile_picture_screen.dart';
+import 'package:todoey/screens/main/loading_data_screen.dart';
+import 'package:todoey/screens/main/notes_screen.dart';
+import 'package:todoey/screens/main/home_screen.dart';
+import 'package:todoey/screens/main/profile_screen.dart';
+import 'package:todoey/screens/main/todo_screen.dart';
 import 'package:todoey/screens/onboarding/get_started.dart';
 import 'package:todoey/screens/onboarding/onboarding.dart';
 import 'package:todoey/shared/bottom_navbar.dart';
@@ -47,6 +52,11 @@ class ToDoEy extends StatelessWidget {
         GetStarted.id: (context) => GetStarted(),
         SignUp.id: (context) => SignUp(),
         Login.id: (context) => Login(),
+        LoadingDataScreen.id: (context) => LoadingDataScreen(),
+        HomeScreen.id: (context) => HomeScreen(),
+        TodoScreen.id: (context) => TodoScreen(),
+        NotesScreen.id: (context) => NotesScreen(),
+        ProfileScreen.id: (context) => ProfileScreen(),
         AddProfilePicture.id: (context) => AddProfilePicture(),
         BottomNavBar.id: (context) => BottomNavBar()
       },

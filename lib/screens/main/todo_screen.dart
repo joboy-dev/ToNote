@@ -13,15 +13,20 @@ import 'package:todoey/provider/todo_provider.dart';
 import 'package:todoey/provider/user_provider.dart';
 import 'package:todoey/screens/main/dialog_screens/add_todo.dart';
 import 'package:todoey/screens/main/dialog_screens/edit_todo.dart';
+import 'package:todoey/services/shared_preferences/user_shared_preferences.dart';
 import 'package:todoey/services/user/user_service.dart';
 import 'package:todoey/shared/constants.dart';
 import 'package:todoey/shared/loader.dart';
+import 'package:todoey/shared/loading_screen.dart';
 import 'package:todoey/shared/widgets/button.dart';
 import 'package:todoey/shared/widgets/dialog.dart';
 import 'package:todoey/shared/widgets/snackbar.dart';
+import 'package:todoey/shared/widgets/todo_item.dart';
 
 class TodoScreen extends StatefulWidget {
   const TodoScreen({super.key});
+
+  static const String id = 'todo';
 
   @override
   State<TodoScreen> createState() => _TodoScreenState();
@@ -33,18 +38,23 @@ class _TodoScreenState extends State<TodoScreen> {
   String greeting = '';
   bool isChecked = false;
 
+  // map to store cached user data
+  Map<String, dynamic> _cachedUserData = {};
+
   final UserView _userView = UserView();
+
+  final UserSharedPreferences _userSharedPreferences = UserSharedPreferences();
 
   // initialize user provider
   UserProvider _userProvider = UserProvider();
 
   // Function to get the appropriate greeting
   getGreeting() {
-    if (DateTime.now().hour < 12) {
+    if (now.hour < 12) {
       setState(() {
         greeting = 'Good Morning';
       });
-    } else if (DateTime.now().hour >= 12 && DateTime.now().hour < 17) {
+    } else if (now.hour >= 12 && now.hour < 17) {
       setState(() {
         greeting = 'Good Afternoon';
       });
@@ -56,75 +66,94 @@ class _TodoScreenState extends State<TodoScreen> {
   }
 
   // Function to get current logged in user details
-  _getUserDetails() async {
-    // get user data
-    var data = await _userView.getUserDetails();
+  // _getUserDetails() async {
+  //   // get user data
+  //   var data = await _userView.getUserDetails();
 
-    if (data == 200) {
-      dev.log('User Data from gotten user details (TodoScreen) -- $data');
+  //   // check if user data was successfully fetched to prevent errors
+  //   if (data != 400 &&
+  //       data != 401 &&
+  //       data != 'Connection timed out' &&
+  //       data != null) {
+  //     dev.log('User Data from gotten user details (TodoScreen) -- $data');
 
-      // get user profile picture
-      var profilePic = await _userView.getUserProfilePicture();
+  //     // get user profile picture
+  //     var profilePic = await _userView.getUserProfilePicture();
 
-      // create a new user instance
-      User user = User(
-        firstName: data['first_name'],
-        lastName: data['last_name'],
-        email: data['email'],
-        profilePicture: profilePic['profile_pic'],
-      );
+  //     // cache user data
+  //     _userSharedPreferences.cacheUserDetails(
+  //       firstName: data['first_name'],
+  //       lastName: data['last_name'],
+  //       email: data['email'],
+  //       profilePicture: profilePic['profile_pic'],
+  //     );
 
-      // set user details in provider so you can make use of it on the frontend
-      _userProvider.setUser(user);
+  //     // create a new user instance for provider package
+  //     User user = User(
+  //       firstName: data['first_name'],
+  //       lastName: data['last_name'],
+  //       email: data['email'],
+  //       profilePicture: profilePic['profile_pic'],
+  //     );
 
-      // check if user provider worka
-      dev.log('User Provider Testing -- ${_userProvider.user!.profilePicture}');
-    } else if (data == 'Connection Timed out') {
-      dev.log('User Data from gotten user details (TodoScreen) -- $data');
-    }
+  //     // set user details in provider so you can make use of it on the frontend
+  //     dev.log('Setting user details in provider package');
+  //     _userProvider.setUser(user);
+
+  //     // check if user provider works
+  //     dev.log(
+  //         '(TodoScreen) User Provider Testing -- ${_userProvider.user!.profilePicture}');
+
+  //     // set user details in cache
+  //     dev.log('Setting user details in shared preferences cache');
+  //     _cachedUserData = await _userSharedPreferences.getCachedUserData();
+  //     dev.log('(TodoScreen) Cached user data -- $_cachedUserData');
+  //   } else if (data == 'Connection timed out') {
+  //     dev.log(
+  //         'Error -- User Data from gotten user details (TodoScreen) -- $data');
+  //   }
+  // }
+
+  Future<Map<String, dynamic>> _getCachedData() async {
+    // get user cached data
+    Map<String, dynamic> _cachedData =
+        await _userSharedPreferences.getCachedUserData();
+
+    dev.log('(HomeScreen) Cached User Data -- $_cachedData');
+
+    User user = User(
+      firstName: _cachedData['first_name'],
+      lastName: _cachedData['last_name'],
+      email: _cachedData['email'],
+      profilePicture: _cachedData['profile_pic'],
+    );
+
+    _userProvider.setUser(user);
+
+    // Testing provider
+    dev.log('User provider test -- ${_userProvider.user!.firstName}');
+
+    return _cachedData;
   }
 
   @override
   void initState() {
     getGreeting();
+    // _getUserDetails();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      // future: _userService.getUserDetails(),
-      future: _getUserDetails(),
+      future: _getCachedData(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           // check if snapshot has an error
           if (snapshot.hasError) {
             dev.log('Snapshot Error -- ${snapshot.error}');
 
-            return Scaffold(
-              body: SingleChildScrollView(
-                child: SafeArea(
-                  child: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.warning,
-                          size: 40.0,
-                          color: kRedColor,
-                        ),
-                        SizedBox(height: 10.0),
-                        Text(
-                          'We could not fetch your data at this time. Please check your network connection or try again later.',
-                          style: kGreyNormalTextStyle,
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            );
+            return ErrorLoadingScreen();
           } else {
             // Get user details from provider
             final user = _userProvider.user;
@@ -142,55 +171,11 @@ class _TodoScreenState extends State<TodoScreen> {
                   child: Padding(
                     padding: kAppPadding,
                     child: user == null
-                        ? Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.warning,
-                                size: 40.0,
-                                color: kRedColor,
-                              ),
-                              SizedBox(height: 10.0),
-                              Text(
-                                'We could not fetch your data at this time. Please check your network connection or try again later.',
-                                style: kGreyNormalTextStyle,
-                                textAlign: TextAlign.center,
-                              ),
-                            ],
-                          )
+                        ? ErrorLoadingScreen()
                         : Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              // App Bar
-                              Row(
-                                children: [
-                                  Expanded(
-                                    flex: 2,
-                                    child: Text(
-                                      '$greeting, ${user.firstName}',
-                                      style: kOtherAppBarTextStyle.copyWith(
-                                        color: kGreenColor,
-                                        fontSize: 17.0,
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(width: 10.0),
-                                  Expanded(
-                                    flex: 0,
-                                    child: CircleAvatar(
-                                      backgroundColor:
-                                          kGreenColor.withOpacity(0.5),
-                                      foregroundImage:
-                                          NetworkImage(user.profilePicture),
-                                    ),
-                                  ),
-                                ],
-                              ), // End App Bar
-
-                              Divider(thickness: 0.5),
-                              SizedBox(height: 10.0),
-
                               // Main Body
                               Row(
                                 children: [
@@ -257,109 +242,9 @@ class _TodoScreenState extends State<TodoScreen> {
             );
           }
         } else {
-          return SafeArea(
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Loader(size: 40.0, color: kGreenColor),
-                  Text(
-                    'Fetching data',
-                    style: kGreyNormalTextStyle,
-                  ),
-                ],
-              ),
-            ),
-          );
+          return LoadingScreen(color: kGreenColor);
         }
       },
     );
   }
 }
-
-class TodoItem extends StatelessWidget {
-  TodoItem({
-    super.key,
-    required this.title,
-    required this.isChecked,
-    required this.date,
-    required this.onChanged,
-  });
-
-  final String title;
-  final bool isChecked;
-  final DateTime date;
-  Function(bool? value) onChanged;
-
-  List colors = [
-    kGreenColor.withOpacity(0.35),
-    kDarkYellowColor.withOpacity(0.35),
-    Color.fromARGB(255, 142, 184, 255),
-    Color.fromARGB(255, 250, 255, 184),
-    Color.fromARGB(255, 255, 184, 184),
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      title: Text(
-        title,
-        style: kNormalTextStyle.copyWith(
-          fontSize: 16.0,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-      tileColor: isChecked
-          ? Color.fromARGB(255, 218, 218, 218)
-          : colors[Random().nextInt(colors.length).toInt()],
-      leading: Checkbox(
-          checkColor: kGreenColor,
-          activeColor: kDarkYellowColor,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
-          value: isChecked,
-          onChanged: isChecked ? (value) {} : onChanged),
-      trailing: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          IconButton(
-            onPressed: () {
-              isChecked
-                  ? showSnackbar(
-                      context, 'You cannot edit a completed todo item')
-                  : showDialogBox(context: context, screen: EditTodoScreen());
-            },
-            icon: Icon(Icons.edit),
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.delete),
-          ),
-        ],
-      ),
-      subtitle: Text(
-        'Expires ${date.toString().substring(0, 10)}',
-        style: kGreyNormalTextStyle.copyWith(fontSize: 12.0),
-      ),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(5.0),
-      ),
-      contentPadding: EdgeInsets.all(5.0),
-    );
-  }
-}
-
-// var data = await _userView.getUserDetails();
-
-// dev.log('Provider user -- $data');
-
-// User userObject = User(
-//   firstName: data['first_name'],
-//   lastName: data['last_name'],
-//   email: data['email'],
-// );
-
-// final userProvider = Provider.of<UserProvider>(context, listen: false);
-
-// userProvider.setUser(userObject);

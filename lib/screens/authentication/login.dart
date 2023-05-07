@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:todoey/backend/user/user_view.dart';
 import 'package:todoey/screens/authentication/signup.dart';
+import 'package:todoey/screens/main/loading_data_screen.dart';
 import 'package:todoey/shared/animations.dart';
 import 'package:todoey/shared/bottom_navbar.dart';
 import 'package:todoey/shared/constants.dart';
@@ -116,7 +117,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
         setState(() {
           message = 'Welcome $email.';
         });
-        navigatorPushReplacementNamed(context, BottomNavBar.id);
+        navigatorPushReplacementNamed(context, LoadingDataScreen.id);
       } else if (data == 400) {
         setState(() {
           message =
