@@ -1,19 +1,17 @@
 // ignore_for_file: prefer_const_constructors, must_be_immutable
 
-import 'dart:developer';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:todoey/backend/user/user_view.dart';
-import 'package:todoey/models/user.dart';
+import 'package:provider/provider.dart';
+import 'package:todoey/entities/user.dart';
 import 'package:todoey/provider/user_provider.dart';
 import 'package:todoey/screens/main/home_screen.dart';
 import 'package:todoey/screens/main/notes_screen.dart';
 import 'package:todoey/screens/main/profile_screen.dart';
 import 'package:todoey/screens/main/todo_screen.dart';
-import 'package:todoey/services/shared_preferences/user_shared_preferences.dart';
+import 'package:todoey/services/timer.dart';
 import 'package:todoey/shared/constants.dart';
 import 'package:todoey/shared/loading_screen.dart';
 
@@ -29,10 +27,7 @@ class BottomNavBar extends StatefulWidget {
 }
 
 class _BottomNavBarState extends State<BottomNavBar> {
-  final UserSharedPreferences _userSharedPreferences = UserSharedPreferences();
-
-  // initialize user provider
-  final UserProvider _userProvider = UserProvider();
+  LoadingTimer _loadingTimer = LoadingTimer();
 
   math.Random random = math.Random();
   DateTime now = DateTime.now();
@@ -56,35 +51,13 @@ class _BottomNavBarState extends State<BottomNavBar> {
     }
   }
 
-  Future<Map<String, dynamic>> _getCachedData() async {
-    // get user cached data
-    Map<String, dynamic> _cachedData =
-        await _userSharedPreferences.getCachedUserData();
-
-    log('(BottomNavBar) Cached User Data -- $_cachedData');
-
-    User user = User(
-      firstName: _cachedData['first_name'],
-      lastName: _cachedData['last_name'],
-      email: _cachedData['email'],
-      profilePicture: _cachedData['profile_pic'],
-    );
-
-    _userProvider.setUser(user);
-
-    // Testing provider
-    log('User provider test -- ${_userProvider.user!.firstName}');
-
-    return _cachedData;
-  }
-
   int _index = 0;
 
   // List of icon items
   final List<Widget> _items = [
     Icon(
       Icons.home,
-      semanticLabel: 'Todo',
+      semanticLabel: 'Home',
       size: 30.0,
       color: kBgColor,
     ),
@@ -125,7 +98,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
   @override
   void initState() {
     _getGreeting();
-    _getCachedData();
+    _loadingTimer.startTimer();
     super.initState();
   }
 
@@ -143,73 +116,70 @@ class _BottomNavBarState extends State<BottomNavBar> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: _getCachedData(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
-          if (snapshot.hasError) {
-            return ErrorLoadingScreen();
-          } else {
-            final user = _userProvider.user;
+  void dispose() {
+    _loadingTimer.timer?.cancel();
+    super.dispose();
+  }
 
-            if (user == null) {
-              return ErrorLoadingScreen();
-            } else {
-              List<CustomAppBar> appBars = [
-                CustomAppBar(
-                  textColor: kOrangeColor,
-                  appBarText: '$greeting, ${user.firstName}',
-                  imageUrl: user.profilePicture,
-                ),
-                CustomAppBar(
-                  textColor: kGreenColor,
-                  appBarText: '$greeting, ${user.firstName}',
-                  imageUrl: user.profilePicture,
-                ),
-                CustomAppBar(
-                  textColor: kYellowColor,
-                  appBarText: '$greeting, ${user.firstName}',
-                  imageUrl: user.profilePicture,
-                ),
-                CustomAppBar(
-                  textColor: kDarkYellowColor,
-                  otherAppBarText: 'My Profile',
-                ),
-              ];
-              return Scaffold(
-                appBar: appBars[_index],
-                body: Stack(
-                  children: [
-                    _buildOffstageNavigator(0),
-                    _buildOffstageNavigator(1),
-                    _buildOffstageNavigator(2),
-                    _buildOffstageNavigator(3),
-                  ],
-                ),
-                bottomNavigationBar: CurvedNavigationBar(
-                  items: _items,
-                  index: _index,
-                  color: colors[_index],
-                  backgroundColor: kBgColor,
-                  height: 75.0,
-                  animationCurve: Curves.easeIn,
-                  animationDuration: Duration(milliseconds: 300),
-                  onTap: (value) {
-                    setState(() {
-                      // assign current index the value in the on tap function
-                      _index = value;
-                    });
-                  },
-                ),
-                // body: screens[_index],
-              );
-            }
-          }
-        } else {
+  @override
+  Widget build(BuildContext context) {
+    final user = Provider.of<UserProvider?>(context)?.user;
+
+    // return Consumer<User?>(
+    //   builder: (context, user, _) {
+        if (user == null) {
           return LoadingScreen(color: kOrangeColor);
+        } else {
+          List<CustomAppBar> appBars = [
+            CustomAppBar(
+              textColor: kOrangeColor,
+              appBarText: '$greeting, ${user.firstName}',
+              imageUrl: user.profilePicture,
+            ),
+            CustomAppBar(
+              textColor: kGreenColor,
+              appBarText: '$greeting, ${user.firstName}',
+              imageUrl: user.profilePicture,
+            ),
+            CustomAppBar(
+              textColor: kYellowColor,
+              appBarText: '$greeting, ${user.firstName}',
+              imageUrl: user.profilePicture,
+            ),
+            CustomAppBar(
+              textColor: kDarkYellowColor,
+              otherAppBarText: 'My Profile',
+            ),
+          ];
+          return Scaffold(
+            appBar: appBars[_index],
+            body: Stack(
+              children: [
+                _buildOffstageNavigator(0),
+                _buildOffstageNavigator(1),
+                _buildOffstageNavigator(2),
+                _buildOffstageNavigator(3),
+              ],
+            ),
+            bottomNavigationBar: CurvedNavigationBar(
+              items: _items,
+              index: _index,
+              color: colors[_index],
+              backgroundColor: kBgColor,
+              height: 75.0,
+              animationCurve: Curves.easeIn,
+              animationDuration: Duration(milliseconds: 300),
+              onTap: (value) {
+                setState(() {
+                  // assign current index the value in the on tap function
+                  _index = value;
+                });
+              },
+            ),
+            // body: screens[_index],
+          );
         }
-      },
-    );
+      // },
+    // );
   }
 }

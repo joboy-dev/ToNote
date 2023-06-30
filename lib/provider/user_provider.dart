@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:todoey/models/user.dart';
+import 'package:todoey/entities/user.dart';
 
-class UserProvider with ChangeNotifier {
+class UserProvider extends ChangeNotifier {
   User? _user;
 
   User? get user => _user;

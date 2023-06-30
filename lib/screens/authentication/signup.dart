@@ -1,13 +1,14 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_build_context_synchronously, no_leading_underscores_for_local_identifiers
 
-import 'dart:math';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:todoey/backend/user/user_api.dart';
 import 'package:todoey/backend/user/user_view.dart';
-import 'package:todoey/models/user.dart';
+import 'package:todoey/entities/user.dart';
 import 'package:todoey/screens/authentication/login.dart';
 import 'package:todoey/screens/main/add_profile_picture_screen.dart';
+import 'package:todoey/services/isar_service.dart';
 import 'package:todoey/shared/animations.dart';
 import 'package:todoey/shared/bottom_navbar.dart';
 import 'package:todoey/shared/constants.dart';
@@ -107,6 +108,8 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
 
   // function to validate the form fields
   validateForm() async {
+    final IsarService _isarService = IsarService();
+
     final UserModel _newUser = UserModel(
       firstName: fName,
       lastName: lName,
@@ -114,6 +117,8 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
       password: pword,
       password2: pword2,
     );
+
+    final User _user = User();
 
     if (pword == pword2) {
       if (_formKey.currentState!.validate()) {
@@ -124,6 +129,7 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
 
         // create user account and store return value in a variable
         var data = await _userView.createAccount(user: _newUser);
+        log('(Signup Screen) User Data -- $data');
 
         // deactivate loading
         setState(() {
@@ -136,7 +142,7 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
             message =
                 'User with this email already exists. Try using another email.';
           });
-        } else if (data == 201) {
+        } else if (data is Map) {
           setState(() {
             message = 'Account created successfully. Login now.';
           });
@@ -236,7 +242,7 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                                 hintText: 'First Name',
                                 onChanged: (value) {
                                   setState(() {
-                                    fName = value;
+                                    fName = value!;
                                     updateButtonState();
                                   });
                                 },
@@ -256,7 +262,7 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                               child: NameTextField(
                                 hintText: 'Last Name',
                                 onChanged: (value) {
-                                  lName = value;
+                                  lName = value!;
                                   updateButtonState();
                                 },
                               ),
@@ -276,7 +282,7 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                         child: EmailTextField(
                           onChanged: (value) {
                             setState(() {
-                              email = value;
+                              email = value!;
                               updateButtonState();
                             });
                           },
@@ -296,7 +302,7 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                           obscureText: obscureText1,
                           onChanged: (value) {
                             setState(() {
-                              pword = value;
+                              pword = value!;
                               updateButtonState();
                             });
                           },
@@ -321,7 +327,7 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                           obscureText: obscureText2,
                           onChanged: (value) {
                             setState(() {
-                              pword2 = value;
+                              pword2 = value!;
                               updateButtonState();
                             });
                           },

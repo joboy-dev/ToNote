@@ -4,8 +4,9 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:todoey/screens/main/loading_data_screen.dart';
-import 'package:todoey/services/user/token_storage.dart';
+import 'package:todoey/services/token_storage.dart';
 import 'package:todoey/screens/onboarding/get_started.dart';
+import 'package:todoey/shared/bottom_navbar.dart';
 
 class Wrapper extends StatefulWidget {
   const Wrapper({super.key});
@@ -41,7 +42,7 @@ class _WrapperState extends State<Wrapper> {
     if (_token == null) {
       return GetStarted();
     } else {
-      return LoadingDataScreen();
+      return BottomNavBar();
     }
   }
 }

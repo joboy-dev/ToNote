@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:todoey/backend/user/user_view.dart';
-import 'package:todoey/models/user.dart';
+import 'package:todoey/entities/user.dart';
 import 'package:todoey/provider/user_provider.dart';
 
 import 'package:todoey/screens/authentication/login.dart';
@@ -137,27 +137,27 @@ class _AddProfilePictureState extends State<AddProfilePicture>
     }
   }
 
-  _uploadPicture() async {
-    var pic = await _userView.uploadUserProfilePicture(_image!);
+  // _uploadPicture() async {
+  //   var pic = await _userView.uploadUserProfilePicture(_image!);
 
-    User user = User(
-      firstName: _userProvider.user!.firstName,
-      lastName: _userProvider.user!.lastName,
-      email: _userProvider.user!.email,
-      profilePicture: pic['profile_pic'],
-    );
+  //   User user = User(
+  //     firstName: _userProvider.user!.firstName,
+  //     lastName: _userProvider.user!.lastName,
+  //     email: _userProvider.user!.email,
+  //     profilePicture: pic['profile_pic'],
+  //   );
 
-    // set user details in provider so you can make use of it on the frontend
-    _userProvider.setUser(user);
+  //   // set user details in provider so you can make use of it on the frontend
+  //   _userProvider.setUser(user);
 
-    // check if user provider worka
-    log('User Provider -- ${_userProvider.user!.profilePicture}');
-  }
+  //   // check if user provider worka
+  //   log('User Provider -- ${_userProvider.user!.profilePicture}');
+  // }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: _uploadPicture(),
+      // future: _uploadPicture(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasError) {

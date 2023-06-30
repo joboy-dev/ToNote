@@ -2,15 +2,17 @@
 
 import 'package:flutter/material.dart';
 import 'package:todoey/screens/main/loading_data_screen.dart';
+import 'package:todoey/services/timer.dart';
+import 'package:todoey/shared/bottom_navbar.dart';
 import 'package:todoey/shared/constants.dart';
 import 'package:todoey/shared/loader.dart';
 import 'package:todoey/shared/navigator.dart';
 import 'package:todoey/shared/widgets/button.dart';
 
 class LoadingScreen extends StatelessWidget {
-  LoadingScreen({super.key, required this.color});
+  LoadingScreen({super.key, this.color});
 
-  Color color;
+  Color? color;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +29,10 @@ class LoadingScreen extends StatelessWidget {
                   Loader(size: 40.0, color: color),
                   SizedBox(height: 10.0),
                   Text(
+                    // _loadingTimer.isLoading
+                    // ?
                     'Fetching data',
+                    // : _loadingTimer.message,
                     style: kGreyNormalTextStyle,
                     textAlign: TextAlign.center,
                   ),
@@ -74,8 +79,7 @@ class ErrorLoadingScreen extends StatelessWidget {
                       iconColor: kOrangeColor,
                       text: 'Reload',
                       onPressed: () {
-                        navigatorPushReplacementNamed(
-                            context, LoadingDataScreen.id);
+                        navigatorPushReplacementNamed(context, BottomNavBar.id);
                       },
                     ),
                   )

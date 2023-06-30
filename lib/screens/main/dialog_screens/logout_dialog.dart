@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:todoey/backend/user/user_view.dart';
 import 'package:todoey/screens/authentication/login.dart';
 import 'package:todoey/screens/onboarding/get_started.dart';
+import 'package:todoey/services/isar_service.dart';
 import 'package:todoey/shared/constants.dart';
 import 'package:todoey/shared/navigator.dart';
 import 'package:todoey/shared/widgets/button.dart';
@@ -27,6 +28,7 @@ class _LogoutDialogState extends State<LogoutDialog> {
     setState(() {
       _isLoading = true;
     });
+    await IsarService().removeUser();
     var data = await _userView.logout();
     setState(() {
       _isLoading = false;

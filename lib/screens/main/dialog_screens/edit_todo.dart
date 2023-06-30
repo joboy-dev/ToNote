@@ -55,7 +55,7 @@ class _EditTodoScreenState extends State<EditTodoScreen> {
             hintText: 'Enter your todo',
             onChanged: (value) {
               setState(() {
-                title = value;
+                title = value!;
                 updateButtonState();
               });
             },

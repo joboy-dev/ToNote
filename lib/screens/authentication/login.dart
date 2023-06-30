@@ -2,8 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:todoey/backend/user/user_view.dart';
+import 'package:todoey/entities/user.dart';
 import 'package:todoey/screens/authentication/signup.dart';
 import 'package:todoey/screens/main/loading_data_screen.dart';
+import 'package:todoey/services/isar_service.dart';
 import 'package:todoey/shared/animations.dart';
 import 'package:todoey/shared/bottom_navbar.dart';
 import 'package:todoey/shared/constants.dart';
@@ -94,6 +96,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
   }
 
   final UserView _userView = UserView();
+  final IsarService _isarService = IsarService();
   bool _isLoading = false;
 
   // function to validate the form fields
@@ -113,11 +116,29 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
       });
 
       // check for errors
-      if (data == 200) {
+      if (data is Map) {
         setState(() {
+          _isLoading = true;
+        });
+
+        var userData = await _userView.getUserDetails();
+        var userPic = await _userView.getUserProfilePicture();
+
+        // Save user datails to iser service
+        await _isarService.saveUser(User()
+          ..id = userData['id']
+          ..firstName = userData['first_name']
+          ..lastName = userData['last_name']
+          ..email = userData['email']
+          ..profilePicture = userPic['profile_pic']);
+
+        // await _isarService.getUserDetails();
+
+        setState(() {
+          _isLoading = false;
           message = 'Welcome $email.';
         });
-        navigatorPushReplacementNamed(context, LoadingDataScreen.id);
+        navigatorPushReplacementNamed(context, BottomNavBar.id);
       } else if (data == 400) {
         setState(() {
           message =
@@ -201,7 +222,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                         child: EmailTextField(
                           onChanged: (value) {
                             setState(() {
-                              email = value;
+                              email = value!;
                               updateButtonState();
                             });
                           },
@@ -221,7 +242,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                           obscureText: obscureText1,
                           onChanged: (value) {
                             setState(() {
-                              pword = value;
+                              pword = value!;
                               updateButtonState();
                             });
                           },

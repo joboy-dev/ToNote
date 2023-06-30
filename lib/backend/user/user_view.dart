@@ -1,9 +1,8 @@
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:dio/dio.dart';
 import 'package:todoey/backend/user/user_api.dart';
-import 'package:todoey/models/user.dart';
+import 'package:todoey/entities/user.dart';
 
 /// THIS VIEW IS PUT IN PLACE TO HANDLE USER RELATED FUNCTIONALITY
 class UserView {
@@ -66,6 +65,23 @@ class UserView {
   /// FUNCTION TO UPLOAD USER PROFILE PICTURE
   uploadUserProfilePicture(File profilePic) async {
     var data = await _userAPI.uploadUserProfilePicture(file: profilePic);
+
+    return data;
+  }
+
+  /// FUNCTION TO UPDATE USER DETAILS
+  updateUserDetails({
+    required String firstName,
+    required String lastName,
+    required String email,
+  }) async {
+    Map<String, dynamic> jsonData = {
+      "first_name": firstName,
+      "last_name": lastName,
+      "email": email,
+    };
+    
+    var data = await _userAPI.updateUserDetails(jsonData);
 
     return data;
   }

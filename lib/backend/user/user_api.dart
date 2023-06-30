@@ -3,14 +3,13 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
-// import 'package:dio/dio.dart';
+
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:todoey/backend/endpoints.dart';
-import 'package:todoey/services/user/token_storage.dart';
+import 'package:todoey/services/token_storage.dart';
 import 'package:todoey/provider/auth_provider.dart';
-import 'package:todoey/services/shared_preferences/user_shared_preferences.dart';
 
 /// THIS VIEW IS PUT IN PLACE TO HANDLE USER RELATED RESPONSES
 class UserAPI {
@@ -21,9 +20,6 @@ class UserAPI {
 
   // Initialize token storage class
   final TokenStorage tokenStorage = TokenStorage();
-
-  // initialize user shared preferences
-  final UserSharedPreferences _userSharedPreferences = UserSharedPreferences();
 
   var endpoint = '';
 
@@ -56,7 +52,8 @@ class UserAPI {
         log("$responseData");
         // log('${responseData['first_name']}');
 
-        return response.statusCode;
+        // return response.statusCode;
+        return responseData;
       } else if (response.statusCode == 400) {
         log('-----------------RESPONSE 400 DATA-----------------');
         log('${responseData as Map}');
@@ -100,7 +97,8 @@ class UserAPI {
         // set token variable in AuthProvideer class
         _authProvider.setToken(responseData['token']);
 
-        return response.statusCode;
+        // return response.statusCode;
+        return responseData;
       } else if (response.statusCode == 400) {
         log('-----------------RESPONSE 400 DATA-----------------');
         log('$responseData');
@@ -143,7 +141,7 @@ class UserAPI {
         _authProvider.clearToken();
 
         // clear cached data
-        _userSharedPreferences.clearCache();
+        // _userSharedPreferences.clearCache();
 
         return response.statusCode;
       } else if (response.statusCode == 400) {
@@ -317,6 +315,55 @@ class UserAPI {
     } catch (e) {
       log('-------------EXCEPTION THROWN------------');
       log(e.toString());
+
+      return null;
+    }
+  }
+
+  /// FUNCTION TO HANDLE UPDATING USER DETAILS RESPONSES
+  Future updateUserDetails(dynamic data) async {
+    try {
+      // get user token from storage
+      var token = await tokenStorage.readToken();
+      log('Getting details of user $token to update');
+
+      headers = {
+        'Authorization': 'Token $token',
+        'Content-Type': 'application/json',
+      };
+
+      var response = await http.patch(
+        Uri.parse(userDetailsEndpoint),
+        headers: headers,
+        body: jsonEncode(data),
+      );
+
+      var responseData = jsonDecode(response.body);
+
+      log("STATUS CODE -- ${response.statusCode}");
+
+      if (response.statusCode == 200) {
+        log('-----------------RESPONSE 200 DATA-----------------');
+        log('$responseData');
+
+        return responseData;
+      } else if (response.statusCode == 400) {
+        log('-----------------RESPONSE 400 DATA-----------------');
+        log('$responseData');
+
+        return response.statusCode;
+      } else if (response.statusCode == 401) {
+        log('-----------------RESPONSE 401 DATA-----------------');
+        log('$responseData');
+
+        return response.statusCode;
+      } else {
+        log('Request Failed');
+        return null;
+      }
+    } catch (e) {
+      log('---------EXCEPTION THROWN------------');
+      log('Updating user details error -- ${e.toString()}');
 
       return null;
     }

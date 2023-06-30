@@ -14,7 +14,7 @@ class NameTextField extends StatelessWidget {
 
   String? initialValue;
   String hintText;
-  Function(String value) onChanged;
+  Function(String? value) onChanged;
   // Function(String? newValue) onSaved;
 
   @override
@@ -51,14 +51,16 @@ class EmailTextField extends StatelessWidget {
     this.initialValue,
     this.readOnly,
     required this.onChanged,
+    this.color,
     // required this.disableButton,
   });
 
   final String? initialValue;
   bool? readOnly;
+  final Color? color;
   // bool disableButton;
 
-  final Function(String value) onChanged;
+  final Function(String? value) onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +75,7 @@ class EmailTextField extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 10.0),
           child: Icon(
             Icons.email_rounded,
-            color: kYellowColor,
+            color: color ?? kYellowColor,
           ),
         ),
       ),
@@ -95,11 +97,13 @@ class PasswordTextField extends StatelessWidget {
     required this.obscureText,
     required this.onChanged,
     required this.onTap,
+    this.color
   });
 
   String hintText;
   bool obscureText;
-  Function(String value) onChanged;
+  Color? color;
+  Function(String? value) onChanged;
   Function() onTap; // for gesture detector
 
   @override
@@ -114,7 +118,7 @@ class PasswordTextField extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 10.0),
           child: Icon(
             Icons.lock,
-            color: kYellowColor,
+            color: color ?? kYellowColor,
           ),
         ),
         suffixIcon: Padding(
@@ -124,12 +128,12 @@ class PasswordTextField extends StatelessWidget {
             child: obscureText
                 ? Icon(
                     FontAwesomeIcons.solidEye,
-                    color: kYellowColor,
+                    color: color ?? kYellowColor,
                     size: 20.0,
                   )
                 : Icon(
                     FontAwesomeIcons.solidEyeSlash,
-                    color: kYellowColor,
+                    color: color ?? kYellowColor,
                     size: 20.0,
                   ),
           ),
@@ -167,7 +171,7 @@ class NormalTextField extends StatelessWidget {
 
   String? initialValue;
   String hintText;
-  Function(String value) onChanged;
+  Function(String? value) onChanged;
   Color enabledBorderColor;
   bool obscureText;
   Color focusedBorderColor;

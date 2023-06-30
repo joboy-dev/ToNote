@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'dart:developer';
 
-import 'package:todoey/services/user/token_storage.dart';
+import 'package:todoey/services/token_storage.dart';
 
 class AuthProvider with ChangeNotifier {
   var _token ;
@@ -11,6 +11,7 @@ class AuthProvider with ChangeNotifier {
 
   TokenStorage storage = TokenStorage();
 
+  // function to set token into secure storage
   void setToken(String userToken) async {
     await storage.writeToken(token: userToken);
 
@@ -21,6 +22,7 @@ class AuthProvider with ChangeNotifier {
     log('User token in Provider -- $_token');
   }
 
+  // function to clear token from secure storage
   void clearToken() async {
     await storage.deleteToken();
     _token = await storage.readToken();

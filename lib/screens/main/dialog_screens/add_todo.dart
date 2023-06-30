@@ -28,8 +28,6 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
   validateForm() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      // TodoProvider().addTodo(title: title, date: selectedDate);
-      // print(TodoProvider().todos);
       navigatorPop(context);
       showSnackbar(context,
           'New todo "$title" added and expires on ${selectedDate.toIso8601String().substring(0, 10)}');
@@ -61,7 +59,7 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
             hintText: 'Enter your todo',
             onChanged: (value) {
               setState(() {
-                title = value;
+                title = value!;
                 updateButtonState();
               });
             },
@@ -72,7 +70,7 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
             focusedErrorBorderColor: kRedColor,
             errorTextStyleColor: kRedColor,
             iconColor: kGreenColor,
-            prefixIcon: Icons.person,
+            prefixIcon: Icons.check_circle_outline,
           ),
           SizedBox(height: 20.0),
 
