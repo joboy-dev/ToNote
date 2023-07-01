@@ -1,7 +1,9 @@
 // ignore_for_file: prefer_const_constructors, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todoey/backend/user/user_view.dart';
+import 'package:todoey/provider/user_provider.dart';
 import 'package:todoey/screens/authentication/login.dart';
 import 'package:todoey/screens/onboarding/get_started.dart';
 import 'package:todoey/services/isar_service.dart';
@@ -49,6 +51,7 @@ class _LogoutDialogState extends State<LogoutDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserProvider?>(context);
     return Column(
       children: [
         DialogHeader(
@@ -64,6 +67,10 @@ class _LogoutDialogState extends State<LogoutDialog> {
           button2Text: 'Logout',
           button2Color: kDarkYellowColor,
           button2onPressed: () {
+            // clear user data from provider
+            user?.clearUser();
+
+            // logout
             _logout();
           },
         ),

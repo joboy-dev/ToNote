@@ -1,10 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class LoadingTimer extends ChangeNotifier {
-  bool isLoading = true;
+  bool isLoading = false;
   String message = '';
 
   Timer? timer;
@@ -12,7 +11,7 @@ class LoadingTimer extends ChangeNotifier {
   // setting a timer for user data to load
   startTimer() {
     bool isLoading = true;
-    timer = Timer(Duration(milliseconds: 100), () {
+    timer = Timer(const Duration(milliseconds: 100), () {
       if (isLoading) {
         isLoading = false;
         message = 'This request is taking too long.';
@@ -20,5 +19,10 @@ class LoadingTimer extends ChangeNotifier {
         notifyListeners();
       }
     });
+  }
+
+  cancelTimer() {
+    timer?.cancel();
+    notifyListeners();
   }
 }

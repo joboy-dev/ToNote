@@ -42,7 +42,7 @@ class _WrapperState extends State<Wrapper> {
     if (_token == null) {
       return GetStarted();
     } else {
-      return BottomNavBar();
+      return LoadingDataScreen();
     }
   }
 }

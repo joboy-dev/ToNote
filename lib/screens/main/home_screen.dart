@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 import 'package:todoey/backend/user/user_view.dart';
 import 'package:todoey/entities/user.dart';
 import 'package:todoey/provider/user_provider.dart';
+import 'package:todoey/screens/main/add_notes_screen.dart';
 import 'package:todoey/screens/main/dialog_screens/add_todo.dart';
 import 'package:todoey/screens/main/todo_screen.dart';
 import 'package:todoey/services/isar_service.dart';
@@ -82,20 +83,21 @@ class _HomeScreenState extends State<HomeScreen> {
                                 SizedBox(width: 15.0),
                                 Expanded(
                                   flex: 1,
-                                  child: ButtonIcon(
-                                    buttonText: 'New',
+                                  child: IconTextButton(
+                                    text: 'New',
+                                    fontWeight: FontWeight.bold,
+                                    icon: FontAwesomeIcons.plus,
+                                    iconColor: kOrangeColor,
+                                    textColor: kOrangeColor,
+                                    fontSize: 17.0,
+                                    gap: 20.0,
                                     onPressed: () {
                                       showDialogBox(
                                         context: context,
                                         dismisible: false,
                                         screen: AddTodoScreen(),
                                       );
-                                      // navigatorPushNamed(
-                                      //     context, TodoScreen.id);
                                     },
-                                    buttonColor: kOrangeColor,
-                                    // inactive: false
-                                    icon: FontAwesomeIcons.plus,
                                   ),
                                 ),
                               ],
@@ -135,8 +137,11 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
 
+                            SizedBox(height: 20.0),
+
                             // NOTES
                             Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
                               children: [
                                 Expanded(
                                   flex: 2,
@@ -151,17 +156,18 @@ class _HomeScreenState extends State<HomeScreen> {
                                 SizedBox(width: 15.0),
                                 Expanded(
                                   flex: 1,
-                                  child: ButtonIcon(
-                                    buttonText: 'New',
-                                    onPressed: () {
-                                      showDialogBox(
-                                        context: context,
-                                        dismisible: false,
-                                        screen: AddTodoScreen(),
-                                      );
-                                    },
-                                    buttonColor: kOrangeColor,
+                                  child: IconTextButton(
+                                    text: 'New',
+                                    fontWeight: FontWeight.bold,
                                     icon: FontAwesomeIcons.plus,
+                                    iconColor: kOrangeColor,
+                                    textColor: kOrangeColor,
+                                    fontSize: 17.0,
+                                    gap: 20.0,
+                                    onPressed: () {
+                                      navigatorPushReplacementNamed(
+                                          context, AddNotesScreen.id);
+                                    },
                                   ),
                                 ),
                               ],

@@ -23,9 +23,8 @@ class LoadingScreen extends StatelessWidget {
             padding: kAppPadding,
             child: Center(
               child: Column(
-                // mainAxisAlignment: MainAxisAlignment.center,
-                // crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.35),
                   Loader(size: 40.0, color: color),
                   SizedBox(height: 10.0),
                   Text(
@@ -46,6 +45,40 @@ class LoadingScreen extends StatelessWidget {
   }
 }
 
+class LoadingScreenNoScaffold extends StatelessWidget {
+  LoadingScreenNoScaffold({super.key, this.color});
+
+  Color? color;
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: SafeArea(
+        child: Padding(
+          padding: kAppPadding,
+          child: Center(
+            child: Column(
+              children: [
+                SizedBox(height: MediaQuery.of(context).size.height * 0.35),
+                Loader(size: 40.0, color: color),
+                SizedBox(height: 10.0),
+                Text(
+                  // _loadingTimer.isLoading
+                  // ?
+                  'Fetching data',
+                  // : _loadingTimer.message,
+                  style: kGreyNormalTextStyle,
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class ErrorLoadingScreen extends StatelessWidget {
   ErrorLoadingScreen({super.key});
 
@@ -58,9 +91,8 @@ class ErrorLoadingScreen extends StatelessWidget {
             padding: kAppPadding,
             child: Center(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.30),
                   Icon(
                     Icons.warning,
                     size: 40.0,
@@ -79,6 +111,7 @@ class ErrorLoadingScreen extends StatelessWidget {
                       iconColor: kOrangeColor,
                       text: 'Reload',
                       onPressed: () {
+                        // navigatorPushReplacementNamed(context, LoadingDataScreen.id);
                         navigatorPushReplacementNamed(context, BottomNavBar.id);
                       },
                     ),
@@ -107,9 +140,8 @@ class ConnectingScreen extends StatelessWidget {
             padding: kAppPadding,
             child: Center(
               child: Column(
-                // mainAxisAlignment: MainAxisAlignment.center,
-                // crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.35),
                   Loader(size: 40.0, color: color),
                   SizedBox(height: 10.0),
                   Text(

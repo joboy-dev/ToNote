@@ -92,13 +92,12 @@ class EmailTextField extends StatelessWidget {
 }
 
 class PasswordTextField extends StatelessWidget {
-  PasswordTextField({
-    required this.hintText,
-    required this.obscureText,
-    required this.onChanged,
-    required this.onTap,
-    this.color
-  });
+  PasswordTextField(
+      {required this.hintText,
+      required this.obscureText,
+      required this.onChanged,
+      required this.onTap,
+      this.color});
 
   String hintText;
   bool obscureText;
@@ -167,10 +166,13 @@ class NormalTextField extends StatelessWidget {
     required this.cursorColor,
     required this.prefixIcon,
     this.suffixIcon,
+    this.readonly,
+    this.fontSize,
   });
 
   String? initialValue;
   String hintText;
+  bool? readonly;
   Function(String? value) onChanged;
   Color enabledBorderColor;
   bool obscureText;
@@ -182,19 +184,21 @@ class NormalTextField extends StatelessWidget {
   Color cursorColor;
   IconData prefixIcon;
   IconData? suffixIcon;
+  double? fontSize;
   // Function(String? newValue) onSaved;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      readOnly: readonly ?? false,
       initialValue: initialValue,
-      style: kTextFieldStyle,
+      style: kTextFieldStyle.copyWith(fontSize: fontSize ?? 12.0),
       cursorColor: cursorColor,
       obscureText: obscureText,
       decoration: InputDecoration(
         hintText: hintText,
-        hintStyle:
-            kTextFieldStyle.copyWith(color: Colors.black.withOpacity(0.5)),
+        hintStyle: kTextFieldStyle.copyWith(
+            color: Colors.black.withOpacity(0.5), fontSize: fontSize ?? 12.0),
         prefixIcon: Icon(
           prefixIcon,
           color: iconColor,
@@ -230,6 +234,87 @@ class NormalTextField extends StatelessWidget {
       validator: (value) {
         if (value!.isEmpty) {
           // disableButton = true;
+          return 'This field cannot be empty';
+        } else {
+          return null;
+        }
+      },
+    );
+  }
+}
+
+class TextareaTextField extends StatelessWidget {
+  TextareaTextField({
+    super.key,
+    this.initialValue,
+    this.readonly,
+    required this.hintText,
+    required this.onChanged,
+    this.enabledBorderColor,
+    this.focusedBorderColor,
+    this.errorBorderColor,
+    this.focusedErrorBorderColor,
+    required this.errorTextStyleColor,
+    required this.cursorColor,
+  });
+
+  String? initialValue;
+  String hintText;
+  bool? readonly;
+  Function(String? value) onChanged;
+  Color? enabledBorderColor;
+  Color? focusedBorderColor;
+  Color? errorBorderColor;
+  Color? focusedErrorBorderColor;
+  Color errorTextStyleColor;
+  Color cursorColor;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      readOnly: readonly ?? false,
+      maxLines: null,
+      keyboardType: TextInputType.multiline,
+      initialValue: initialValue,
+      style: kTextFieldStyle,
+      cursorColor: cursorColor,
+      decoration: InputDecoration(
+        hintText: hintText,
+        hintStyle:
+            kTextFieldStyle.copyWith(color: Colors.black.withOpacity(0.5)),
+        labelStyle: TextStyle(
+          color: kYellowColor,
+          fontWeight: FontWeight.w300,
+          fontSize: 10.0,
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+              color: enabledBorderColor ?? Colors.transparent, width: 1.0),
+          borderRadius: BorderRadius.all(Radius.circular(5.0)),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+              color: focusedBorderColor ?? Colors.transparent, width: 1.0),
+          borderRadius: BorderRadius.all(Radius.circular(5.0)),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+              color: errorBorderColor ?? Colors.transparent, width: 1.0),
+          borderRadius: BorderRadius.all(Radius.circular(5.0)),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+              color: focusedErrorBorderColor ?? Colors.transparent, width: 1.0),
+          borderRadius: BorderRadius.all(Radius.circular(5.0)),
+        ),
+        errorStyle: TextStyle(
+          color: errorTextStyleColor,
+        ),
+      ),
+      // onSaved: onSaved,
+      onChanged: onChanged,
+      validator: (value) {
+        if (value!.isEmpty) {
           return 'This field cannot be empty';
         } else {
           return null;

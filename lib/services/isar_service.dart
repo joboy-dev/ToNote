@@ -74,6 +74,8 @@ class IsarService {
 
       if (userDoc != null) {
         log('UserDoc -- ${userDoc.firstName}');
+        
+        //  store user data in provider
         Provider.of<UserProvider>(context, listen: false).setUser(userDoc);
         log('${Provider.of<UserProvider>(context, listen: false).user?.email}');
         return userDoc;
@@ -82,37 +84,4 @@ class IsarService {
       }
     }
   }
-
-  /// Function to update user details
-  // Future updateDetails(User existingUser) async {
-  //   final isar = await db;
-
-  //   var userData = await userView.getUserDetails();
-
-  //   final userDoc = await isar.txn(() => isar.users.get(userData['id']));
-
-  //   if (userDoc != null) {}
-  // }
-
-  // Future<Stream<List<User>>> userStream() async {
-  //   final isar = await db;
-  //   final streamController = StreamController<List<User>>();
-
-  //   var userData = await userView.getUserDetails();
-
-  //   final query = isar.users.where().filter().idEqualTo(userData['id']).build();
-
-  //   // listen for changes
-  //   final listener = query.watchLazy();
-
-  //   listener.listen((_) {
-  //     // fetch updated data
-  //     final users = query.findFirst();
-  //     streamController.add(users as List<User>);
-  //   });
-
-  //   log('${streamController.stream}');
-
-  //   return streamController.stream;
-  // }
 }

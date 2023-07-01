@@ -7,18 +7,20 @@ import 'package:todoey/shared/navigator.dart';
 import 'package:todoey/shared/widgets/button.dart';
 import 'package:todoey/shared/widgets/text_field.dart';
 
-class AddNotesScreen extends StatefulWidget {
-  const AddNotesScreen({super.key});
+class EditNoteScreen extends StatefulWidget {
+  const EditNoteScreen({super.key});
 
-  static const String id = 'add note';
+  static const String id = 'edit note';
 
   @override
-  State<AddNotesScreen> createState() => _AddNotesScreenState();
+  State<EditNoteScreen> createState() => _EditNoteScreenState();
 }
 
-class _AddNotesScreenState extends State<AddNotesScreen> {
+class _EditNoteScreenState extends State<EditNoteScreen> {
   String title = '';
   String content = '';
+
+  bool readonly = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,6 +40,7 @@ class _AddNotesScreenState extends State<AddNotesScreen> {
                       flex: 2,
                       child: NormalTextField(
                         hintText: 'Title',
+                        readonly: readonly,
                         fontSize: 17.0,
                         onChanged: (value) {
                           setState(() {
@@ -56,15 +59,31 @@ class _AddNotesScreenState extends State<AddNotesScreen> {
                     ),
                     Expanded(
                       flex: 1,
-                      child: IconTextButton(
-                        text: 'Save',
-                        icon: Icons.save_rounded,
-                        iconColor: kYellowColor,
-                        fontSize: 15.0,
-                        onPressed: () {
-                          navigatorPop(context);
-                        },
-                      ),
+                      child: readonly
+                          ? IconTextButton(
+                              text: 'Edit',
+                              icon: Icons.edit,
+                              iconColor: kYellowColor,
+                              fontSize: 15.0,
+                              onPressed: () {
+                                setState(() {
+                                  readonly = false;
+                                });
+                              },
+                            )
+                          : IconTextButton(
+                              text: 'Save',
+                              icon: Icons.save_rounded,
+                              iconColor: kYellowColor,
+                              fontSize: 15.0,
+                              onPressed: () {
+                                // Implement save functionality
+                                setState(() {
+                                  readonly = true;
+                                });
+                                // navigatorPop(context);
+                              },
+                            ),
                     ),
                   ],
                 ),
@@ -75,6 +94,7 @@ class _AddNotesScreenState extends State<AddNotesScreen> {
                 // Text area field
                 TextareaTextField(
                   hintText: 'Type a note...',
+                  readonly: readonly,
                   onChanged: (value) {
                     setState(() {
                       content = '$value';

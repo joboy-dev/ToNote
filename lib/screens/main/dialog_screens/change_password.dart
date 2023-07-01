@@ -107,7 +107,7 @@ class _ChangePasswordState extends State<ChangePassword> {
               children: [
                 // Header
                 DialogHeader(
-                  headerText: 'Change Passwordd',
+                  headerText: 'Change Password',
                   mainColor: kDarkYellowColor,
                   icon: FontAwesomeIcons.lock,
                 ),

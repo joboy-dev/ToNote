@@ -47,12 +47,10 @@ class _EditProfileState extends State<EditProfile> {
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<UserProvider>(context).user;
+    final user = Provider.of<UserProvider?>(context)?.user;
 
     // _isLoading = _loadingProvider.isLoading!;
 
-    // return Consumer<User?>(
-    //   builder: (context, user, _) {
     validateForm() async {
       if (_formKey.currentState!.validate()) {
         setState(() {
@@ -184,7 +182,5 @@ class _EditProfileState extends State<EditProfile> {
               ],
             ),
           );
-    //   },
-    // );
   }
 }

@@ -186,11 +186,19 @@ class IconTextButton extends StatelessWidget {
     required this.icon,
     required this.iconColor,
     required this.onPressed,
+    this.fontSize,
+    this.textColor,
+    this.gap,
+    this.fontWeight,
   });
 
   final String text;
   final IconData icon;
   final Color iconColor;
+  final Color? textColor;
+  final double? fontSize;
+  final double? gap;
+  final FontWeight? fontWeight;
   final Function() onPressed;
 
   @override
@@ -202,10 +210,14 @@ class IconTextButton extends StatelessWidget {
         child: Row(
           children: [
             Icon(icon, color: iconColor),
-            SizedBox(width: 20.0),
+            SizedBox(width: gap ?? 20.0),
             Text(
               text,
-              style: kGreyNormalTextStyle.copyWith(fontSize: 17.0),
+              style: kGreyNormalTextStyle.copyWith(
+                fontSize: fontSize ?? 17.0,
+                color: textColor ?? kGreyTextColor,
+                fontWeight: fontWeight ?? FontWeight.normal,
+              ),
             ),
           ],
         ),

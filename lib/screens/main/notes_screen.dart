@@ -2,8 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:todoey/screens/main/add_notes_screen.dart';
 import 'package:todoey/screens/main/dialog_screens/add_todo.dart';
 import 'package:todoey/shared/constants.dart';
+import 'package:todoey/shared/navigator.dart';
 import 'package:todoey/shared/widgets/button.dart';
 import 'package:todoey/shared/widgets/dialog.dart';
 
@@ -44,17 +46,18 @@ class _NotesScreenState extends State<NotesScreen> {
                     ),
                     Expanded(
                       flex: 1,
-                      child: ButtonIcon(
-                        buttonText: 'New',
-                        onPressed: () {
-                          showDialogBox(
-                            context: context,
-                            dismisible: false,
-                            screen: AddTodoScreen(),
-                          );
-                        },
-                        buttonColor: kYellowColor,
+                      child: IconTextButton(
+                        text: 'New',
+                        fontWeight: FontWeight.bold,
                         icon: FontAwesomeIcons.plus,
+                        iconColor: kYellowColor,
+                        textColor: kYellowColor,
+                        fontSize: 17.0,
+                        gap: 20.0,
+                        onPressed: () {
+                          navigatorPushReplacementNamed(
+                              context, AddNotesScreen.id);
+                        },
                       ),
                     ),
                   ],

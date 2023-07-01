@@ -138,7 +138,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
           _isLoading = false;
           message = 'Welcome $email.';
         });
-        navigatorPushReplacementNamed(context, BottomNavBar.id);
+        navigatorPushReplacementNamed(context, LoadingDataScreen.id);
       } else if (data == 400) {
         setState(() {
           message =

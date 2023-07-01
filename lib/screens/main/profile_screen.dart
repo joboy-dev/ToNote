@@ -28,7 +28,7 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<UserProvider>(context).user;
+    final user = Provider.of<UserProvider?>(context)?.user;
     return Scaffold(
       backgroundColor: kBgColor,
       body: SingleChildScrollView(

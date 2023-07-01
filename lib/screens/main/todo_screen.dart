@@ -71,8 +71,14 @@ class _TodoScreenState extends State<TodoScreen> {
                               ),
                               Expanded(
                                 flex: 1,
-                                child: ButtonIcon(
-                                  buttonText: 'New',
+                                child: IconTextButton(
+                                  text: 'New',
+                                  fontWeight: FontWeight.bold,
+                                  icon: FontAwesomeIcons.plus,
+                                  iconColor: kGreenColor,
+                                  textColor: kGreenColor,
+                                  fontSize: 17.0,
+                                  gap: 20.0,
                                   onPressed: () {
                                     showDialogBox(
                                       context: context,
@@ -80,8 +86,6 @@ class _TodoScreenState extends State<TodoScreen> {
                                       screen: AddTodoScreen(),
                                     );
                                   },
-                                  buttonColor: kGreenColor,
-                                  icon: FontAwesomeIcons.plus,
                                 ),
                               ),
                             ],
