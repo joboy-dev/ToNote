@@ -74,7 +74,7 @@ class IsarService {
       if (userDoc != null) {
         log('UserDoc -- ${userDoc.firstName}');
 
-        // store user data in provider
+        // store user data in provider. listen must be false
         Provider.of<UserProvider>(context, listen: false).setUser(userDoc);
         log('${Provider.of<UserProvider>(context, listen: false).user?.email}');
         return userDoc;
