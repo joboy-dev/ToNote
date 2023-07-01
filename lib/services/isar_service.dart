@@ -51,9 +51,8 @@ class IsarService {
     isar.writeTxnSync<int>(() => isar.users.putSync(newUser));
   }
 
-  /// Function to get logged in user details
+  /// Function to get logged in user details and set it in provider
   Future<User?> getUserDetails(BuildContext context) async {
-  // Future<User?> getUserDetails() async {
     // initialize isar
     final isar = await db;
 
@@ -74,8 +73,8 @@ class IsarService {
 
       if (userDoc != null) {
         log('UserDoc -- ${userDoc.firstName}');
-        
-        //  store user data in provider
+
+        // store user data in provider
         Provider.of<UserProvider>(context, listen: false).setUser(userDoc);
         log('${Provider.of<UserProvider>(context, listen: false).user?.email}');
         return userDoc;
