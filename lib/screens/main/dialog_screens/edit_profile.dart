@@ -59,6 +59,7 @@ class _EditProfileState extends State<EditProfile> {
 
         // _loadingProvider.setTrue();
 
+        // update user details on backend
         var data = await _userView.updateUserDetails(
           firstName: fName ?? '${user?.firstName}',
           lastName: lName ?? '${user?.lastName}',
@@ -73,19 +74,37 @@ class _EditProfileState extends State<EditProfile> {
 
         if (data is Map) {
           // save updated data to isar
-          await _isarService.saveUser(User()
-            ..firstName = fName ?? '${user?.firstName}'
-            ..lastName = lName ?? '${user?.lastName}'
-            ..email = email ?? '${user?.email}'
-            ..profilePicture = data['profile_pic']
-            ..id = data['id']);
+          await _isarService.saveUser(
+              context,
+              User()
+                ..firstName = fName ?? '${user?.firstName}'
+                ..lastName = lName ?? '${user?.lastName}'
+                ..email = email ?? '${user?.email}'
+                ..profilePicture = data['profile_pic']
+                ..id = data['id']
+                ..darkMode = user?.darkMode);
 
-          // get updated details from isar service
-          await _isarService.getUserDetails(context);
-
+          // update user details on isar
+          // var isarData = await _isarService.updateUserDetails(
+          //   context,
+          //   email ?? '${user?.email}',
+          //   fName ?? '${user?.firstName}',
+          //   lName ?? '${user?.lastName}',
+          // );
           setState(() {
             message = 'Successfully updated profile';
           });
+          navigatorPop(context);
+
+          // if (isarData is User) {
+          // } else {
+          //   setState(() {
+          //     message = 'Something went wrong. Try again';
+          //   });
+          // }
+
+          // get updated details from isar service
+          // await _isarService.getUserDetails(context);
         } else if (data == 400) {
           setState(() {
             message = 'This email already exists';
@@ -95,7 +114,6 @@ class _EditProfileState extends State<EditProfile> {
             message = 'Something went wrong. Try again';
           });
         }
-        navigatorPop(context);
         showSnackbar(context, message);
       }
     }

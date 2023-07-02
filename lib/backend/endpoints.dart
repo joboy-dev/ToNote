@@ -7,3 +7,4 @@ final loginEndpoint = '$baseUrl/user/login/';
 final logoutEndpoint = '$baseUrl/user/logout/';
 final userDetailsEndpoint = '$baseUrl/user/update/';
 final getUploadPictureEndpoint = '$baseUrl/user/uploadPicture/';
+final changePasswordEndpoint = '$baseUrl/user/changePassword/';

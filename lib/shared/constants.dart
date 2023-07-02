@@ -2,6 +2,14 @@
 
 import 'package:flutter/material.dart';
 
+bool? kDarkMode = false;
+
+// class Constants {
+//   Constants() {
+//     darkmode = DarkMode().isDarkMode();
+//   }
+// }
+
 // COLORS
 const kYellowColor = Color(0xFFFFC901);
 const kDarkYellowColor = Color(0xFF958446);
@@ -12,8 +20,10 @@ const kWhiteTextColor = Colors.white;
 const kGreyTextColor = Color.fromARGB(255, 126, 126, 126);
 // const kTextColor = Colors.white;
 const kButtonTextColor = Colors.white;
-const kBgColor = Color.fromARGB(255, 250, 250, 250);
+Color kBgColor =
+    kDarkMode! ? Color(0xff1E1E1E) : Color.fromARGB(255, 250, 250, 250);
 // const kBgColor = Color(0xff1E1E1E);
+// kDarkMode! ? Color(0xff1E1E1E) :
 const kRedColor = Color.fromARGB(255, 206, 15, 15);
 const kInactiveColor = Color.fromARGB(255, 199, 199, 199);
 

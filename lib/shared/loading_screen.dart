@@ -52,29 +52,20 @@ class LoadingScreenNoScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: SafeArea(
-        child: Padding(
-          padding: kAppPadding,
-          child: Center(
-            child: Column(
-              children: [
-                SizedBox(height: MediaQuery.of(context).size.height * 0.35),
-                Loader(size: 40.0, color: color),
-                SizedBox(height: 10.0),
-                Text(
-                  // _loadingTimer.isLoading
-                  // ?
-                  'Fetching data',
-                  // : _loadingTimer.message,
-                  style: kGreyNormalTextStyle,
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            ),
-          ),
+    return Column(
+      children: [
+        SizedBox(height: MediaQuery.of(context).size.height * 0.35),
+        Loader(size: 40.0, color: color),
+        SizedBox(height: 10.0),
+        Text(
+          // _loadingTimer.isLoading
+          // ?
+          'Fetching data',
+          // : _loadingTimer.message,
+          style: kGreyNormalTextStyle,
+          textAlign: TextAlign.center,
         ),
-      ),
+      ],
     );
   }
 }
@@ -111,8 +102,9 @@ class ErrorLoadingScreen extends StatelessWidget {
                       iconColor: kOrangeColor,
                       text: 'Reload',
                       onPressed: () {
-                        // navigatorPushReplacementNamed(context, LoadingDataScreen.id);
-                        navigatorPushReplacementNamed(context, BottomNavBar.id);
+                        navigatorPushReplacementNamed(
+                            context, LoadingDataScreen.id);
+                        // navigatorPushReplacementNamed(context, BottomNavBar.id);
                       },
                     ),
                   )
@@ -122,6 +114,42 @@ class ErrorLoadingScreen extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class ErrorLoadingScreenNoScaffold extends StatelessWidget {
+  ErrorLoadingScreenNoScaffold({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        SizedBox(height: MediaQuery.of(context).size.height * 0.30),
+        Icon(
+          Icons.warning,
+          size: 40.0,
+          color: kRedColor,
+        ),
+        SizedBox(height: 10.0),
+        Text(
+          'We could not fetch your data at this time. Please check your network connection or try again later.',
+          style: kGreyNormalTextStyle,
+          textAlign: TextAlign.center,
+        ),
+        SizedBox(height: 10.0),
+        Center(
+          child: IconTextButton(
+            icon: Icons.refresh,
+            iconColor: kOrangeColor,
+            text: 'Reload',
+            onPressed: () {
+              navigatorPushReplacementNamed(context, LoadingDataScreen.id);
+              // navigatorPushReplacementNamed(context, BottomNavBar.id);
+            },
+          ),
+        )
+      ],
     );
   }
 }

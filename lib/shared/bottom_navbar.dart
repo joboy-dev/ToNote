@@ -6,9 +6,14 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:isar/isar.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:provider/provider.dart';
 import 'package:todoey/entities/user.dart';
 import 'package:todoey/provider/user_provider.dart';
+import 'package:todoey/screens/main/add_notes_screen.dart';
+import 'package:todoey/screens/main/add_profile_picture_screen.dart';
+import 'package:todoey/screens/main/edit_note_screen.dart';
 import 'package:todoey/screens/main/home_screen.dart';
 import 'package:todoey/screens/main/notes_screen.dart';
 import 'package:todoey/screens/main/profile_screen.dart';
@@ -30,12 +35,12 @@ class BottomNavBar extends StatefulWidget {
 }
 
 class _BottomNavBarState extends State<BottomNavBar> {
-  LoadingTimer _loadingTimer = LoadingTimer();
+  PersistentTabController? _controller;
+  bool? _hideNavBar;
+  int _index = 0;
 
-  math.Random random = math.Random();
   DateTime now = DateTime.now();
   String greeting = '';
-  bool isChecked = false;
 
   // Function to get the appropriate greeting
   _getGreeting() {
@@ -54,66 +59,74 @@ class _BottomNavBarState extends State<BottomNavBar> {
     }
   }
 
-  int _index = 0;
+  // List of persistent nav bar items
+  List<PersistentBottomNavBarItem> _navBarsItems() => [
+        PersistentBottomNavBarItem(
+          icon: const Icon(Icons.home),
+          title: "Home",
+          activeColorPrimary: kBgColor,
+          inactiveColorPrimary: kGreyTextColor,
+          routeAndNavigatorSettings: RouteAndNavigatorSettings(
+            initialRoute: HomeScreen.id,
+            routes: {
+              AddNotesScreen.id: (context) => AddNotesScreen(),
+              EditNoteScreen.id: (context) => EditNoteScreen(),
+            },
+          ),
+        ),
+        PersistentBottomNavBarItem(
+          icon: const Icon(Icons.checklist_rounded),
+          title: "Todo",
+          activeColorPrimary: kBgColor,
+          inactiveColorPrimary: kGreyTextColor,
+        ),
+        PersistentBottomNavBarItem(
+          icon: const Icon(FontAwesomeIcons.noteSticky),
+          title: "Notes",
+          activeColorPrimary: kBgColor,
+          inactiveColorPrimary: kGreyTextColor,
+          // Adding routes
+          routeAndNavigatorSettings: RouteAndNavigatorSettings(
+            initialRoute: NotesScreen.id,
+            routes: {
+              AddNotesScreen.id: (context) => AddNotesScreen(),
+              EditNoteScreen.id: (context) => EditNoteScreen(),
+            },
+          ),
+        ),
+        PersistentBottomNavBarItem(
+          icon: const Icon(Icons.person),
+          title: "Profile",
+          activeColorPrimary: kBgColor,
+          inactiveColorPrimary: kGreyTextColor,
+          routeAndNavigatorSettings: RouteAndNavigatorSettings(
+            initialRoute: ProfileScreen.id,
+            routes: {
+              AddProfilePicture.id: (context) => AddProfilePicture(),
+            },
+          ),
+        ),
+      ];
 
-  // List of icon items
-  final List<Widget> _items = [
-    Icon(
-      Icons.home,
-      semanticLabel: 'Home',
-      size: 30.0,
-      color: kBgColor,
-    ),
-    Icon(
-      Icons.check_circle_outline,
-      semanticLabel: 'Todo',
-      size: 30.0,
-      color: kBgColor,
-    ),
-    Icon(
-      FontAwesomeIcons.noteSticky,
-      semanticLabel: 'Notes',
-      size: 30.0,
-      color: kBgColor,
-    ),
-    Icon(
-      Icons.person,
-      semanticLabel: 'Profile',
-      size: 30.0,
-      color: kBgColor,
-    )
+  List<Widget> _buildScreens() => [
+        HomeScreen(),
+        TodoScreen(),
+        NotesScreen(),
+        ProfileScreen(),
+      ];
+
+  List<Color> colors = [
+    kOrangeColor,
+    kGreenColor,
+    kYellowColor,
+    kDarkYellowColor
   ];
-
-  // List of screens
-  List screens = [HomeScreen(), TodoScreen(), NotesScreen(), ProfileScreen()];
-
-  // List of colors that will be used for each screen
-  List colors = [kOrangeColor, kGreenColor, kYellowColor, kDarkYellowColor];
-
-  // create a list of navigator keys
-  List<GlobalKey<NavigatorState>> navigatorKeys = [
-    GlobalKey<NavigatorState>(),
-    GlobalKey<NavigatorState>(),
-    GlobalKey<NavigatorState>(),
-    GlobalKey<NavigatorState>(),
-  ];
-
-  // widget function to monitor changes to screens in the navbar in case if
-  // a button is tapped off the navbar stage
-  Widget _buildOffstageNavigator(int index) {
-    return Offstage(
-      offstage: _index != index,
-      child: Navigator(
-        key: navigatorKeys[index],
-        onGenerateRoute: (routeSettings) =>
-            MaterialPageRoute(builder: (_) => screens[index]),
-      ),
-    );
-  }
 
   @override
   void initState() {
     _getGreeting();
+    _controller = PersistentTabController();
+    _hideNavBar = false;
     super.initState();
   }
 
@@ -123,57 +136,61 @@ class _BottomNavBarState extends State<BottomNavBar> {
 
     log('Bottom nav bar test -- ${user?.firstName}');
 
-    // if (user == null) {
-    //   return LoadingScreen(color: kOrangeColor);
-    // } else {
-    List<CustomAppBar> appBars = [
-      CustomAppBar(
-        textColor: kOrangeColor,
-        appBarText: '$greeting, ${user?.firstName}',
-        imageUrl: user?.profilePicture,
-      ),
-      CustomAppBar(
-        textColor: kGreenColor,
-        appBarText: '$greeting, ${user?.firstName}',
-        imageUrl: user?.profilePicture,
-      ),
-      CustomAppBar(
-        textColor: kYellowColor,
-        appBarText: '$greeting, ${user?.firstName}',
-        imageUrl: user?.profilePicture,
-      ),
-      CustomAppBar(
-        textColor: kDarkYellowColor,
-        otherAppBarText: 'My Profile',
-      ),
-    ];
+    List<PreferredSizeWidget> appBars() => [
+          CustomAppBar(
+            textColor: kOrangeColor,
+            appBarText: '$greeting, ${user?.firstName}',
+            imageUrl: user?.profilePicture,
+          ),
+          CustomAppBar(
+            textColor: kGreenColor,
+            appBarText: '$greeting, ${user?.firstName}',
+            imageUrl: user?.profilePicture,
+          ),
+          CustomAppBar(
+            textColor: kYellowColor,
+            appBarText: '$greeting, ${user?.firstName}',
+            imageUrl: user?.profilePicture,
+          ),
+          CustomAppBar(
+            textColor: kDarkYellowColor,
+            otherAppBarText: 'My Profile',
+          ),
+        ];
+
     return Scaffold(
-      appBar: appBars[_index],
-      body: Stack(
-        children: [
-          _buildOffstageNavigator(0),
-          _buildOffstageNavigator(1),
-          _buildOffstageNavigator(2),
-          _buildOffstageNavigator(3),
-        ],
-      ),
-      bottomNavigationBar: CurvedNavigationBar(
-        items: _items,
-        index: _index,
-        color: colors[_index],
-        backgroundColor: kBgColor,
-        height: 75.0,
-        animationCurve: Curves.easeIn,
-        animationDuration: Duration(milliseconds: 300),
-        onTap: (value) {
+      appBar: appBars()[_index],
+      body: PersistentTabView(
+        context,
+        controller: _controller,
+        screens: _buildScreens(),
+        items: _navBarsItems(),
+        resizeToAvoidBottomInset: true,
+        navBarHeight: MediaQuery.of(context).viewInsets.bottom > 0
+            ? 0.0
+            : kBottomNavigationBarHeight,
+        bottomScreenMargin: 0,
+        backgroundColor: colors[_index],
+        hideNavigationBar: _hideNavBar,
+        decoration: NavBarDecoration(
+          colorBehindNavBar: kGreyTextColor,
+        ),
+        itemAnimationProperties: const ItemAnimationProperties(
+          duration: Duration(milliseconds: 400),
+          curve: Curves.ease,
+        ),
+        screenTransitionAnimation: const ScreenTransitionAnimation(
+          animateTabTransition: true,
+          duration: Duration(milliseconds: 400),
+          curve: Curves.ease,
+        ),
+        navBarStyle: NavBarStyle.style11,
+        onItemSelected: (value) {
           setState(() {
-            // assign current index the value in the on tap function
             _index = value;
           });
         },
       ),
-      // body: screens[_index],
     );
   }
-  // }
 }

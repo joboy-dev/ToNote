@@ -1,15 +1,16 @@
 import 'package:isar/isar.dart';
 import 'package:todoey/entities/user.dart';
 
-part 'todo.g.dart';
+part 'note.g.dart';
 
 @Collection()
-class Todo {
+class Note {
   Id? id;
   String? title;
-  bool? isCompleted;
-  DateTime? expire;
+  String? content;
+  DateTime? created;
+  DateTime? updated;
 
-  @Backlink(to: 'todos')
+  @Backlink(to: 'notes')
   final user = IsarLinks<User>();
 }

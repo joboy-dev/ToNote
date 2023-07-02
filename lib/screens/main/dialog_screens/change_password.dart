@@ -50,52 +50,50 @@ class _ChangePasswordState extends State<ChangePassword> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider>(context).user;
+
     validateForm() async {
       if (_formKey.currentState!.validate()) {
-        setState(() {
-          _isLoading = true;
-        });
+        if (newPword == newPword2) {
+          if (oldPword != newPword) {
+            setState(() {
+              _isLoading = true;
+            });
 
-        // if
+            var data = await _userView.changePassword(
+                email: '${user?.email}',
+                olaPassword: oldPword,
+                newPassword: newPword,
+                confirmPassword: newPword2);
 
-        // var data = await _userView.updateUserDetails(
-        //   firstName: fName ?? '${user?.firstName}',
-        //   lastName: lName ?? '${user?.lastName}',
-        //   email: email ?? '${user?.email}',
-        // );
+            setState(() {
+              _isLoading = false;
+            });
 
-        var data;
-
-        setState(() {
-          _isLoading = false;
-        });
-
-        if (data is Map) {
-          // save updated data to isar
-          // await _isarService.saveUser(User()
-          //   ..firstName = fName ?? '${user?.firstName}'
-          //   ..lastName = lName ?? '${user?.lastName}'
-          //   ..email = email ?? '${user?.email}'
-          //   ..profilePicture = data['profile_pic']
-          //   ..id = data['id']);
-
-          // get updated details from isar service
-          await _isarService.getUserDetails(context);
-
-          setState(() {
-            message = 'Successfully updated password';
-            navigatorPop(context);
-          });
-        } else if (data == 400) {
-          setState(() {
-            message = 'Old password incorrect. Try again';
-          });
+            if (data is Map) {
+              setState(() {
+                message = 'Successfully updated password';
+                navigatorPop(context);
+                showSnackbar(context, message);
+              });
+            } else if (data == 400) {
+              setState(() {
+                message = 'Old password incorrect. Try again';
+              });
+            } else {
+              setState(() {
+                message = 'Something went wrong. Try again';
+              });
+            }
+          } else {
+            setState(() {
+              message = 'Your old and new password cannot be the same';
+            });
+          }
         } else {
           setState(() {
-            message = 'Something went wrong. Try again';
+            message = 'Your new password doesn\'t metch. Try again.';
           });
         }
-        showSnackbar(context, message);
       }
     }
 
@@ -194,6 +192,13 @@ class _ChangePasswordState extends State<ChangePassword> {
                 _isLoading
                     ? Loader(size: 20.0, color: kDarkYellowColor)
                     : SizedBox(height: 0.0),
+
+                message.isEmpty
+                    ? SizedBox(height: 0.0)
+                    : Text(
+                        message,
+                        style: kNormalTextStyle.copyWith(color: kRedColor),
+                      ),
               ],
             ),
           );

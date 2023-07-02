@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 import 'package:todoey/backend/user/user_view.dart';
 import 'package:todoey/entities/user.dart';
 import 'package:todoey/provider/user_provider.dart';
@@ -54,13 +55,13 @@ class _AddProfilePictureState extends State<AddProfilePicture>
   @override
   void initState() {
     _controller1 =
-        AnimationController(vsync: this, duration: kAnimationDuration3);
+        AnimationController(vsync: this, duration: kAnimationDuration1);
 
     _controller2 =
-        AnimationController(vsync: this, duration: kAnimationDuration3);
+        AnimationController(vsync: this, duration: kAnimationDuration1);
 
     _controller3 =
-        AnimationController(vsync: this, duration: kAnimationDuration3);
+        AnimationController(vsync: this, duration: kAnimationDuration1);
 
     _controller1.forward().whenCompleteOrCancel(() {
       _controller2.forward().whenCompleteOrCancel(() {
@@ -91,237 +92,173 @@ class _AddProfilePictureState extends State<AddProfilePicture>
     super.dispose();
   }
 
-  // function to select image from gallery
-  Future selectImageFromGallery() async {
-    final XFile? image =
-        await _imagePicker.pickImage(source: ImageSource.gallery);
-
-    if (_image != null) {
-      // set image to selected image
-      setState(() {
-        // convert XFile into a File object
-        _image = File(image!.path);
-        log('$_image');
-      });
-
-      showDialogBox(
-        context: context,
-        dismisible: false,
-        screen: UploadProfilePicture(
-          image: _image ?? _userProvider.user!.profilePicture,
-        ),
-      );
-    }
-  }
-
-  // functio n to select image through camera
-  Future selectImageFromCamera() async {
-    final XFile? image =
-        await _imagePicker.pickImage(source: ImageSource.camera);
-
-    if (_image != null) {
-      // set image to selected image
-      setState(() {
-        // convert XFile into a File object
-        _image = File(image!.path);
-        log('$_image');
-      });
-
-      showDialogBox(
-        context: context,
-        dismisible: false,
-        screen: UploadProfilePicture(
-          image: _image ?? _userProvider.user!.profilePicture,
-        ),
-      );
-    }
-  }
-
-  // _uploadPicture() async {
-  //   var pic = await _userView.uploadUserProfilePicture(_image!);
-
-  //   User user = User(
-  //     firstName: _userProvider.user!.firstName,
-  //     lastName: _userProvider.user!.lastName,
-  //     email: _userProvider.user!.email,
-  //     profilePicture: pic['profile_pic'],
-  //   );
-
-  //   // set user details in provider so you can make use of it on the frontend
-  //   _userProvider.setUser(user);
-
-  //   // check if user provider worka
-  //   log('User Provider -- ${_userProvider.user!.profilePicture}');
-  // }
-
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      // future: _uploadPicture(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
-          if (snapshot.hasError) {
-            log('Snapshot Error -- ${snapshot.error}');
-            return Scaffold(
-              body: SafeArea(
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Loader(
-                        size: 40.0,
-                        color: kYellowColor,
+    final user = Provider.of<UserProvider?>(context)?.user;
+    
+    // function to select image from gallery
+    Future selectImageFromGallery() async {
+      final XFile? image =
+          await _imagePicker.pickImage(source: ImageSource.gallery);
+
+      if (_image != null) {
+        // set image to selected image
+        setState(() {
+          // convert XFile into a File object
+          _image = File(image!.path);
+          log('$_image');
+        });
+
+        showDialogBox(
+          context: context,
+          dismisible: false,
+          screen: UploadProfilePicture(
+            image: _image ?? user?.profilePicture,
+          ),
+        );
+      }
+    }
+
+    // functio n to select image through camera
+    Future selectImageFromCamera() async {
+      final XFile? image =
+          await _imagePicker.pickImage(source: ImageSource.camera);
+
+      if (_image != null) {
+        // set image to selected image
+        setState(() {
+          // convert XFile into a File object
+          _image = File(image!.path);
+          log('$_image');
+        });
+
+        showDialogBox(
+          context: context,
+          dismisible: false,
+          screen: UploadProfilePicture(
+            image: _image ?? user?.profilePicture,
+          ),
+        );
+      }
+    }
+
+    return Scaffold(
+      // appBar: AppBar(
+      //   backgroundColor: kBgColor,
+      //   elevation: 0.0,
+      //   shape: RoundedRectangleBorder(
+      //     borderRadius: BorderRadius.only(
+      //       bottomLeft: Radius.circular(10.0),
+      //       bottomRight: Radius.circular(10.0),
+      //     ),
+      //   ),
+      //   iconTheme: IconThemeData(color: kTextColor),
+      // ),
+      body: SingleChildScrollView(
+        child: SafeArea(
+          child: Padding(
+            padding: kAppPadding,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                FadeTransition(
+                  opacity: _animation1,
+                  child: Text(
+                    'Add your profile picture.\n\nIf you do not want to perform this action, you can click the skip button below.',
+                    style: kGreyNormalTextStyle,
+                    textAlign: TextAlign.justify,
+                  ),
+                ),
+                SizedBox(height: 20.0),
+                FadeTransition(
+                  opacity: _animation2,
+                  child: Center(
+                    child: GestureDetector(
+                      onTap: () {
+                        showDialogBox(
+                          context: context,
+                          dismisible: false,
+                          screen: UploadProfilePicture(image: _image!),
+                        );
+                      },
+                      child: CircleAvatar(
+                        backgroundColor: kGreyTextColor,
+                        backgroundImage:
+                            AssetImage('assets/images/default.jpg'),
+                        foregroundImage:
+                            NetworkImage('${user?.profilePicture}'),
+                        radius: 120.0,
                       ),
-                      Text(
-                        'There was an issue while retrieving your data',
-                        style: kGreyNormalTextStyle,
-                        textAlign: TextAlign.center,
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            );
-          } else {
-            return Scaffold(
-              appBar: AppBar(
-                backgroundColor: kBgColor,
-                elevation: 2.0,
-                centerTitle: true,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(10.0),
-                    bottomRight: Radius.circular(10.0),
-                  ),
-                ),
-                title: Column(
-                  children: [
-                    SizedBox(height: 30.0),
-                    Text(
-                      'ADD PROFILE PICTURE',
-                      style: kAppBarTextStyle,
                     ),
-                    SizedBox(height: 30.0),
-                  ],
+                  ),
                 ),
-                iconTheme: IconThemeData(color: kTextColor),
-              ),
-              body: SingleChildScrollView(
-                child: SafeArea(
-                  child: Padding(
-                    padding: kAppPadding,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.end,
+                SizedBox(height: 20.0),
+                FadeTransition(
+                  opacity: _animation2,
+                  child: Text(
+                    'Select from the two options below on how you want to add your profile picture.',
+                    style: kGreyNormalTextStyle,
+                    textAlign: TextAlign.justify,
+                  ),
+                ),
+                SizedBox(height: 30.0),
+
+                // Buttons
+                SlideTransition(
+                  position: slideTransitionAnimation(
+                      dx: 2, dy: 0, animation: _animation3),
+                  child: FadeTransition(
+                    opacity: _animation3,
+                    child: Row(
                       children: [
-                        FadeTransition(
-                          opacity: _animation1,
-                          child: Text(
-                            'Add your profile picture.\n\nIf you do not want to perform this action, you can click the skip button below.',
-                            style: kGreyNormalTextStyle,
-                            textAlign: TextAlign.justify,
+                        Expanded(
+                          child: ButtonIcon(
+                            buttonText: 'Gallery',
+                            onPressed: () {
+                              selectImageFromGallery();
+                            },
+                            buttonColor: kYellowColor,
+                            icon: Icons.photo_library,
                           ),
                         ),
-                        SizedBox(height: 20.0),
-                        FadeTransition(
-                          opacity: _animation2,
-                          child: Center(
-                            child: GestureDetector(
-                              onTap: () {
-                                showDialogBox(
-                                  context: context,
-                                  dismisible: false,
-                                  screen: UploadProfilePicture(image: _image!),
-                                );
-                              },
-                              child: CircleAvatar(
-                                backgroundColor: kGreyTextColor,
-                                backgroundImage:
-                                    AssetImage('assets/images/default.jpg'),
-                                foregroundImage: FileImage(_image!),
-                                radius: 120.0,
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 20.0),
-                        FadeTransition(
-                          opacity: _animation2,
-                          child: Text(
-                            'Select from the two options below on how you want to add your profile picture.',
-                            style: kGreyNormalTextStyle,
-                            textAlign: TextAlign.justify,
-                          ),
-                        ),
-                        SizedBox(height: 30.0),
-
-                        // Buttons
-                        SlideTransition(
-                          position: slideTransitionAnimation(
-                              dx: 2, dy: 0, animation: _animation3),
-                          child: FadeTransition(
-                            opacity: _animation3,
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: ButtonIcon(
-                                    buttonText: 'Gallery',
-                                    onPressed: () {
-                                      selectImageFromGallery();
-                                    },
-                                    buttonColor: kYellowColor,
-                                    icon: Icons.photo_library,
-                                  ),
-                                ),
-                                SizedBox(width: 10.0),
-                                Expanded(
-                                  child: ButtonIcon(
-                                    buttonText: 'Camera',
-                                    onPressed: () {
-                                      selectImageFromCamera();
-                                    },
-                                    buttonColor: kGreenColor,
-                                    icon: FontAwesomeIcons.camera,
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-
-                        SizedBox(height: 10.0),
-
-                        // Skip button
-                        TextButton(
-                          onPressed: () {
-                            navigatorPushReplacementNamed(context, Login.id);
-                          },
-                          style: TextButton.styleFrom(),
-                          child: Text(
-                            'Skip>>',
-                            style: kNormalTextStyle.copyWith(
-                              color: kDarkYellowColor,
-                              fontWeight: FontWeight.bold,
-                            ),
+                        SizedBox(width: 10.0),
+                        Expanded(
+                          child: ButtonIcon(
+                            buttonText: 'Camera',
+                            onPressed: () {
+                              selectImageFromCamera();
+                            },
+                            buttonColor: kGreenColor,
+                            icon: FontAwesomeIcons.camera,
                           ),
                         )
                       ],
                     ),
                   ),
                 ),
-              ),
-            );
-          }
-        } else {
-          return Center(
-            child: Loader(
-              size: 40.0,
-              color: kYellowColor,
+
+                SizedBox(height: 10.0),
+
+                // Skip button
+                // TextButton(
+                //   onPressed: () {
+                //     navigatorPushReplacementNamed(context, Login.id);
+                //   },
+                //   style: TextButton.styleFrom(),
+                //   child: Text(
+                //     'Skip>>',
+                //     style: kNormalTextStyle.copyWith(
+                //       color: kDarkYellowColor,
+                //       fontWeight: FontWeight.bold,
+                //     ),
+                //   ),
+                // )
+              ],
             ),
-          );
-        }
-      },
+          ),
+        ),
+      ),
     );
   }
 }

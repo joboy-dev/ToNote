@@ -55,7 +55,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 fontSize: 17.0,
               ),
             ),
-      elevation: 2.0,
+      elevation: 0,
       centerTitle: false,
       foregroundColor: kBgColor,
       backgroundColor: kBgColor,

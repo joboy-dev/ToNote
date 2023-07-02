@@ -30,6 +30,7 @@ import 'provider/user_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   runApp(
     MultiProvider(
       providers: [
@@ -46,6 +47,7 @@ void main() async {
 
 class ToDoEy extends StatelessWidget {
   const ToDoEy({super.key});
+
   @override
   Widget build(BuildContext context) {
     return FutureProvider<User?>.value(
@@ -59,7 +61,6 @@ class ToDoEy extends StatelessWidget {
           title: 'ToDo-Ey',
           theme: ThemeData(
             scaffoldBackgroundColor: kBgColor,
-            timePickerTheme: TimePickerThemeData(),
           ),
           initialRoute: Onboarding.id,
           routes: {
@@ -69,14 +70,7 @@ class ToDoEy extends StatelessWidget {
             SignUp.id: (context) => SignUp(),
             Login.id: (context) => Login(),
             LoadingDataScreen.id: (context) => LoadingDataScreen(),
-            HomeScreen.id: (context) => HomeScreen(),
-            TodoScreen.id: (context) => TodoScreen(),
-            NotesScreen.id: (context) => NotesScreen(),
-            ProfileScreen.id: (context) => ProfileScreen(),
-            AddProfilePicture.id: (context) => AddProfilePicture(),
             BottomNavBar.id: (context) => BottomNavBar(),
-            AddNotesScreen.id: (context) => AddNotesScreen(),
-            EditNoteScreen.id: (context) => EditNoteScreen(),
           },
         ));
   }

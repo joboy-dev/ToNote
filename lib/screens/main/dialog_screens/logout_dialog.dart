@@ -30,7 +30,6 @@ class _LogoutDialogState extends State<LogoutDialog> {
     setState(() {
       _isLoading = true;
     });
-    await IsarService().removeUser();
     var data = await _userView.logout();
     setState(() {
       _isLoading = false;
@@ -42,7 +41,7 @@ class _LogoutDialogState extends State<LogoutDialog> {
       navigatorPushReplacementNamed(context, GetStarted.id);
     } else {
       setState(() {
-        message = 'An error occured while signing you out. Try again later';
+        message = 'An error occured while signing you out. Try again .';
       });
       navigatorPop(context);
     }

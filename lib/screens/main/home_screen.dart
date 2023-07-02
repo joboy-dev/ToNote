@@ -51,167 +51,168 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<User?>(
-      builder: (context, user, _) {
-        return user == null
-            ? LoadingScreen(color: kOrangeColor)
-            : Scaffold(
-                backgroundColor: kBgColor,
-                body: SingleChildScrollView(
-                  child: RefreshIndicator(
-                    onRefresh: () async {},
-                    child: SafeArea(
-                      child: Padding(
-                        padding: kAppPadding,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
+    // return Consumer<User?>(
+    //   builder: (context, user, _) {
+    final user = Provider.of<UserProvider?>(context)?.user;
+    return user == null
+        ? ErrorLoadingScreen()
+        : Scaffold(
+            backgroundColor: kBgColor,
+            body: SingleChildScrollView(
+              child: RefreshIndicator(
+                onRefresh: () async {},
+                child: SafeArea(
+                  child: Padding(
+                    padding: kAppPadding,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Main Body
+                        Row(
                           children: [
-                            // Main Body
-                            Row(
-                              children: [
-                                Expanded(
-                                  flex: 2,
-                                  child: Text(
-                                    'My Latest Todos',
-                                    style: kAppBarTextStyle.copyWith(
-                                      color: kGreyTextColor,
-                                      fontSize: 17.0,
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(width: 15.0),
-                                Expanded(
-                                  flex: 1,
-                                  child: IconTextButton(
-                                    text: 'New',
-                                    fontWeight: FontWeight.bold,
-                                    icon: FontAwesomeIcons.plus,
-                                    iconColor: kOrangeColor,
-                                    textColor: kOrangeColor,
-                                    fontSize: 17.0,
-                                    gap: 20.0,
-                                    onPressed: () {
-                                      showDialogBox(
-                                        context: context,
-                                        dismisible: false,
-                                        screen: AddTodoScreen(),
-                                      );
-                                    },
-                                  ),
-                                ),
-                              ],
-                            ),
-
-                            SizedBox(height: 5.0),
-                            Divider(thickness: 1, color: kOrangeColor),
-                            SizedBox(height: 10.0),
-
-                            // Todos
-                            RefreshIndicator(
-                              onRefresh: () async {},
-                              child: SingleChildScrollView(
-                                child: SizedBox(
-                                  height: 210.0,
-                                  child: ListView(
-                                    children: [
-                                      Text('Todos'),
-                                      Text('Todos'),
-                                      Text('Todos'),
-                                      Text('Todos'),
-                                      Text('Todos'),
-                                      Text('Todos'),
-                                      Text('Todos'),
-                                      Text('Todos'),
-                                      Text('Todos'),
-                                      Text('Todos'),
-                                      Text('Todos'),
-                                      Text('Todos'),
-                                      Text('Todos'),
-                                      Text('Todos'),
-                                      Text('Todos'),
-                                      Text('Todos'),
-                                    ],
-                                  ),
+                            Expanded(
+                              flex: 2,
+                              child: Text(
+                                'My Latest Todos',
+                                style: kAppBarTextStyle.copyWith(
+                                  color: kGreyTextColor,
+                                  fontSize: 17.0,
                                 ),
                               ),
                             ),
-
-                            SizedBox(height: 20.0),
-
-                            // NOTES
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Expanded(
-                                  flex: 2,
-                                  child: Text(
-                                    'My Latest Notes',
-                                    style: kAppBarTextStyle.copyWith(
-                                      color: kGreyTextColor,
-                                      fontSize: 17.0,
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(width: 15.0),
-                                Expanded(
-                                  flex: 1,
-                                  child: IconTextButton(
-                                    text: 'New',
-                                    fontWeight: FontWeight.bold,
-                                    icon: FontAwesomeIcons.plus,
-                                    iconColor: kOrangeColor,
-                                    textColor: kOrangeColor,
-                                    fontSize: 17.0,
-                                    gap: 20.0,
-                                    onPressed: () {
-                                      navigatorPushReplacementNamed(
-                                          context, AddNotesScreen.id);
-                                    },
-                                  ),
-                                ),
-                              ],
-                            ),
-
-                            SizedBox(height: 5.0),
-                            Divider(thickness: 1, color: kOrangeColor),
-                            SizedBox(height: 10.0),
-
-                            // Notes
-                            SingleChildScrollView(
-                              child: SizedBox(
-                                height: 210.0,
-                                child: ListView(
-                                  children: [
-                                    Text('Todos'),
-                                    Text('Todos'),
-                                    Text('Todos'),
-                                    Text('Todos'),
-                                    Text('Todos'),
-                                    Text('Todos'),
-                                    Text('Todos'),
-                                    Text('Todos'),
-                                    Text('Todos'),
-                                    Text('Todos'),
-                                    Text('Todos'),
-                                    Text('Todos'),
-                                    Text('Todos'),
-                                    Text('Todos'),
-                                    Text('Todos'),
-                                    Text('Todos'),
-                                  ],
-                                ),
+                            SizedBox(width: 15.0),
+                            Expanded(
+                              flex: 1,
+                              child: IconTextButton(
+                                text: 'New',
+                                fontWeight: FontWeight.bold,
+                                icon: FontAwesomeIcons.plus,
+                                iconColor: kOrangeColor,
+                                textColor: kOrangeColor,
+                                fontSize: 17.0,
+                                gap: 20.0,
+                                onPressed: () {
+                                  showDialogBox(
+                                    context: context,
+                                    dismisible: false,
+                                    screen: AddTodoScreen(),
+                                  );
+                                },
                               ),
                             ),
-                            SizedBox(height: 20.0),
                           ],
                         ),
-                      ),
+
+                        SizedBox(height: 5.0),
+                        Divider(thickness: 1, color: kOrangeColor),
+                        SizedBox(height: 10.0),
+
+                        // Todos
+                        RefreshIndicator(
+                          onRefresh: () async {},
+                          child: SingleChildScrollView(
+                            child: SizedBox(
+                              height: 210.0,
+                              child: ListView(
+                                children: [
+                                  Text('Todos'),
+                                  Text('Todos'),
+                                  Text('Todos'),
+                                  Text('Todos'),
+                                  Text('Todos'),
+                                  Text('Todos'),
+                                  Text('Todos'),
+                                  Text('Todos'),
+                                  Text('Todos'),
+                                  Text('Todos'),
+                                  Text('Todos'),
+                                  Text('Todos'),
+                                  Text('Todos'),
+                                  Text('Todos'),
+                                  Text('Todos'),
+                                  Text('Todos'),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+
+                        SizedBox(height: 20.0),
+
+                        // NOTES
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Expanded(
+                              flex: 2,
+                              child: Text(
+                                'My Latest Notes',
+                                style: kAppBarTextStyle.copyWith(
+                                  color: kGreyTextColor,
+                                  fontSize: 17.0,
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 15.0),
+                            Expanded(
+                              flex: 1,
+                              child: IconTextButton(
+                                text: 'New',
+                                fontWeight: FontWeight.bold,
+                                icon: FontAwesomeIcons.plus,
+                                iconColor: kOrangeColor,
+                                textColor: kOrangeColor,
+                                fontSize: 17.0,
+                                gap: 20.0,
+                                onPressed: () {
+                                  navigatorPushNamed(
+                                      context, AddNotesScreen.id);
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+
+                        SizedBox(height: 5.0),
+                        Divider(thickness: 1, color: kOrangeColor),
+                        SizedBox(height: 10.0),
+
+                        // Notes
+                        SingleChildScrollView(
+                          child: SizedBox(
+                            height: 210.0,
+                            child: ListView(
+                              children: [
+                                Text('Todos'),
+                                Text('Todos'),
+                                Text('Todos'),
+                                Text('Todos'),
+                                Text('Todos'),
+                                Text('Todos'),
+                                Text('Todos'),
+                                Text('Todos'),
+                                Text('Todos'),
+                                Text('Todos'),
+                                Text('Todos'),
+                                Text('Todos'),
+                                Text('Todos'),
+                                Text('Todos'),
+                                Text('Todos'),
+                                Text('Todos'),
+                              ],
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 20.0),
+                      ],
                     ),
                   ),
                 ),
-              );
-      },
-    );
+              ),
+            ),
+          );
+    //   },
+    // );
   }
 }

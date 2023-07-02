@@ -85,4 +85,23 @@ class UserView {
 
     return data;
   }
+
+  /// FUNCTION TO CHANGE USER PASSWORD
+  changePassword({
+    required String email,
+    required String olaPassword,
+    required String newPassword,
+    required String confirmPassword,
+  }) async {
+    Map<String, dynamic> jsonData = {
+      "email": email,
+      "password": olaPassword,
+      "new_password": newPassword,
+      "confirm_password": confirmPassword,
+    };
+    
+    var data = await _userAPI.changePassword(jsonData);
+
+    return data;
+  }
 }

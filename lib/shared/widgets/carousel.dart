@@ -19,14 +19,14 @@ class CarouselContainer extends StatelessWidget {
             decoration: BoxDecoration(
               // color: Colors.white,
               borderRadius: BorderRadius.circular(10.0),
-              boxShadow: [
-                BoxShadow(
-                  blurRadius: 50.0,
-                  color: Color.fromARGB(255, 177, 177, 177).withOpacity(0.5),
-                  spreadRadius: 10.0,
-                  offset: Offset(0, 3),
-                ),
-              ],
+              // boxShadow: [
+              //   BoxShadow(
+              //     blurRadius: 50.0,
+              //     color: Color.fromARGB(255, 177, 177, 177).withOpacity(0.5),
+              //     spreadRadius: 10.0,
+              //     offset: Offset(0, 3),
+              //   ),
+              // ],
             ),
             height: 350.0,
             child: Image(

@@ -1,6 +1,8 @@
 import 'package:isar/isar.dart';
 import 'package:todoey/entities/todo.dart';
 
+import 'note.dart';
+
 part 'user.g.dart';
 
 /// THIS IS USED IN SIGNING UP OF THE USER
@@ -34,12 +36,16 @@ class UserModel {
 @Collection()
 class User {
   // Id id = Isar.autoIncrement;
-  int? id;
+  Id? id;
   String? firstName;
   String? lastName;
   String? email;
   String? profilePicture;
+  bool? darkMode;
+
+  // Foreign keys
   final todos = IsarLinks<Todo>();
+  final notes = IsarLinks<Note>();
 
   // Script to run for build_runner
   // flutter pub run build_runner build --delete-conflicting-outputs

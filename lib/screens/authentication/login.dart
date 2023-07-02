@@ -124,21 +124,30 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
         var userData = await _userView.getUserDetails();
         var userPic = await _userView.getUserProfilePicture();
 
-        // Save user datails to iser service
-        await _isarService.saveUser(User()
-          ..id = userData['id']
-          ..firstName = userData['first_name']
-          ..lastName = userData['last_name']
-          ..email = userData['email']
-          ..profilePicture = userPic['profile_pic']);
+        if (userData is Map && userPic is Map) {
+          // Save user datails to iser service
+          await _isarService.saveUser(context, User()
+            ..id = userData['id']
+            ..firstName = userData['first_name']
+            ..lastName = userData['last_name']
+            ..email = userData['email']
+            ..profilePicture = userPic['profile_pic']
+            ..darkMode = false
+            );
 
-        // await _isarService.getUserDetails();
+          // await _isarService.getUserDetails();
 
-        setState(() {
-          _isLoading = false;
-          message = 'Welcome $email.';
-        });
-        navigatorPushReplacementNamed(context, LoadingDataScreen.id);
+          setState(() {
+            _isLoading = false;
+            message = 'Welcome $email.';
+          });
+          navigatorPushReplacementNamed(context, LoadingDataScreen.id);
+        } else {
+          setState(() {
+            _isLoading = false;
+            message = 'Something went wrong. Try again.';
+          });
+        }
       } else if (data == 400) {
         setState(() {
           message =

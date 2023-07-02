@@ -368,4 +368,53 @@ class UserAPI {
       return null;
     }
   }
+
+  /// FUNCTION TO HANDLE CHANGE PASSWORD RESPONSES
+  Future changePassword(dynamic data) async {
+    try {
+      // get user token
+      var token = await tokenStorage.readToken();
+
+      headers = {
+        'Authorization': 'Token $token',
+        'Content-Type': 'application/json',
+      };
+
+      var response = await http.patch(
+        Uri.parse(changePasswordEndpoint),
+        headers: headers,
+        body: jsonEncode(data),
+      );
+
+      var responseData = jsonDecode(response.body);
+
+      log("STATUS CODE -- ${response.statusCode}");
+
+      if (response.statusCode == 200) {
+        log('-----------------RESPONSE 200 DATA-----------------');
+        log('$responseData');
+
+        return responseData;
+      } else if (response.statusCode == 400) {
+        log('-----------------RESPONSE 400 DATA-----------------');
+        log('$responseData');
+
+        return response.statusCode;
+      } else if (response.statusCode == 401) {
+        log('-----------------RESPONSE 401 DATA-----------------');
+        log('$responseData');
+
+        return response.statusCode;
+      } else {
+        log('Request Failed');
+        return null;
+      }
+
+    } catch (e) {
+      log('---------EXCEPTION THROWN------------');
+      log('Changing user password error -- ${e.toString()}');
+
+      return null;
+    }
+  }
 }
