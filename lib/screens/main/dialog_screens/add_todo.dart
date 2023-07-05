@@ -60,12 +60,6 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
 
       // if (data is Map) {
       if (data is Todo) {
-        // var isarUser = await IsarService().getUserDetails(context);
-
-        // var userData = await _userView.getUserDetails();
-
-        // if (isarUser is User) {
-        // save data in isar db
         await IsarService().saveTodo(data, context);
 
         setState(() {
