@@ -5,12 +5,16 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:todoey/backend/todo/todo_view.dart';
 import 'package:todoey/entities/user.dart';
+import 'package:todoey/provider/device_prefs_provider.dart';
 import 'package:todoey/provider/user_provider.dart';
 import 'package:todoey/screens/main/add_profile_picture_screen.dart';
 import 'package:todoey/screens/main/dialog_screens/edit_profile.dart';
 import 'package:todoey/screens/main/dialog_screens/logout_dialog.dart';
+import 'package:todoey/screens/main/dialog_screens/view_profile_picture.dart';
 import 'package:todoey/services/isar_service.dart';
+import 'package:todoey/services/user_preferences.dart';
 import 'package:todoey/shared/constants.dart';
 import 'package:todoey/shared/loading_screen.dart';
 import 'package:todoey/shared/navigator.dart';
@@ -30,37 +34,17 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  // bool? _darkMode;
-  @override
-  void initState() {
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
-    log('ProfileScreen dark mode constant $kDarkMode');
     final user = Provider.of<UserProvider?>(context)?.user;
-    kDarkMode = user?.darkMode;
+    kDarkMode = Provider.of<DevicePrefsProvider>(context).darkMode;
+    // kDarkMode = Prefs().isDarkMode();
+    log('ProfileScreen dark mode constant $kDarkMode');
 
     toggleTheme() async {
-      var theme = await IsarService().saveUser(
-          context,
-          User()
-            ..firstName = '${user?.firstName}'
-            ..lastName = '${user?.lastName}'
-            ..email = '${user?.email}'
-            ..profilePicture = user?.profilePicture
-            ..id = user?.id
-            ..darkMode = !kDarkMode!);
+      await Prefs().setDarkMode(context, value: !kDarkMode);
 
-      if (theme is User) {
-        // setState(() {
-        //   kDarkMode = kDarkMode;
-        // });
-        showSnackbar(context, 'Theme updated.');
-      } else {
-        showSnackbar(context, 'An error occured. Try again.');
-      }
+      showSnackbar(context, 'Theme updated.');
     }
 
     log('$kDarkMode');
@@ -76,13 +60,46 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      Row(
+                        children: [
+                          Expanded(flex: 2, child: SizedBox()),
+                          Expanded(
+                            flex: 1,
+                            child: IconTextButton(
+                              text: 'Logout',
+                              fontSize: 12.0,
+                              fontWeight: FontWeight.bold,
+                              icon: Icons.logout_rounded,
+                              iconColor: kRedColor,
+                              textColor: kRedColor,
+                              onPressed: () {
+                                showDialogBox(
+                                  context: context,
+                                  screen: LogoutDialog(),
+                                  dismisible: true,
+                                );
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 10.0),
+
                       // Profile picture container
                       Center(
-                        child: CircleAvatar(
-                          backgroundColor: kDarkYellowColor.withOpacity(0.5),
-                          foregroundImage:
-                              NetworkImage('${user.profilePicture}'),
-                          radius: 70.0,
+                        child: GestureDetector(
+                          onTap: () {
+                            showDialogBox(
+                              context: context,
+                              screen: ViewProfilePictureScreen(),
+                            );
+                          },
+                          child: CircleAvatar(
+                            backgroundColor: kDarkYellowColor.withOpacity(0.5),
+                            foregroundImage:
+                                NetworkImage('${user.profilePicture}'),
+                            radius: 70.0,
+                          ),
                         ),
                       ),
                       SizedBox(height: 20.0),
@@ -92,8 +109,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Text('${user.firstName}, ${user.lastName}',
-                                style: kNormalTextStyle),
+                            Text(
+                              '${user.firstName}, ${user.lastName}',
+                              style: kGreyNormalTextStyle.copyWith(
+                                fontWeight: FontWeight.w900,
+                              ),
+                            ),
                             SizedBox(height: 10.0),
                             Text(
                               '${user.email}',
@@ -123,7 +144,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
 
                       // SizedBox(),
-                      Divider(),
+                      Divider(color: kGreyTextColor, thickness: 0.1),
                       SizedBox(height: 10.0),
 
                       IconTextButton(
@@ -166,10 +187,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           Expanded(
                             flex: 4,
                             child: IconTextButton(
-                              text: kDarkMode!
+                              text: kDarkMode
                                   ? 'Switch to light mode'
                                   : 'Switch to dark mode',
-                              icon: kDarkMode!
+                              icon: kDarkMode
                                   ? Icons.brightness_high_rounded
                                   : FontAwesomeIcons.moon,
                               iconColor: kDarkYellowColor,
@@ -185,32 +206,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               inactiveThumbColor:
                                   kDarkYellowColor.withOpacity(0.5),
                               inactiveTrackColor: kDarkYellowColor,
-                              value: kDarkMode!,
+                              value: kDarkMode,
                               onChanged: (value) async {
                                 await toggleTheme();
                                 setState(() {
                                   kDarkMode = value;
+                                  kBgColor = kDarkMode
+                                      ? Color(0xff1E1E1E)
+                                      : Color.fromARGB(255, 250, 250, 250);
                                 });
                                 log('ProfileScreen switch Dark Mode - $kDarkMode');
+
+                                var todos = await TodoView().getUserTodos();
+                                log('User todos-- $todos');
                               },
                             ),
                           )
                         ],
                       ),
-                      SizedBox(height: 20.0),
-
-                      SizedBox(height: 20.0),
-
-                      // Logout button
-                      Button(
-                        buttonText: 'Logout',
-                        onPressed: () {
-                          showDialogBox(
-                              context: context, screen: LogoutDialog());
-                        },
-                        buttonColor: kRedColor,
-                        inactive: false,
-                      )
                     ],
                   ),
                 ),

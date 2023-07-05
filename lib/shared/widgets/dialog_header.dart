@@ -31,7 +31,8 @@ class DialogHeader extends StatelessWidget {
           ],
         ),
         SizedBox(height: 10.0),
-        Divider(),
+        Divider(color: mainColor),
+        SizedBox(height: 10.0),
       ],
     );
   }

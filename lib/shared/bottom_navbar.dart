@@ -10,11 +10,13 @@ import 'package:isar/isar.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:provider/provider.dart';
 import 'package:todoey/entities/user.dart';
+import 'package:todoey/provider/device_prefs_provider.dart';
 import 'package:todoey/provider/user_provider.dart';
 import 'package:todoey/screens/main/add_notes_screen.dart';
 import 'package:todoey/screens/main/add_profile_picture_screen.dart';
 import 'package:todoey/screens/main/edit_note_screen.dart';
 import 'package:todoey/screens/main/home_screen.dart';
+import 'package:todoey/screens/main/loading_data_screen.dart';
 import 'package:todoey/screens/main/notes_screen.dart';
 import 'package:todoey/screens/main/profile_screen.dart';
 import 'package:todoey/screens/main/todo_screen.dart';
@@ -44,7 +46,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
 
   // Function to get the appropriate greeting
   _getGreeting() {
-    if (now.hour < 12) {
+    if (now.hour >= 0 && now.hour < 12) {
       setState(() {
         greeting = 'Good Morning';
       });
@@ -61,24 +63,33 @@ class _BottomNavBarState extends State<BottomNavBar> {
 
   // List of persistent nav bar items
   List<PersistentBottomNavBarItem> _navBarsItems() => [
-        PersistentBottomNavBarItem(
-          icon: const Icon(Icons.home),
-          title: "Home",
-          activeColorPrimary: kBgColor,
-          inactiveColorPrimary: kGreyTextColor,
-          routeAndNavigatorSettings: RouteAndNavigatorSettings(
-            initialRoute: HomeScreen.id,
-            routes: {
-              AddNotesScreen.id: (context) => AddNotesScreen(),
-              EditNoteScreen.id: (context) => EditNoteScreen(),
-            },
-          ),
-        ),
+        // PersistentBottomNavBarItem(
+        //   icon: const Icon(Icons.home),
+        //   title: "Home",
+        //   activeColorPrimary: kBgColor,
+        //   inactiveColorPrimary: kGreyTextColor,
+        //   routeAndNavigatorSettings: RouteAndNavigatorSettings(
+        //     initialRoute: HomeScreen.id,
+        //     routes: {
+        //       AddNotesScreen.id: (context) => AddNotesScreen(),
+        //       EditNoteScreen.id: (context) => EditNoteScreen(),
+        //       LoadingDataScreen.id: (context) => LoadingDataScreen(),
+        //     },
+        //   ),
+        // ),
         PersistentBottomNavBarItem(
           icon: const Icon(Icons.checklist_rounded),
           title: "Todo",
           activeColorPrimary: kBgColor,
           inactiveColorPrimary: kGreyTextColor,
+          routeAndNavigatorSettings: RouteAndNavigatorSettings(
+            initialRoute: TodoScreen.id,
+            routes: {
+              AddNotesScreen.id: (context) => AddNotesScreen(),
+              EditNoteScreen.id: (context) => EditNoteScreen(),
+              LoadingDataScreen.id: (context) => LoadingDataScreen(),
+            },
+          ),
         ),
         PersistentBottomNavBarItem(
           icon: const Icon(FontAwesomeIcons.noteSticky),
@@ -91,6 +102,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
             routes: {
               AddNotesScreen.id: (context) => AddNotesScreen(),
               EditNoteScreen.id: (context) => EditNoteScreen(),
+              LoadingDataScreen.id: (context) => LoadingDataScreen(),
             },
           ),
         ),
@@ -103,20 +115,21 @@ class _BottomNavBarState extends State<BottomNavBar> {
             initialRoute: ProfileScreen.id,
             routes: {
               AddProfilePicture.id: (context) => AddProfilePicture(),
+              LoadingDataScreen.id: (context) => LoadingDataScreen(),
             },
           ),
         ),
       ];
 
   List<Widget> _buildScreens() => [
-        HomeScreen(),
+        // HomeScreen(),
         TodoScreen(),
         NotesScreen(),
         ProfileScreen(),
       ];
 
   List<Color> colors = [
-    kOrangeColor,
+    // kOrangeColor,
     kGreenColor,
     kYellowColor,
     kDarkYellowColor
@@ -133,64 +146,99 @@ class _BottomNavBarState extends State<BottomNavBar> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider?>(context)?.user;
+    final prefsDarkMode = Provider.of<DevicePrefsProvider>(context).darkMode;
+
+    setState(() {
+      kBgColor = prefsDarkMode
+          ? Color(0xff1E1E1E)
+          : Color.fromARGB(255, 250, 250, 250);
+    });
 
     log('Bottom nav bar test -- ${user?.firstName}');
 
-    List<PreferredSizeWidget> appBars() => [
-          CustomAppBar(
-            textColor: kOrangeColor,
-            appBarText: '$greeting, ${user?.firstName}',
-            imageUrl: user?.profilePicture,
-          ),
-          CustomAppBar(
-            textColor: kGreenColor,
-            appBarText: '$greeting, ${user?.firstName}',
-            imageUrl: user?.profilePicture,
-          ),
-          CustomAppBar(
-            textColor: kYellowColor,
-            appBarText: '$greeting, ${user?.firstName}',
-            imageUrl: user?.profilePicture,
-          ),
-          CustomAppBar(
-            textColor: kDarkYellowColor,
-            otherAppBarText: 'My Profile',
-          ),
-        ];
+    List<PreferredSizeWidget> appBars() => user == null
+        ? [
+            CustomAppBar(
+              textColor: kOrangeColor,
+              appBarText: 'Loading...',
+              imageUrl: user?.profilePicture,
+              appBarColor: kBgColor,
+            ),
+          ]
+        : [
+            // CustomAppBar(
+            //   textColor: kOrangeColor,
+            //   appBarText: '$greeting, ${user.firstName}',
+            //   imageUrl: user.profilePicture,
+            //   appBarColor: kBgColor,
+            // ),
+            CustomAppBar(
+              textColor: kGreenColor,
+              appBarText: '$greeting, ${user.firstName}',
+              imageUrl: user.profilePicture,
+              appBarColor: kBgColor,
+            ),
+            CustomAppBar(
+              textColor: kYellowColor,
+              appBarText: '$greeting, ${user.firstName}',
+              imageUrl: user.profilePicture,
+              appBarColor: kBgColor,
+            ),
+            CustomAppBar(
+              textColor: kDarkYellowColor,
+              otherAppBarText: 'My Profile',
+              appBarColor: kBgColor,
+            ),
+          ];
 
     return Scaffold(
       appBar: appBars()[_index],
-      body: PersistentTabView(
-        context,
-        controller: _controller,
-        screens: _buildScreens(),
-        items: _navBarsItems(),
-        resizeToAvoidBottomInset: true,
-        navBarHeight: MediaQuery.of(context).viewInsets.bottom > 0
-            ? 0.0
-            : kBottomNavigationBarHeight,
-        bottomScreenMargin: 0,
-        backgroundColor: colors[_index],
-        hideNavigationBar: _hideNavBar,
-        decoration: NavBarDecoration(
-          colorBehindNavBar: kGreyTextColor,
-        ),
-        itemAnimationProperties: const ItemAnimationProperties(
-          duration: Duration(milliseconds: 400),
-          curve: Curves.ease,
-        ),
-        screenTransitionAnimation: const ScreenTransitionAnimation(
-          animateTabTransition: true,
-          duration: Duration(milliseconds: 400),
-          curve: Curves.ease,
-        ),
-        navBarStyle: NavBarStyle.style11,
-        onItemSelected: (value) {
-          setState(() {
-            _index = value;
-          });
-        },
-      ),
+      body: user == null
+          ? LoadingScreen(color: kOrangeColor)
+          : PersistentTabView(
+              context,
+              controller: _controller,
+              screens: _buildScreens(),
+              items: _navBarsItems(),
+              resizeToAvoidBottomInset: true,
+              navBarHeight: MediaQuery.of(context).viewInsets.bottom > 0
+                  ? 0.0
+                  : kBottomNavigationBarHeight,
+              bottomScreenMargin: 0,
+              backgroundColor: colors[_index],
+              hideNavigationBar: _hideNavBar,
+              decoration: NavBarDecoration(
+                colorBehindNavBar: kGreyTextColor,
+                border: Border(
+                  top: BorderSide(
+                    color: kGreyTextColor,
+                    width: 3.0,
+                  ),
+                ),
+                // boxShadow: [
+                //   BoxShadow(
+                //     color: kBgColor,
+                //     offset: Offset(1.0, 4.0),
+                //     blurStyle: BlurStyle.solid,
+                //   )
+                // ]
+              ),
+              itemAnimationProperties: const ItemAnimationProperties(
+                duration: Duration(milliseconds: 400),
+                curve: Curves.ease,
+              ),
+              screenTransitionAnimation: const ScreenTransitionAnimation(
+                animateTabTransition: true,
+                duration: Duration(milliseconds: 400),
+                curve: Curves.ease,
+              ),
+              navBarStyle: NavBarStyle.style11,
+              onItemSelected: (value) {
+                setState(() {
+                  _index = value;
+                });
+              },
+            ),
     );
   }
 }

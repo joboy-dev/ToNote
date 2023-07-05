@@ -1,19 +1,22 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import 'package:todoey/backend/user/user_view.dart';
 import 'package:todoey/entities/user.dart';
 import 'package:todoey/screens/authentication/signup.dart';
 import 'package:todoey/screens/main/loading_data_screen.dart';
 import 'package:todoey/services/isar_service.dart';
 import 'package:todoey/shared/animations.dart';
-import 'package:todoey/shared/bottom_navbar.dart';
+import 'package:todoey/provider/user_provider.dart';
 import 'package:todoey/shared/constants.dart';
 import 'package:todoey/shared/loader.dart';
 import 'package:todoey/shared/navigator.dart';
 import 'package:todoey/shared/widgets/button.dart';
 import 'package:todoey/shared/widgets/snackbar.dart';
 import 'package:todoey/shared/widgets/text_field.dart';
+import 'package:todoey/wrapper.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -122,26 +125,17 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
         });
 
         var userData = await _userView.getUserDetails();
-        var userPic = await _userView.getUserProfilePicture();
+        // var userPic = await _userView.getUserProfilePicture();
 
-        if (userData is Map && userPic is Map) {
+        if (userData is User) {
           // Save user datails to iser service
-          await _isarService.saveUser(context, User()
-            ..id = userData['id']
-            ..firstName = userData['first_name']
-            ..lastName = userData['last_name']
-            ..email = userData['email']
-            ..profilePicture = userPic['profile_pic']
-            ..darkMode = false
-            );
-
-          // await _isarService.getUserDetails();
+          await _isarService.saveUser(context, userData);
 
           setState(() {
             _isLoading = false;
             message = 'Welcome $email.';
           });
-          navigatorPushReplacementNamed(context, LoadingDataScreen.id);
+          navigatorPushReplacementNamed(context, Wrapper.id);
         } else {
           setState(() {
             _isLoading = false;
@@ -173,9 +167,10 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: kBgColor,
       appBar: AppBar(
         backgroundColor: kBgColor,
-        elevation: 2.0,
+        elevation: 0.0,
         centerTitle: true,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
@@ -187,9 +182,10 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
           children: [
             SizedBox(height: 30.0),
             Text(
-              'LOGIN',
+              'Login',
               style: kAppBarTextStyle,
             ),
+            // Divider(),
             SizedBox(height: 30.0),
           ],
         ),
@@ -296,7 +292,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                           firstText: 'Don\'t have an account? ',
                           secondText: 'Sign up',
                           onTap: () {
-                            navigatorPushReplacementNamed(context, SignUp.id);
+                            navigatorPushNamed(context, SignUp.id);
                           },
                         ),
                       ),

@@ -108,8 +108,6 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
 
   // function to validate the form fields
   validateForm() async {
-    final IsarService _isarService = IsarService();
-
     final UserModel _newUser = UserModel(
       firstName: fName,
       lastName: lName,
@@ -117,8 +115,6 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
       password: pword,
       password2: pword2,
     );
-
-    final User _user = User();
 
     if (pword == pword2) {
       if (_formKey.currentState!.validate()) {
@@ -142,9 +138,11 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
             message =
                 'User with this email already exists. Try using another email.';
           });
-        } else if (data is Map) {
+        } else if (data is User) {
+          // await IsarService().saveUser(context, data);
+
           setState(() {
-            message = 'Account created successfully. Login now.';
+            message = 'Account created successfully. Login.';
           });
           navigatorPushNamed(context, Login.id);
         } else {
@@ -180,9 +178,10 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: kBgColor,
       appBar: AppBar(
         backgroundColor: kBgColor,
-        elevation: 2.0,
+        elevation: 0.0,
         centerTitle: true,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
@@ -194,7 +193,7 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
           children: [
             SizedBox(height: 30.0),
             Text(
-              'CREATE ACCOUNT',
+              'Create Account',
               style: kAppBarTextStyle,
             ),
             SizedBox(height: 30.0),

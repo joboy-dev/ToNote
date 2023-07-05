@@ -95,7 +95,7 @@ class _AddProfilePictureState extends State<AddProfilePicture>
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider?>(context)?.user;
-    
+
     // function to select image from gallery
     Future selectImageFromGallery() async {
       final XFile? image =
@@ -154,6 +154,7 @@ class _AddProfilePictureState extends State<AddProfilePicture>
       //   ),
       //   iconTheme: IconThemeData(color: kTextColor),
       // ),
+      backgroundColor: kBgColor,
       body: SingleChildScrollView(
         child: SafeArea(
           child: Padding(

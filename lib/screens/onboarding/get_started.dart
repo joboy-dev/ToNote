@@ -88,6 +88,7 @@ class _GetStartedState extends State<GetStarted> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: kBgColor,
       body: SingleChildScrollView(
         child: SafeArea(
           child: Column(

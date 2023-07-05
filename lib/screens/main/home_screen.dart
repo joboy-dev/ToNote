@@ -1,26 +1,23 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
-import 'dart:async';
-import 'dart:developer';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:todoey/backend/user/user_view.dart';
-import 'package:todoey/entities/user.dart';
+import 'package:todoey/provider/notes_provider.dart';
+import 'package:todoey/provider/todo_provider.dart';
 import 'package:todoey/provider/user_provider.dart';
 import 'package:todoey/screens/main/add_notes_screen.dart';
 import 'package:todoey/screens/main/dialog_screens/add_todo.dart';
-import 'package:todoey/screens/main/todo_screen.dart';
-import 'package:todoey/services/isar_service.dart';
 import 'package:todoey/services/timer.dart';
 import 'package:todoey/shared/constants.dart';
-import 'package:todoey/shared/loader.dart';
+import 'package:todoey/shared/custom_appbar.dart';
 import 'package:todoey/shared/loading_screen.dart';
 import 'package:todoey/shared/navigator.dart';
 import 'package:todoey/shared/widgets/button.dart';
 import 'package:todoey/shared/widgets/dialog.dart';
+import 'package:todoey/shared/widgets/todo_item.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -33,7 +30,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   math.Random random = math.Random();
-  bool isChecked = false;
+  bool? isChecked = false;
 
   LoadingTimer _loadingTimer = LoadingTimer();
 
@@ -51,9 +48,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // return Consumer<User?>(
-    //   builder: (context, user, _) {
     final user = Provider.of<UserProvider?>(context)?.user;
+    final todos = Provider.of<TodoProvider?>(context)?.todos;
+    final notes = Provider.of<NoteProvider?>(context)?.notes;
+
     return user == null
         ? ErrorLoadingScreen()
         : Scaffold(
@@ -62,151 +60,173 @@ class _HomeScreenState extends State<HomeScreen> {
               child: RefreshIndicator(
                 onRefresh: () async {},
                 child: SafeArea(
-                  child: Padding(
-                    padding: kAppPadding,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // Main Body
-                        Row(
-                          children: [
-                            Expanded(
-                              flex: 2,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // ------------------TODOS-----------------------
+                      CustomAppBar(
+                        textColor: kGreyTextColor,
+                        appBarColor: kBgColor,
+                        dividerColor: kOrangeColor,
+                        appBarText: ' My Latest Todos',
+                        trailing: IconTextButton(
+                          text: 'New',
+                          fontWeight: FontWeight.bold,
+                          icon: FontAwesomeIcons.plus,
+                          iconColor: kOrangeColor,
+                          textColor: kOrangeColor,
+                          fontSize: 17.0,
+                          gap: 20.0,
+                          onPressed: () {
+                            showDialogBox(
+                              context: context,
+                              dismisible: false,
+                              screen: AddTodoScreen(),
+                            );
+                          },
+                        ),
+                      ),
+
+                      // Todos
+                      todos == null || todos.isEmpty
+                          ? Center(
                               child: Text(
-                                'My Latest Todos',
-                                style: kAppBarTextStyle.copyWith(
-                                  color: kGreyTextColor,
-                                  fontSize: 17.0,
-                                ),
+                                'There are no todos available.',
+                                style: kGreyNormalTextStyle,
                               ),
-                            ),
-                            SizedBox(width: 15.0),
-                            Expanded(
-                              flex: 1,
-                              child: IconTextButton(
-                                text: 'New',
-                                fontWeight: FontWeight.bold,
-                                icon: FontAwesomeIcons.plus,
-                                iconColor: kOrangeColor,
-                                textColor: kOrangeColor,
-                                fontSize: 17.0,
-                                gap: 20.0,
-                                onPressed: () {
-                                  showDialogBox(
-                                    context: context,
-                                    dismisible: false,
-                                    screen: AddTodoScreen(),
+                            )
+                          : Padding(
+                              padding: kAppPadding,
+                              // child: SingleChildScrollView(
+                              // child: SizedBox(
+                              // height: 520.0,
+                              child: ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: todos.length,
+                                itemBuilder: (context, index) {
+                                  // reverse index logic
+                                  final reversedIndex =
+                                      todos.length - 1 - index;
+                                  final todo = todos[reversedIndex];
+                                  isChecked = todo.isCompleted;
+                                  return TodoItem(
+                                    tileColor: kOrangeColor.withOpacity(0.6),
+                                    todoId: todo.id!,
+                                    indexId: index,
+                                    title: '${todo.title}',
+                                    isChecked: todo.isCompleted,
+                                    date: DateTime.parse('${todo.expire}'),
+                                    onChanged: (value) {
+                                      setState(() {
+                                        isChecked = value!;
+                                      });
+                                    },
+                                    // onTap: () {},
                                   );
                                 },
                               ),
+                              // ),
+                              // ),
                             ),
-                          ],
+
+                      // SizedBox(height: 20.0),
+
+                      // ------------------NOTES-----------------------
+                      CustomAppBar(
+                        textColor: kGreyTextColor,
+                        appBarColor: kBgColor,
+                        dividerColor: kOrangeColor,
+                        appBarText: ' My Latest Notes',
+                        trailing: IconTextButton(
+                          text: 'New',
+                          fontWeight: FontWeight.bold,
+                          icon: FontAwesomeIcons.plus,
+                          iconColor: kOrangeColor,
+                          textColor: kOrangeColor,
+                          fontSize: 17.0,
+                          gap: 20.0,
+                          onPressed: () {
+                            navigatorPushNamed(context, AddNotesScreen.id);
+                          },
                         ),
+                      ),
 
-                        SizedBox(height: 5.0),
-                        Divider(thickness: 1, color: kOrangeColor),
-                        SizedBox(height: 10.0),
-
-                        // Todos
-                        RefreshIndicator(
-                          onRefresh: () async {},
-                          child: SingleChildScrollView(
-                            child: SizedBox(
-                              height: 210.0,
-                              child: ListView(
-                                children: [
-                                  Text('Todos'),
-                                  Text('Todos'),
-                                  Text('Todos'),
-                                  Text('Todos'),
-                                  Text('Todos'),
-                                  Text('Todos'),
-                                  Text('Todos'),
-                                  Text('Todos'),
-                                  Text('Todos'),
-                                  Text('Todos'),
-                                  Text('Todos'),
-                                  Text('Todos'),
-                                  Text('Todos'),
-                                  Text('Todos'),
-                                  Text('Todos'),
-                                  Text('Todos'),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-
-                        SizedBox(height: 20.0),
-
-                        // NOTES
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Expanded(
-                              flex: 2,
+                      // Notes
+                      todos == null || todos.isEmpty
+                          ? Center(
                               child: Text(
-                                'My Latest Notes',
-                                style: kAppBarTextStyle.copyWith(
-                                  color: kGreyTextColor,
-                                  fontSize: 17.0,
+                                'There are no notes available.',
+                                style: kGreyNormalTextStyle,
+                              ),
+                            )
+                          : Padding(
+                              padding: kAppPadding,
+                              // child: SingleChildScrollView(
+                              //   child: SizedBox(
+                              //     height: 600.0,
+                              child: Container(
+                                height: 300,
+                                child: ListView.builder(
+                                  // scrollDirection: Axis.horizontal,
+                                  shrinkWrap: true,
+                                  itemCount: todos.length,
+                                  itemBuilder: (context, index) {
+                                    // reverse index logic
+                                    final reversedIndex =
+                                        todos.length - 1 - index;
+                                    final todo = todos[reversedIndex];
+                                    isChecked = todo.isCompleted;
+                                    return TodoItem(
+                                      tileColor: kOrangeColor.withOpacity(0.6),
+                                      todoId: todo.id!,
+                                      indexId: index,
+                                      title: '${todo.title}',
+                                      isChecked: todo.isCompleted,
+                                      date: DateTime.parse('${todo.expire}'),
+                                      onChanged: (value) {
+                                        setState(() {
+                                          isChecked = value!;
+                                        });
+                                      },
+                                      // onTap: () {},
+                                    );
+                                  },
                                 ),
                               ),
                             ),
-                            SizedBox(width: 15.0),
-                            Expanded(
-                              flex: 1,
-                              child: IconTextButton(
-                                text: 'New',
-                                fontWeight: FontWeight.bold,
-                                icon: FontAwesomeIcons.plus,
-                                iconColor: kOrangeColor,
-                                textColor: kOrangeColor,
-                                fontSize: 17.0,
-                                gap: 20.0,
-                                onPressed: () {
-                                  navigatorPushNamed(
-                                      context, AddNotesScreen.id);
-                                },
-                              ),
-                            ),
-                          ],
-                        ),
-
-                        SizedBox(height: 5.0),
-                        Divider(thickness: 1, color: kOrangeColor),
-                        SizedBox(height: 10.0),
-
-                        // Notes
-                        SingleChildScrollView(
-                          child: SizedBox(
-                            height: 210.0,
-                            child: ListView(
-                              children: [
-                                Text('Todos'),
-                                Text('Todos'),
-                                Text('Todos'),
-                                Text('Todos'),
-                                Text('Todos'),
-                                Text('Todos'),
-                                Text('Todos'),
-                                Text('Todos'),
-                                Text('Todos'),
-                                Text('Todos'),
-                                Text('Todos'),
-                                Text('Todos'),
-                                Text('Todos'),
-                                Text('Todos'),
-                                Text('Todos'),
-                                Text('Todos'),
-                              ],
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 20.0),
-                      ],
-                    ),
+                      // ),
+                      // ),
+                      // : Padding(
+                      //     padding: kAppPadding,
+                      //     child: SingleChildScrollView(
+                      //       child: SizedBox(
+                      //         height: 210.0,
+                      //         child: ListView(
+                      //           children: [
+                      //             Text('Todos'),
+                      //             Text('Todos'),
+                      //             Text('Todos'),
+                      //             Text('Todos'),
+                      //             Text('Todos'),
+                      //             Text('Todos'),
+                      //             Text('Todos'),
+                      //             Text('Todos'),
+                      //             Text('Todos'),
+                      //             Text('Todos'),
+                      //             Text('Todos'),
+                      //             Text('Todos'),
+                      //             Text('Todos'),
+                      //             Text('Todos'),
+                      //             Text('Todos'),
+                      //             Text('Todos'),
+                      //           ],
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ),
+                      SizedBox(height: 70.0),
+                    ],
                   ),
                 ),
               ),

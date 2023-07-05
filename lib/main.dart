@@ -4,22 +4,17 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todoey/entities/user.dart';
 import 'package:todoey/provider/auth_provider.dart';
+import 'package:todoey/provider/device_prefs_provider.dart';
 import 'package:todoey/provider/loading_provider.dart';
+import 'package:todoey/provider/notes_provider.dart';
 import 'package:todoey/provider/todo_provider.dart';
 import 'package:todoey/screens/authentication/login.dart';
 import 'package:todoey/screens/authentication/signup.dart';
-import 'package:todoey/screens/main/add_notes_screen.dart';
-import 'package:todoey/screens/main/add_profile_picture_screen.dart';
-import 'package:todoey/screens/main/edit_note_screen.dart';
 import 'package:todoey/screens/main/loading_data_screen.dart';
-import 'package:todoey/screens/main/notes_screen.dart';
-import 'package:todoey/screens/main/home_screen.dart';
-import 'package:todoey/screens/main/profile_screen.dart';
-import 'package:todoey/screens/main/todo_screen.dart';
 import 'package:todoey/screens/onboarding/get_started.dart';
 import 'package:todoey/screens/onboarding/onboarding.dart';
+import 'package:todoey/services/user_preferences.dart';
 import 'package:todoey/services/isar_service.dart';
 import 'package:todoey/services/timer.dart';
 import 'package:todoey/shared/bottom_navbar.dart';
@@ -35,43 +30,48 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => TodoProvider()),
+        ChangeNotifierProvider(create: (_) => NoteProvider()),
         ChangeNotifierProvider(create: (_) => AuthProvider()),
         ChangeNotifierProvider(create: (_) => UserProvider()),
-        ChangeNotifierProvider(create: (_) => LoadingTimer()),
-        ChangeNotifierProvider(create: (_) => LoadingProvider()),
+        ChangeNotifierProvider(create: (_) => DevicePrefsProvider()),
+        // ChangeNotifierProvider(create: (_) => LoadingTimer()),
+        // ChangeNotifierProvider(create: (_) => LoadingProvider()),
       ],
       child: ToDoEy(),
     ),
   );
 }
 
-class ToDoEy extends StatelessWidget {
+class ToDoEy extends StatefulWidget {
   const ToDoEy({super.key});
 
   @override
+  State<ToDoEy> createState() => _ToDoEyState();
+}
+
+class _ToDoEyState extends State<ToDoEy> {
+  @override
   Widget build(BuildContext context) {
-    return FutureProvider<User?>.value(
-        value: IsarService().getUserDetails(context),
-        initialData: null,
-        catchError: (context, error) {
-          log('(Main Function) FutureProvider Error -- $error');
-        },
-        child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'ToDo-Ey',
-          theme: ThemeData(
-            scaffoldBackgroundColor: kBgColor,
-          ),
-          initialRoute: Onboarding.id,
-          routes: {
-            Wrapper.id: (context) => Wrapper(),
-            Onboarding.id: (context) => Onboarding(),
-            GetStarted.id: (context) => GetStarted(),
-            SignUp.id: (context) => SignUp(),
-            Login.id: (context) => Login(),
-            LoadingDataScreen.id: (context) => LoadingDataScreen(),
-            BottomNavBar.id: (context) => BottomNavBar(),
-          },
-        ));
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'ToDo-Ey',
+      // themeMode: Prefs().isDarkMode() ? ThemeMode.dark : ThemeMode.light,
+      // theme: ThemeData(
+      //   scaffoldBackgroundColor: Color.fromARGB(255, 250, 250, 250),
+      // ),
+      // darkTheme: ThemeData(
+      //   scaffoldBackgroundColor: Color(0xff1E1E1E),
+      // ),
+      initialRoute: Onboarding.id,
+      routes: {
+        Wrapper.id: (context) => Wrapper(),
+        Onboarding.id: (context) => Onboarding(),
+        GetStarted.id: (context) => GetStarted(),
+        SignUp.id: (context) => SignUp(),
+        Login.id: (context) => Login(),
+        LoadingDataScreen.id: (context) => LoadingDataScreen(),
+        BottomNavBar.id: (context) => BottomNavBar(),
+      },
+    );
   }
 }

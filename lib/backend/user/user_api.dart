@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_print
 
+import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
@@ -16,7 +17,7 @@ class UserAPI {
   final AuthProvider _authProvider = AuthProvider();
 
   // initialize flutter secure storage to store user token
-  final storage = const FlutterSecureStorage();
+  // final storage = const FlutterSecureStorage();
 
   // Initialize token storage class
   final TokenStorage tokenStorage = TokenStorage();
@@ -26,9 +27,14 @@ class UserAPI {
   var authToken = '';
 
   // create map of hraders
-  Map<String, String> headers = {
-    'Content-Type': 'application/json',
-  };
+  Map<String, String> getHeaders() => {
+        'Content-Type': 'application/json',
+      };
+
+  Map<String, String> getHeadersWithToken(String token) => {
+        'Authorization': 'Token $token',
+        'Content-Type': 'application/json',
+      };
 
   // FUNCTION TO HANDLE CREATE ACCOUNT RESPONSES
   Future createAccount({
@@ -38,7 +44,7 @@ class UserAPI {
       // store response in a variable
       var response = await http.post(
         Uri.parse(registerEndpoint),
-        headers: headers,
+        headers: getHeaders(),
         body: jsonEncode(data),
       );
 
@@ -82,7 +88,7 @@ class UserAPI {
       var response = await http.post(
         Uri.parse(loginEndpoint),
         body: jsonEncode(data),
-        headers: headers,
+        headers: getHeaders(),
       );
 
       log('STATUS CODE -- ${response.statusCode}');
@@ -121,13 +127,8 @@ class UserAPI {
       var token = await tokenStorage.readToken();
       log('Logging user with $token out');
 
-      headers = {
-        'Authorization': 'Token $token',
-        'Content-Type': 'application/json',
-      };
-
-      var response =
-          await http.post(Uri.parse(logoutEndpoint), headers: headers);
+      var response = await http.post(Uri.parse(logoutEndpoint),
+          headers: getHeadersWithToken(token));
 
       var responseData = jsonDecode(response.body);
 
@@ -140,9 +141,6 @@ class UserAPI {
         // clear the token and set it to null
         _authProvider.clearToken();
 
-        // clear cached data
-        // _userSharedPreferences.clearCache();
-
         return response.statusCode;
       } else if (response.statusCode == 400) {
         log('-----------------RESPONSE 400 DATA-----------------');
@@ -156,12 +154,14 @@ class UserAPI {
         return response.statusCode;
       } else {
         log('Request Failed');
+        // await logout();
         return null;
       }
     } catch (e) {
       log('-------------EXCEPTION THROWN------------');
       log(e.toString());
 
+      // await logout();
       return null;
     }
   }
@@ -171,40 +171,38 @@ class UserAPI {
     try {
       // get user token
       var token = await tokenStorage.readToken();
-      log('Getting details of user $token');
+      if (token != null) {
+        log('Getting details of user $token');
 
-      headers = {
-        'Authorization': 'Token $token',
-        'Content-Type': 'application/json',
-      };
+        var response = await http.get(
+          Uri.parse(userDetailsEndpoint),
+          headers: getHeadersWithToken(token),
+        );
 
-      var response = await http.get(
-        Uri.parse(userDetailsEndpoint),
-        headers: headers,
-      );
+        var responseData = jsonDecode(response.body);
 
-      var responseData = jsonDecode(response.body);
+        log("STATUS CODE -- ${response.statusCode}");
 
-      log("STATUS CODE -- ${response.statusCode}");
+        if (response.statusCode == 200) {
+          log('-----------------RESPONSE 200 DATA-----------------');
+          log('$responseData');
 
-      if (response.statusCode == 200) {
-        log('-----------------RESPONSE 200 DATA-----------------');
-        log('$responseData');
+          return responseData;
+        } else if (response.statusCode == 400) {
+          log('-----------------RESPONSE 400 DATA-----------------');
+          log('$responseData');
 
-        return responseData;
-      } else if (response.statusCode == 400) {
-        log('-----------------RESPONSE 400 DATA-----------------');
-        log('$responseData');
+          return response.statusCode;
+        } else if (response.statusCode == 401) {
+          log('-----------------RESPONSE 401 DATA-----------------');
+          log('$responseData');
 
-        return response.statusCode;
-      } else if (response.statusCode == 401) {
-        log('-----------------RESPONSE 401 DATA-----------------');
-        log('$responseData');
-
-        return response.statusCode;
-      } else {
-        log('Request Failed');
-        return null;
+          return response.statusCode;
+        } else {
+          log('Request Failed');
+          // await getUserDetails();
+          return null;
+        }
       }
     } catch (e) {
       log('-------------EXCEPTION THROWN------------');
@@ -214,7 +212,8 @@ class UserAPI {
       if (e.toString() == 'Connection timed out') {
         return e.toString();
       } else {
-        return null;
+        await getUserDetails();
+        // return null;
       }
     }
   }
@@ -226,14 +225,9 @@ class UserAPI {
       var token = await tokenStorage.readToken();
       log('Getting profile picture of user $token');
 
-      headers = {
-        'Authorization': 'Token $token',
-        'Content-Type': 'application/json',
-      };
-
       var response = await http.get(
         Uri.parse(getUploadPictureEndpoint),
-        headers: headers,
+        headers: getHeadersWithToken(token),
       );
 
       var responseData = jsonDecode(response.body);
@@ -257,13 +251,17 @@ class UserAPI {
         return response.statusCode;
       } else {
         log('Request Failed');
-        return null;
+        await getUserProfilePicture();
+
+        // return null;
       }
     } catch (e) {
       log('-------------EXCEPTION THROWN------------');
       log(e.toString());
 
-      return null;
+      await getUserProfilePicture();
+
+      // return null;
     }
   }
 
@@ -273,11 +271,6 @@ class UserAPI {
       // get user token
       var token = await tokenStorage.readToken();
       log('Getting profile picture of user $token');
-
-      headers = {
-        'Authorization': 'Token $token',
-        'Content-Type': 'application/json',
-      };
 
       // Make a multi part request since we are using a file
       var request =
@@ -327,14 +320,9 @@ class UserAPI {
       var token = await tokenStorage.readToken();
       log('Getting details of user $token to update');
 
-      headers = {
-        'Authorization': 'Token $token',
-        'Content-Type': 'application/json',
-      };
-
       var response = await http.patch(
         Uri.parse(userDetailsEndpoint),
-        headers: headers,
+        headers: getHeadersWithToken(token),
         body: jsonEncode(data),
       );
 
@@ -375,14 +363,9 @@ class UserAPI {
       // get user token
       var token = await tokenStorage.readToken();
 
-      headers = {
-        'Authorization': 'Token $token',
-        'Content-Type': 'application/json',
-      };
-
       var response = await http.patch(
         Uri.parse(changePasswordEndpoint),
-        headers: headers,
+        headers: getHeadersWithToken(token),
         body: jsonEncode(data),
       );
 
@@ -409,7 +392,6 @@ class UserAPI {
         log('Request Failed');
         return null;
       }
-
     } catch (e) {
       log('---------EXCEPTION THROWN------------');
       log('Changing user password error -- ${e.toString()}');

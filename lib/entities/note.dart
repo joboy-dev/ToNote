@@ -3,6 +3,16 @@ import 'package:todoey/entities/user.dart';
 
 part 'note.g.dart';
 
+class NoteModel {
+  String title;
+  String content;
+
+  NoteModel({
+    required this.title,
+    required this.content,
+  });
+}
+
 @Collection()
 class Note {
   Id? id;
@@ -10,7 +20,9 @@ class Note {
   String? content;
   DateTime? created;
   DateTime? updated;
+  int? ownerId;
+  String? ownerEmail;
 
   @Backlink(to: 'notes')
-  final user = IsarLinks<User>();
+  var user = IsarLinks<User>();
 }

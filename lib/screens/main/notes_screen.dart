@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:todoey/provider/notes_provider.dart';
 import 'package:todoey/provider/user_provider.dart';
 import 'package:todoey/screens/main/add_notes_screen.dart';
 import 'package:todoey/shared/constants.dart';
@@ -23,6 +24,8 @@ class _NotesScreenState extends State<NotesScreen> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider?>(context)?.user;
+    final notes = Provider.of<NoteProvider?>(context)?.notes;
+
     return user == null
         ? ErrorLoadingScreen()
         : Scaffold(
@@ -59,8 +62,7 @@ class _NotesScreenState extends State<NotesScreen> {
                               fontSize: 17.0,
                               gap: 20.0,
                               onPressed: () {
-                                navigatorPushNamed(
-                                    context, AddNotesScreen.id);
+                                navigatorPushNamed(context, AddNotesScreen.id);
                               },
                             ),
                           ),
@@ -71,29 +73,63 @@ class _NotesScreenState extends State<NotesScreen> {
                       Divider(thickness: 1, color: kYellowColor),
                       SizedBox(height: 10.0),
 
+                      // Notes
+                      notes == null || notes.isEmpty
+                          ? Center(
+                              child: Text(
+                                'There are no notes available.',
+                                style: kGreyNormalTextStyle,
+                              ),
+                            )
+                          : SingleChildScrollView(
+                              child: SizedBox(
+                                height: 210.0,
+                                child: ListView(
+                                  children: [
+                                    Text('Todos'),
+                                    Text('Todos'),
+                                    Text('Todos'),
+                                    Text('Todos'),
+                                    Text('Todos'),
+                                    Text('Todos'),
+                                    Text('Todos'),
+                                    Text('Todos'),
+                                    Text('Todos'),
+                                    Text('Todos'),
+                                    Text('Todos'),
+                                    Text('Todos'),
+                                    Text('Todos'),
+                                    Text('Todos'),
+                                    Text('Todos'),
+                                    Text('Todos'),
+                                  ],
+                                ),
+                              ),
+                            ),
+
                       // Todos
-                      SingleChildScrollView(
-                        child: SizedBox(
-                          height: 500.0,
-                          // child: ListView.builder(
-                          //   itemCount: todos.length,
-                          //   itemBuilder: (context, index) {
-                          //     final todo = todos[index];
-                          //     isChecked = todo.isCompleted;
-                          //     return TodoItem(
-                          //       title: todo.title,
-                          //       isChecked: todo.isCompleted,
-                          //       date: todo.expire,
-                          //       onChanged: (value) {
-                          //         setState(() {
-                          //           isChecked = value!;
-                          //         });
-                          //       },
-                          //     );
-                          //   },
-                          // ),
-                        ),
-                      ),
+                      // SingleChildScrollView(
+                      //   child: SizedBox(
+                      //     height: 500.0,
+                      // child: ListView.builder(
+                      //   itemCount: todos.length,
+                      //   itemBuilder: (context, index) {
+                      //     final todo = todos[index];
+                      //     isChecked = todo.isCompleted;
+                      //     return TodoItem(
+                      //       title: todo.title,
+                      //       isChecked: todo.isCompleted,
+                      //       date: todo.expire,
+                      //       onChanged: (value) {
+                      //         setState(() {
+                      //           isChecked = value!;
+                      //         });
+                      //       },
+                      //     );
+                      //   },
+                      // ),
+                      // ),
+                      // ),
                     ],
                   ),
                 ),

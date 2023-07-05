@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:todoey/screens/main/loading_data_screen.dart';
 import 'package:todoey/services/timer.dart';
-import 'package:todoey/shared/bottom_navbar.dart';
 import 'package:todoey/shared/constants.dart';
 import 'package:todoey/shared/loader.dart';
 import 'package:todoey/shared/navigator.dart';
@@ -17,6 +16,7 @@ class LoadingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: kBgColor,
       body: SingleChildScrollView(
         child: SafeArea(
           child: Padding(
@@ -76,6 +76,7 @@ class ErrorLoadingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: kBgColor,
       body: SingleChildScrollView(
         child: SafeArea(
           child: Padding(

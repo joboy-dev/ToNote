@@ -21,10 +21,11 @@ class NameTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       initialValue: initialValue,
-      style: kTextFieldStyle,
+      style: kTextFieldStyle.copyWith(color: kGreyTextColor),
       cursorColor: kYellowColor,
       decoration: kTextFieldDecoration.copyWith(
         hintText: hintText,
+        hintStyle: kTextFieldStyle.copyWith(color: kGreyTextColor),
         prefixIcon: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10.0),
           child: Icon(
@@ -68,9 +69,10 @@ class EmailTextField extends StatelessWidget {
       readOnly: readOnly ?? false,
       initialValue: initialValue,
       cursorColor: kYellowColor,
-      style: kTextFieldStyle,
+      style: kTextFieldStyle.copyWith(color: kGreyTextColor),
       decoration: kTextFieldDecoration.copyWith(
         hintText: 'Email',
+        hintStyle: kTextFieldStyle.copyWith(color: kGreyTextColor),
         prefixIcon: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10.0),
           child: Icon(
@@ -109,10 +111,11 @@ class PasswordTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       cursorColor: kYellowColor,
-      style: kTextFieldStyle,
+      style: kTextFieldStyle.copyWith(color: kGreyTextColor),
       obscureText: obscureText,
       decoration: kTextFieldDecoration.copyWith(
         hintText: hintText,
+        hintStyle: kGreyNormalTextStyle.copyWith(fontSize: 12.0),
         prefixIcon: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10.0),
           child: Icon(
@@ -198,7 +201,7 @@ class NormalTextField extends StatelessWidget {
       decoration: InputDecoration(
         hintText: hintText,
         hintStyle: kTextFieldStyle.copyWith(
-            color: Colors.black.withOpacity(0.5), fontSize: fontSize ?? 12.0),
+            color: kTextColor, fontSize: fontSize ?? 12.0),
         prefixIcon: Icon(
           prefixIcon,
           color: iconColor,
@@ -280,8 +283,7 @@ class TextareaTextField extends StatelessWidget {
       cursorColor: cursorColor,
       decoration: InputDecoration(
         hintText: hintText,
-        hintStyle:
-            kTextFieldStyle.copyWith(color: Colors.black.withOpacity(0.5)),
+        hintStyle: kTextFieldStyle.copyWith(color: kTextColor.withOpacity(0.5)),
         labelStyle: TextStyle(
           color: kYellowColor,
           fontWeight: FontWeight.w300,
@@ -335,6 +337,7 @@ class DateTimeField extends StatelessWidget {
     required this.errorTextStyleColor,
     required this.iconColor,
     required this.onSaved,
+    this.initialValue,
   });
 
   String hintText;
@@ -344,11 +347,14 @@ class DateTimeField extends StatelessWidget {
   Color focusedErrorBorderColor;
   Color errorTextStyleColor;
   Color iconColor;
+  String? initialValue;
   Function(DateTime? date)? onSaved;
 
   @override
   Widget build(BuildContext context) {
+    DateTime now = DateTime.now();
     return FormField<DateTime>(
+      // initialValue: DateTime.parse(initialValue!) ?? DateTime.parse( now.toIso8601String().substring(0, 10)),
       builder: (dateState) {
         return InputDecorator(
           decoration: InputDecoration(

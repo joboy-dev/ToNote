@@ -17,28 +17,23 @@ const UserSchema = CollectionSchema(
   name: r'User',
   id: -7838171048429979076,
   properties: {
-    r'darkMode': PropertySchema(
-      id: 0,
-      name: r'darkMode',
-      type: IsarType.bool,
-    ),
     r'email': PropertySchema(
-      id: 1,
+      id: 0,
       name: r'email',
       type: IsarType.string,
     ),
     r'firstName': PropertySchema(
-      id: 2,
+      id: 1,
       name: r'firstName',
       type: IsarType.string,
     ),
     r'lastName': PropertySchema(
-      id: 3,
+      id: 2,
       name: r'lastName',
       type: IsarType.string,
     ),
     r'profilePicture': PropertySchema(
-      id: 4,
+      id: 3,
       name: r'profilePicture',
       type: IsarType.string,
     )
@@ -109,11 +104,10 @@ void _userSerialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeBool(offsets[0], object.darkMode);
-  writer.writeString(offsets[1], object.email);
-  writer.writeString(offsets[2], object.firstName);
-  writer.writeString(offsets[3], object.lastName);
-  writer.writeString(offsets[4], object.profilePicture);
+  writer.writeString(offsets[0], object.email);
+  writer.writeString(offsets[1], object.firstName);
+  writer.writeString(offsets[2], object.lastName);
+  writer.writeString(offsets[3], object.profilePicture);
 }
 
 User _userDeserialize(
@@ -122,13 +116,13 @@ User _userDeserialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  final object = User();
-  object.darkMode = reader.readBoolOrNull(offsets[0]);
-  object.email = reader.readStringOrNull(offsets[1]);
-  object.firstName = reader.readStringOrNull(offsets[2]);
-  object.id = id;
-  object.lastName = reader.readStringOrNull(offsets[3]);
-  object.profilePicture = reader.readStringOrNull(offsets[4]);
+  final object = User(
+    email: reader.readStringOrNull(offsets[0]),
+    firstName: reader.readStringOrNull(offsets[1]),
+    id: id,
+    lastName: reader.readStringOrNull(offsets[2]),
+    profilePicture: reader.readStringOrNull(offsets[3]),
+  );
   return object;
 }
 
@@ -140,14 +134,12 @@ P _userDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
-      return (reader.readBoolOrNull(offset)) as P;
+      return (reader.readStringOrNull(offset)) as P;
     case 1:
       return (reader.readStringOrNull(offset)) as P;
     case 2:
       return (reader.readStringOrNull(offset)) as P;
     case 3:
-      return (reader.readStringOrNull(offset)) as P;
-    case 4:
       return (reader.readStringOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -244,31 +236,6 @@ extension UserQueryWhere on QueryBuilder<User, User, QWhereClause> {
 }
 
 extension UserQueryFilter on QueryBuilder<User, User, QFilterCondition> {
-  QueryBuilder<User, User, QAfterFilterCondition> darkModeIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'darkMode',
-      ));
-    });
-  }
-
-  QueryBuilder<User, User, QAfterFilterCondition> darkModeIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'darkMode',
-      ));
-    });
-  }
-
-  QueryBuilder<User, User, QAfterFilterCondition> darkModeEqualTo(bool? value) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'darkMode',
-        value: value,
-      ));
-    });
-  }
-
   QueryBuilder<User, User, QAfterFilterCondition> emailIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
@@ -1034,18 +1001,6 @@ extension UserQueryLinks on QueryBuilder<User, User, QFilterCondition> {
 }
 
 extension UserQuerySortBy on QueryBuilder<User, User, QSortBy> {
-  QueryBuilder<User, User, QAfterSortBy> sortByDarkMode() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'darkMode', Sort.asc);
-    });
-  }
-
-  QueryBuilder<User, User, QAfterSortBy> sortByDarkModeDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'darkMode', Sort.desc);
-    });
-  }
-
   QueryBuilder<User, User, QAfterSortBy> sortByEmail() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'email', Sort.asc);
@@ -1096,18 +1051,6 @@ extension UserQuerySortBy on QueryBuilder<User, User, QSortBy> {
 }
 
 extension UserQuerySortThenBy on QueryBuilder<User, User, QSortThenBy> {
-  QueryBuilder<User, User, QAfterSortBy> thenByDarkMode() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'darkMode', Sort.asc);
-    });
-  }
-
-  QueryBuilder<User, User, QAfterSortBy> thenByDarkModeDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'darkMode', Sort.desc);
-    });
-  }
-
   QueryBuilder<User, User, QAfterSortBy> thenByEmail() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'email', Sort.asc);
@@ -1170,12 +1113,6 @@ extension UserQuerySortThenBy on QueryBuilder<User, User, QSortThenBy> {
 }
 
 extension UserQueryWhereDistinct on QueryBuilder<User, User, QDistinct> {
-  QueryBuilder<User, User, QDistinct> distinctByDarkMode() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'darkMode');
-    });
-  }
-
   QueryBuilder<User, User, QDistinct> distinctByEmail(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -1210,12 +1147,6 @@ extension UserQueryProperty on QueryBuilder<User, User, QQueryProperty> {
   QueryBuilder<User, int, QQueryOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'id');
-    });
-  }
-
-  QueryBuilder<User, bool?, QQueryOperations> darkModeProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'darkMode');
     });
   }
 

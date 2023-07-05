@@ -23,6 +23,7 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: kBgColor,
       body: SingleChildScrollView(
         child: SafeArea(
           child: Padding(
@@ -87,7 +88,7 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
                   ],
                 ),
 
-                Divider(),
+                Divider(color: kYellowColor),
                 SizedBox(height: 10.0),
 
                 // Text area field

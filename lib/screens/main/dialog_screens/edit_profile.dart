@@ -81,30 +81,12 @@ class _EditProfileState extends State<EditProfile> {
                 ..lastName = lName ?? '${user?.lastName}'
                 ..email = email ?? '${user?.email}'
                 ..profilePicture = data['profile_pic']
-                ..id = data['id']
-                ..darkMode = user?.darkMode);
-
-          // update user details on isar
-          // var isarData = await _isarService.updateUserDetails(
-          //   context,
-          //   email ?? '${user?.email}',
-          //   fName ?? '${user?.firstName}',
-          //   lName ?? '${user?.lastName}',
-          // );
+                ..id = data['id']);
+          navigatorPop(context);
           setState(() {
             message = 'Successfully updated profile';
           });
-          navigatorPop(context);
-
-          // if (isarData is User) {
-          // } else {
-          //   setState(() {
-          //     message = 'Something went wrong. Try again';
-          //   });
-          // }
-
-          // get updated details from isar service
-          // await _isarService.getUserDetails(context);
+          showSnackbar(context, message);
         } else if (data == 400) {
           setState(() {
             message = 'This email already exists';
@@ -114,7 +96,6 @@ class _EditProfileState extends State<EditProfile> {
             message = 'Something went wrong. Try again';
           });
         }
-        showSnackbar(context, message);
       }
     }
 
@@ -197,6 +178,15 @@ class _EditProfileState extends State<EditProfile> {
                 _isLoading
                     ? Loader(size: 20.0, color: kDarkYellowColor)
                     : SizedBox(height: 0.0),
+
+                message.isEmpty
+                    ? SizedBox(height: 0.0)
+                    : Center(
+                        child: Text(
+                          message,
+                          style: kNormalTextStyle.copyWith(color: kRedColor),
+                        ),
+                      ),
               ],
             ),
           );

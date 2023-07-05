@@ -2,28 +2,19 @@
 
 import 'package:flutter/material.dart';
 
-bool? kDarkMode = false;
-
-// class Constants {
-//   Constants() {
-//     darkmode = DarkMode().isDarkMode();
-//   }
-// }
+bool kDarkMode = false;
 
 // COLORS
 const kYellowColor = Color(0xFFFFC901);
 const kDarkYellowColor = Color(0xFF958446);
 const kGreenColor = Color(0xFF51D89D);
 const kOrangeColor = Color(0xFFFFA500);
-const kTextColor = Color(0xff1E1E1E);
+Color kTextColor = Color.fromARGB(255, 126, 126, 126);
 const kWhiteTextColor = Colors.white;
 const kGreyTextColor = Color.fromARGB(255, 126, 126, 126);
 // const kTextColor = Colors.white;
 const kButtonTextColor = Colors.white;
-Color kBgColor =
-    kDarkMode! ? Color(0xff1E1E1E) : Color.fromARGB(255, 250, 250, 250);
-// const kBgColor = Color(0xff1E1E1E);
-// kDarkMode! ? Color(0xff1E1E1E) :
+Color kBgColor = Color.fromARGB(255, 250, 250, 250);
 const kRedColor = Color.fromARGB(255, 206, 15, 15);
 const kInactiveColor = Color.fromARGB(255, 199, 199, 199);
 
@@ -38,7 +29,7 @@ const kAnimationDuration5 = Duration(seconds: 5);
 const fontFamily = 'Poppins';
 
 // TEXT STYLE
-const kAppBarTextStyle = TextStyle(
+var kAppBarTextStyle = TextStyle(
   fontSize: 20.0,
   fontWeight: FontWeight.bold,
   color: kTextColor,
@@ -52,7 +43,7 @@ const kOtherAppBarTextStyle = TextStyle(
   fontFamily: fontFamily,
 );
 
-const kNormalTextStyle = TextStyle(
+var kNormalTextStyle = TextStyle(
   fontSize: 15.0,
   color: kTextColor,
   fontFamily: fontFamily,
@@ -64,7 +55,7 @@ const kGreyNormalTextStyle = TextStyle(
   fontFamily: fontFamily,
 );
 
-const kTextFieldStyle = TextStyle(
+var kTextFieldStyle = TextStyle(
   fontSize: 12.0,
   color: kTextColor,
   fontFamily: fontFamily,

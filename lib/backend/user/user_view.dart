@@ -23,8 +23,13 @@ class UserView {
     // store data gotten from response in user api
     var data = await _userAPI.createAccount(data: jsonData);
 
-    // store returned data
-    return data;
+    if (data is Map<String, dynamic>) {
+      final user = User.fromJson(data);
+      return user;
+    } else {
+      // store returned data
+      return data;
+    }
   }
 
   /// FUNCTION TO HANDLE USER LOGIN
@@ -52,7 +57,13 @@ class UserView {
     var data = await _userAPI.getUserDetails();
     log('$data');
 
-    return data;
+    if (data is Map<String, dynamic>) {
+      final user = User.fromJson(data);
+      return user;
+    } else {
+      return data;
+    }
+
   }
 
   /// FUNCTION TO GET USER PROFILE PICTURE
@@ -80,7 +91,7 @@ class UserView {
       "last_name": lastName,
       "email": email,
     };
-    
+
     var data = await _userAPI.updateUserDetails(jsonData);
 
     return data;
@@ -99,7 +110,7 @@ class UserView {
       "new_password": newPassword,
       "confirm_password": confirmPassword,
     };
-    
+
     var data = await _userAPI.changePassword(jsonData);
 
     return data;

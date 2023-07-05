@@ -38,19 +38,18 @@ class _LogoutDialogState extends State<LogoutDialog> {
       setState(() {
         message = 'Successfully logged out. See you soon.';
       });
-      navigatorPushReplacementNamed(context, GetStarted.id);
+      showSnackbar(context, message);
+      navigatorPushReplacementNamed(context, Login.id);
     } else {
       setState(() {
         message = 'An error occured while signing you out. Try again .';
       });
-      navigatorPop(context);
+      // navigatorPop(context);
     }
-    showSnackbar(context, message);
   }
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<UserProvider?>(context);
     return Column(
       children: [
         DialogHeader(
@@ -65,12 +64,11 @@ class _LogoutDialogState extends State<LogoutDialog> {
           inactiveButton: false,
           button2Text: 'Logout',
           button2Color: kDarkYellowColor,
-          button2onPressed: () {
-            // clear user data from provider
-            user?.clearUser();
-
+          button2onPressed: () async {
+            // clear the isar database
+            await IsarService().clearDb(context);
             // logout
-            _logout();
+            await _logout();
           },
         ),
         SizedBox(height: 10.0),
@@ -83,6 +81,14 @@ class _LogoutDialogState extends State<LogoutDialog> {
                 ),
               )
             : SizedBox(),
+        message.isEmpty
+            ? SizedBox(height: 0.0)
+            : Center(
+                child: Text(
+                  message,
+                  style: kNormalTextStyle.copyWith(color: kRedColor),
+                ),
+              ),
       ],
     );
   }

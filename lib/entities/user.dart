@@ -20,16 +20,6 @@ class UserModel {
     required this.password2,
     this.profilePicture,
   });
-
-  // factory UserModel.fromJson(Map<String, dynamic> json) {
-  //   return UserModel(
-  //     firstName: json['first_name'],
-  //     lastName: json['last_name'],
-  //     email: json['email'],
-  //     password: json['password'],
-  //     password2: json['password2'],
-  //   );
-  // }
 }
 
 /// USED IN GETTING AND STORING USER DETAILS IN LOCAL DB
@@ -41,11 +31,29 @@ class User {
   String? lastName;
   String? email;
   String? profilePicture;
-  bool? darkMode;
+  // bool darkMode = false;
 
   // Foreign keys
-  final todos = IsarLinks<Todo>();
-  final notes = IsarLinks<Note>();
+  var todos = IsarLinks<Todo>();
+  var notes = IsarLinks<Note>();
+
+  User({
+    this.id,
+    this.firstName,
+    this.lastName,
+    this.email,
+    this.profilePicture,
+  });
+
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
+      id: json['id'],
+      firstName: json['first_name'],
+      lastName: json['last_name'],
+      email: json['email'],
+      profilePicture: json['profile_pic'],
+    );
+  }
 
   // Script to run for build_runner
   // flutter pub run build_runner build --delete-conflicting-outputs
