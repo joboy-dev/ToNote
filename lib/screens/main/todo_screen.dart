@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, must_be_immutable, prefer_final_fields
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, must_be_immutable, prefer_final_fields, use_build_context_synchronously
 
 import 'dart:developer' as dev;
 
@@ -7,18 +7,20 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:todoey/entities/user.dart';
+import 'package:todoey/backend/todo/todo_view.dart';
+import 'package:todoey/entities/todo.dart';
 import 'package:todoey/provider/todo_provider.dart';
 import 'package:todoey/provider/user_provider.dart';
+import 'package:todoey/screens/main/completed_todos_screen.dart';
 import 'package:todoey/screens/main/dialog_screens/add_todo.dart';
-import 'package:todoey/screens/main/dialog_screens/edit_todo.dart';
 import 'package:todoey/services/isar_service.dart';
 import 'package:todoey/shared/constants.dart';
 import 'package:todoey/shared/custom_appbar.dart';
-import 'package:todoey/shared/loader.dart';
 import 'package:todoey/shared/loading_screen.dart';
+import 'package:todoey/shared/navigator.dart';
 import 'package:todoey/shared/widgets/button.dart';
 import 'package:todoey/shared/widgets/dialog.dart';
+import 'package:todoey/shared/widgets/snackbar.dart';
 import 'package:todoey/shared/widgets/todo_item.dart';
 
 class TodoScreen extends StatefulWidget {
@@ -34,64 +36,30 @@ class _TodoScreenState extends State<TodoScreen> with TickerProviderStateMixin {
   Random random = Random();
   bool? isChecked = false;
 
+  bool _isLoading = true;
+  String message = '';
+
   late AnimationController _controller;
   late Animation<double> _animation;
-
-  // late AnimationController _controller1;
-  // late Animation<double> _animation1;
-
-  // late AnimationController _controller2;
-  // late Animation<double> _animation2;
 
   @override
   void initState() {
     _controller = AnimationController(
       vsync: this,
-      duration: kAnimationDuration3,
+      duration: kAnimationDuration5,
     );
-
-    // _controller1 = AnimationController(
-    //   vsync: this,
-    //   duration: kAnimationDuration1,
-    // );
-
-    // _controller2 = AnimationController(
-    //   vsync: this,
-    //   duration: kAnimationDuration1,
-    // );
-
-    // handle all animations one by one
     _controller.forward();
-    // .whenCompleteOrCancel(() {
-    //   _controller1.forward().whenCompleteOrCancel(() {
-    //     _controller2.forward();
-    //   });
-    // });
 
-    _animation = CurvedAnimation(
+    _animation = Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
       parent: _controller,
       curve: Curves.easeInOut,
-    );
-
-    // _animation1 = Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-    //   parent: _controller1,
-    //   curve: Curves.linearToEaseOut,
-    // ));
-
-    // _animation2 = Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-    //   parent: _controller2,
-    //   curve: Curves.linear,
-    // ));
-
+    ));
     super.initState();
   }
 
   @override
   void dispose() {
     _controller.dispose();
-    // _controller1.dispose();
-    // _controller2.dispose();
-
     super.dispose();
   }
 
@@ -99,6 +67,8 @@ class _TodoScreenState extends State<TodoScreen> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider?>(context)?.user;
     final todos = Provider.of<TodoProvider?>(context)?.todos;
+
+    // Todo? todo;
 
     return user == null
         ? ErrorLoadingScreen()
@@ -108,7 +78,6 @@ class _TodoScreenState extends State<TodoScreen> with TickerProviderStateMixin {
               child: SafeArea(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     CustomAppBar(
                       textColor: kGreyTextColor,
@@ -133,6 +102,23 @@ class _TodoScreenState extends State<TodoScreen> with TickerProviderStateMixin {
                       ),
                     ),
 
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        IconTextButton(
+                          text: 'View all completed todos',
+                          icon: Icons.check_box_rounded,
+                          iconColor: kGreenColor,
+                          gap: 5.0,
+                          fontSize: 14.0,
+                          onPressed: () {
+                            navigatorPushNamed(
+                                context, CompletedTodosScreen.id);
+                          },
+                        ),
+                      ],
+                    ),
+
                     // Todos
                     todos == null || todos.isEmpty
                         ? Center(
@@ -143,42 +129,28 @@ class _TodoScreenState extends State<TodoScreen> with TickerProviderStateMixin {
                           )
                         : Padding(
                             padding: kAppPadding,
-                            child: SingleChildScrollView(
-                              child: SizedBox(
-                                height: 600.0,
-                                child: ListView.builder(
-                                  shrinkWrap: true,
-                                  itemCount: todos.length,
-                                  itemBuilder: (context, index) {
-                                    // reverse index logic
-                                    final reversedIndex =
-                                        todos.length - 1 - index;
-                                    // get individual todos
-                                    final todo = todos[reversedIndex];
-                                    dev.log(
-                                        'List view backend todo id -- ${todo.id}');
-                                    isChecked = todo.isCompleted;
-                                    return TodoItem(
-                                      tileColor: kGreenColor,
-                                      // todo id for backend todo id (update in backend)
-                                      todoId: todo.id!,
-                                      // index id for list position (getting from provider)
-                                      indexId: reversedIndex,
-                                      title: '${todo.title}',
-                                      isChecked: todo.isCompleted,
-                                      date: DateTime.parse('${todo.expire}'),
-                                      onChanged: (value) {
-                                        setState(() {
-                                          isChecked = value!;
-                                        });
-                                      },
-                                    );
-                                  },
-                                ),
+                            child: SizedBox(
+                              height: 520.00,
+                              child: ListView.builder(
+                                itemCount: todos.length,
+                                itemBuilder: (context, index) {
+                                  // reverse index logic
+                                  final reversedIndex =
+                                      todos.length - 1 - index;
+                                  // get individual todos
+                                  final todo = todos[reversedIndex];
+                                  dev.log(
+                                      'List view backend todo id -- ${todo.id}');
+                                  isChecked = todo.isCompleted;
+                                  return TodoItem(
+                                    // index id for list position (getting from provider)
+                                    indexId: reversedIndex,
+                                  );
+                                },
                               ),
                             ),
                           ),
-                    SizedBox(height: 60.0),
+                    SizedBox(height: 10.0),
                   ],
                 ),
               ),

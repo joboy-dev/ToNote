@@ -20,7 +20,6 @@ import 'package:todoey/shared/widgets/text_field.dart';
 class EditTodoScreen extends StatefulWidget {
   EditTodoScreen({
     super.key,
-    // required this.backendTodoId,
     required this.providerTodoId,
   });
 
@@ -47,6 +46,7 @@ class _EditTodoScreenState extends State<EditTodoScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final _isarService = IsarService();
     final _todoView = TodoView();
 
     // get all todos from provider
@@ -81,8 +81,8 @@ class _EditTodoScreenState extends State<EditTodoScreen> {
         );
 
         if (data is Todo) {
-          await IsarService().saveTodo(data, context);
-          await IsarService().getUserTodos(context);
+          await _isarService.saveTodo(data, context);
+          await _isarService.getUserTodos(context);
 
           setState(() {
             _isLoading = false;

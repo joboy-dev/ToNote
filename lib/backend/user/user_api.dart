@@ -279,7 +279,7 @@ class UserAPI {
       // add file path to the request
       request.files.add(await http.MultipartFile.fromPath('file', file.path));
 
-      var response = await request.send();
+      http.StreamedResponse response = await request.send();
 
       // var responseData = jsonDecode(response.body);
 
@@ -289,6 +289,8 @@ class UserAPI {
       if (response.statusCode == 200) {
         log('-----------------RESPONSE 200 DATA-----------------');
         log('$response');
+
+        log('Stream response for profile picture -- ${await response.stream.bytesToString()}');
 
         return response.statusCode;
       } else if (response.statusCode == 400) {

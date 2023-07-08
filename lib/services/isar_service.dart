@@ -7,12 +7,14 @@ import 'package:flutter/material.dart';
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:todoey/backend/note/note_view.dart';
 import 'package:todoey/backend/todo/todo_view.dart';
 
 import 'package:todoey/backend/user/user_view.dart';
 import 'package:todoey/entities/note.dart';
 import 'package:todoey/entities/todo.dart';
 import 'package:todoey/entities/user.dart';
+import 'package:todoey/provider/notes_provider.dart';
 import 'package:todoey/provider/todo_provider.dart';
 import 'package:todoey/provider/user_provider.dart';
 
@@ -20,6 +22,7 @@ class IsarService {
   late Future<Isar> db;
   final UserView userView = UserView();
   final TodoView todoView = TodoView();
+  final NoteView noteView = NoteView();
 
   IsarService() {
     db = openDB();
@@ -53,18 +56,6 @@ class IsarService {
     Provider.of<UserProvider>(context, listen: false).clearUser();
     log('Clearing user provider -- ${Provider.of<UserProvider>(context, listen: false).user?.email}');
   }
-
-  // Future clearIsarTodos() async {
-  //   // Future clearIsarTodos(BuildContext context) async {
-  //   final isar = await db;
-  //   // await isar.writeTxn(() => isar.clear());
-  //   await isar.writeTxn(() => isar.todos.clear());
-  //   // await isar.writeTxn(() => isar.notes.clear());
-
-  //   // set user provider to null
-  //   // Provider.of<UserProvider>(context, listen: false).clearUser();
-  //   // log('Clearing user provider -- ${Provider.of<UserProvider>(context, listen: false).user?.email}');
-  // }
 
   // -------------------------USERS---------------------------
 
@@ -133,6 +124,7 @@ class IsarService {
 
     // get all user todos
     var userTodos = await todoView.getUserTodos();
+    // Todo todo = userTodos;
 
     if (userTodos is List<Todo>) {
       // loop through all todo items gotten from backend and save in isar
@@ -145,6 +137,13 @@ class IsarService {
       Provider.of<TodoProvider>(context, listen: false).setTodos(todos);
       log('${Provider.of<TodoProvider>(context, listen: false).todos}');
 
+      // query isar db for all completed todos
+      final completedTodos = await isar.txn(
+          () => isar.todos.where().filter().isCompletedEqualTo(true).findAll());
+
+      // save all completed todos in provider
+      Provider.of<TodoProvider>(context, listen: false)
+          .setCompletedTodos(completedTodos);
       return todos;
     } else {
       return null;
@@ -155,14 +154,64 @@ class IsarService {
   Future deleteTodo(int id) async {
     final isar = await db;
 
-    await isar.writeTxn(() => isar.todos.where().idEqualTo(id).deleteAll());
+    await isar
+        .writeTxn(() => isar.todos.where().filter().idEqualTo(id).deleteAll());
+  }
+
+  Future addCompletedTodo(int id, BuildContext context) async {
+    final isar = await db;
+
+    final completedTodo = await isar
+        .txn(() => isar.todos.where().filter().indexIdEqualTo(id).findFirst());
+
+    if (completedTodo != null) {
+      Provider.of<TodoProvider>(context, listen: false)
+          .setCompletedTodo(completedTodo);
+    }
   }
 
   // ------------------------NOTES-----------------------------
 
   /// Function to add new note and update existing note in Isar DB
-  Future saveNote(Note note) async {
+  Future saveNote(Note note, BuildContext context) async {
     final isar = await db;
     isar.writeTxnSync<int>(() => isar.notes.putSync(note));
+
+    // set note in provider
+    Provider.of<NoteProvider>(context, listen: false).setNote(note);
+    log('${Provider.of<NoteProvider>(context, listen: false).notes}');
+  }
+
+  /// Function to get current logged inuser todos
+  Future getUserNotes(BuildContext context) async {
+    final isar = await db;
+
+    // get all user todos
+    var userNotes = await noteView.getUserNotes();
+
+    if (userNotes is List<Note>) {
+      // loop through all todo items gotten from backend and save in isar
+      for (var note in userNotes) {
+        await saveNote(note, context);
+      }
+
+      final notes = await isar.txn(() => isar.notes.where().findAll());
+
+      Provider.of<NoteProvider>(context, listen: false).setNotes(notes);
+      log('${Provider.of<NoteProvider>(context, listen: false).notes}');
+
+      return notes;
+    } else {
+      return null;
+    }
+  }
+
+  /// Function to delete a user todo
+  Future deleteNote(int id) async {
+    final isar = await db;
+
+    // await isar.writeTxn(() => isar.notes.where().indexIdEqualTo(id).deleteAll());
+    await isar
+        .writeTxn(() => isar.notes.where().filter().idEqualTo(id).deleteAll());
   }
 }

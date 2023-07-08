@@ -18,7 +18,7 @@ class TodoView {
       // create map of json data
       Map<String, dynamic> jsonData = {
         "name": todo.title,
-        "ic_completed": todo.isCompleted,
+        "is_completed": todo.isCompleted,
         "due_date": todo.expire,
         "owner": userData.id,
       };
@@ -58,7 +58,7 @@ class TodoView {
       // create map of json data
       Map<String, dynamic> jsonData = {
         "name": todo.title,
-        "ic_completed": todo.isCompleted,
+        "is_completed": todo.isCompleted,
         "due_date": todo.expire,
         "owner": userData.id,
       };

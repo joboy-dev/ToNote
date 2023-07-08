@@ -1,11 +1,8 @@
 // ignore_for_file: prefer_const_constructors, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:todoey/backend/user/user_view.dart';
-import 'package:todoey/provider/user_provider.dart';
 import 'package:todoey/screens/authentication/login.dart';
-import 'package:todoey/screens/onboarding/get_started.dart';
 import 'package:todoey/services/isar_service.dart';
 import 'package:todoey/shared/constants.dart';
 import 'package:todoey/shared/navigator.dart';
@@ -39,7 +36,7 @@ class _LogoutDialogState extends State<LogoutDialog> {
         message = 'Successfully logged out. See you soon.';
       });
       showSnackbar(context, message);
-      navigatorPushReplacementNamed(context, Login.id);
+      navigatorPushReplacementNamed(context, Wrapper.id);
     } else {
       setState(() {
         message = 'An error occured while signing you out. Try again .';
@@ -68,7 +65,7 @@ class _LogoutDialogState extends State<LogoutDialog> {
             // clear the isar database
             await IsarService().clearDb(context);
             // logout
-            await _logout();
+            _logout();
           },
         ),
         SizedBox(height: 10.0),

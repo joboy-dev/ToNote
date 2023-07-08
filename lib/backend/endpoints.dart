@@ -21,3 +21,5 @@ final userNotesEndpoint = '$baseUrl/notes/list/';
 final createNoteEndpoint = '$baseUrl/notes/create/';
 // this needs a note id!!
 final noteDetailEndpoint = '$baseUrl/notes/list';
+getNoteDetailEndpoint(int id) => '$baseUrl/notes/list/$id/';
+

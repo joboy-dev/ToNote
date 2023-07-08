@@ -19,6 +19,7 @@ class TodoModel {
 @Collection()
 class Todo {
   Id? id;
+  int indexId = Isar.autoIncrement;
   String? title;
   bool? isCompleted;
   String? expire;

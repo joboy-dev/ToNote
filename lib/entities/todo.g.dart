@@ -22,18 +22,23 @@ const TodoSchema = CollectionSchema(
       name: r'expire',
       type: IsarType.string,
     ),
-    r'isCompleted': PropertySchema(
+    r'indexId': PropertySchema(
       id: 1,
+      name: r'indexId',
+      type: IsarType.long,
+    ),
+    r'isCompleted': PropertySchema(
+      id: 2,
       name: r'isCompleted',
       type: IsarType.bool,
     ),
     r'ownerEmail': PropertySchema(
-      id: 2,
+      id: 3,
       name: r'ownerEmail',
       type: IsarType.string,
     ),
     r'title': PropertySchema(
-      id: 3,
+      id: 4,
       name: r'title',
       type: IsarType.string,
     )
@@ -94,9 +99,10 @@ void _todoSerialize(
   Map<Type, List<int>> allOffsets,
 ) {
   writer.writeString(offsets[0], object.expire);
-  writer.writeBool(offsets[1], object.isCompleted);
-  writer.writeString(offsets[2], object.ownerEmail);
-  writer.writeString(offsets[3], object.title);
+  writer.writeLong(offsets[1], object.indexId);
+  writer.writeBool(offsets[2], object.isCompleted);
+  writer.writeString(offsets[3], object.ownerEmail);
+  writer.writeString(offsets[4], object.title);
 }
 
 Todo _todoDeserialize(
@@ -108,10 +114,11 @@ Todo _todoDeserialize(
   final object = Todo(
     expire: reader.readStringOrNull(offsets[0]),
     id: id,
-    isCompleted: reader.readBoolOrNull(offsets[1]),
-    ownerEmail: reader.readStringOrNull(offsets[2]),
-    title: reader.readStringOrNull(offsets[3]),
+    isCompleted: reader.readBoolOrNull(offsets[2]),
+    ownerEmail: reader.readStringOrNull(offsets[3]),
+    title: reader.readStringOrNull(offsets[4]),
   );
+  object.indexId = reader.readLong(offsets[1]);
   return object;
 }
 
@@ -125,10 +132,12 @@ P _todoDeserializeProp<P>(
     case 0:
       return (reader.readStringOrNull(offset)) as P;
     case 1:
-      return (reader.readBoolOrNull(offset)) as P;
+      return (reader.readLong(offset)) as P;
     case 2:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readBoolOrNull(offset)) as P;
     case 3:
+      return (reader.readStringOrNull(offset)) as P;
+    case 4:
       return (reader.readStringOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -428,6 +437,58 @@ extension TodoQueryFilter on QueryBuilder<Todo, Todo, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
         property: r'id',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<Todo, Todo, QAfterFilterCondition> indexIdEqualTo(int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'indexId',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Todo, Todo, QAfterFilterCondition> indexIdGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'indexId',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Todo, Todo, QAfterFilterCondition> indexIdLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'indexId',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Todo, Todo, QAfterFilterCondition> indexIdBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'indexId',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -825,6 +886,18 @@ extension TodoQuerySortBy on QueryBuilder<Todo, Todo, QSortBy> {
     });
   }
 
+  QueryBuilder<Todo, Todo, QAfterSortBy> sortByIndexId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'indexId', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Todo, Todo, QAfterSortBy> sortByIndexIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'indexId', Sort.desc);
+    });
+  }
+
   QueryBuilder<Todo, Todo, QAfterSortBy> sortByIsCompleted() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isCompleted', Sort.asc);
@@ -887,6 +960,18 @@ extension TodoQuerySortThenBy on QueryBuilder<Todo, Todo, QSortThenBy> {
     });
   }
 
+  QueryBuilder<Todo, Todo, QAfterSortBy> thenByIndexId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'indexId', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Todo, Todo, QAfterSortBy> thenByIndexIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'indexId', Sort.desc);
+    });
+  }
+
   QueryBuilder<Todo, Todo, QAfterSortBy> thenByIsCompleted() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isCompleted', Sort.asc);
@@ -932,6 +1017,12 @@ extension TodoQueryWhereDistinct on QueryBuilder<Todo, Todo, QDistinct> {
     });
   }
 
+  QueryBuilder<Todo, Todo, QDistinct> distinctByIndexId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'indexId');
+    });
+  }
+
   QueryBuilder<Todo, Todo, QDistinct> distinctByIsCompleted() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'isCompleted');
@@ -963,6 +1054,12 @@ extension TodoQueryProperty on QueryBuilder<Todo, Todo, QQueryProperty> {
   QueryBuilder<Todo, String?, QQueryOperations> expireProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'expire');
+    });
+  }
+
+  QueryBuilder<Todo, int, QQueryOperations> indexIdProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'indexId');
     });
   }
 

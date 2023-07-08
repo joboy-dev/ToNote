@@ -14,6 +14,7 @@ import 'package:todoey/provider/device_prefs_provider.dart';
 import 'package:todoey/provider/user_provider.dart';
 import 'package:todoey/screens/main/add_notes_screen.dart';
 import 'package:todoey/screens/main/add_profile_picture_screen.dart';
+import 'package:todoey/screens/main/completed_todos_screen.dart';
 import 'package:todoey/screens/main/edit_note_screen.dart';
 import 'package:todoey/screens/main/home_screen.dart';
 import 'package:todoey/screens/main/loading_data_screen.dart';
@@ -63,20 +64,20 @@ class _BottomNavBarState extends State<BottomNavBar> {
 
   // List of persistent nav bar items
   List<PersistentBottomNavBarItem> _navBarsItems() => [
-        // PersistentBottomNavBarItem(
-        //   icon: const Icon(Icons.home),
-        //   title: "Home",
-        //   activeColorPrimary: kBgColor,
-        //   inactiveColorPrimary: kGreyTextColor,
-        //   routeAndNavigatorSettings: RouteAndNavigatorSettings(
-        //     initialRoute: HomeScreen.id,
-        //     routes: {
-        //       AddNotesScreen.id: (context) => AddNotesScreen(),
-        //       EditNoteScreen.id: (context) => EditNoteScreen(),
-        //       LoadingDataScreen.id: (context) => LoadingDataScreen(),
-        //     },
-        //   ),
-        // ),
+        PersistentBottomNavBarItem(
+          icon: const Icon(Icons.home),
+          title: "Home",
+          activeColorPrimary: kBgColor,
+          inactiveColorPrimary: kGreyTextColor,
+          routeAndNavigatorSettings: RouteAndNavigatorSettings(
+            initialRoute: HomeScreen.id,
+            routes: {
+              AddNotesScreen.id: (context) => AddNotesScreen(),
+              // EditNoteScreen.id: (context) => EditNoteScreen(),
+              LoadingDataScreen.id: (context) => LoadingDataScreen(),
+            },
+          ),
+        ),
         PersistentBottomNavBarItem(
           icon: const Icon(Icons.checklist_rounded),
           title: "Todo",
@@ -85,9 +86,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
           routeAndNavigatorSettings: RouteAndNavigatorSettings(
             initialRoute: TodoScreen.id,
             routes: {
-              AddNotesScreen.id: (context) => AddNotesScreen(),
-              EditNoteScreen.id: (context) => EditNoteScreen(),
-              LoadingDataScreen.id: (context) => LoadingDataScreen(),
+              CompletedTodosScreen.id: (context) => CompletedTodosScreen()
             },
           ),
         ),
@@ -101,7 +100,6 @@ class _BottomNavBarState extends State<BottomNavBar> {
             initialRoute: NotesScreen.id,
             routes: {
               AddNotesScreen.id: (context) => AddNotesScreen(),
-              EditNoteScreen.id: (context) => EditNoteScreen(),
               LoadingDataScreen.id: (context) => LoadingDataScreen(),
             },
           ),
@@ -122,14 +120,14 @@ class _BottomNavBarState extends State<BottomNavBar> {
       ];
 
   List<Widget> _buildScreens() => [
-        // HomeScreen(),
+        HomeScreen(),
         TodoScreen(),
         NotesScreen(),
         ProfileScreen(),
       ];
 
   List<Color> colors = [
-    // kOrangeColor,
+    kOrangeColor,
     kGreenColor,
     kYellowColor,
     kDarkYellowColor
@@ -164,14 +162,32 @@ class _BottomNavBarState extends State<BottomNavBar> {
               imageUrl: user?.profilePicture,
               appBarColor: kBgColor,
             ),
+            CustomAppBar(
+              textColor: kGreenColor,
+              appBarText: 'Loading...',
+              imageUrl: user?.profilePicture,
+              appBarColor: kBgColor,
+            ),
+            CustomAppBar(
+              textColor: kYellowColor,
+              appBarText: 'Loading...',
+              imageUrl: user?.profilePicture,
+              appBarColor: kBgColor,
+            ),
+            CustomAppBar(
+              textColor: kDarkYellowColor,
+              appBarText: 'Loading...',
+              imageUrl: user?.profilePicture,
+              appBarColor: kBgColor,
+            ),
           ]
         : [
-            // CustomAppBar(
-            //   textColor: kOrangeColor,
-            //   appBarText: '$greeting, ${user.firstName}',
-            //   imageUrl: user.profilePicture,
-            //   appBarColor: kBgColor,
-            // ),
+            CustomAppBar(
+              textColor: kOrangeColor,
+              appBarText: '$greeting, ${user.firstName}',
+              imageUrl: user.profilePicture,
+              appBarColor: kBgColor,
+            ),
             CustomAppBar(
               textColor: kGreenColor,
               appBarText: '$greeting, ${user.firstName}',
@@ -215,13 +231,6 @@ class _BottomNavBarState extends State<BottomNavBar> {
                     width: 3.0,
                   ),
                 ),
-                // boxShadow: [
-                //   BoxShadow(
-                //     color: kBgColor,
-                //     offset: Offset(1.0, 4.0),
-                //     blurStyle: BlurStyle.solid,
-                //   )
-                // ]
               ),
               itemAnimationProperties: const ItemAnimationProperties(
                 duration: Duration(milliseconds: 400),

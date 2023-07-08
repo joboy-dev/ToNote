@@ -1,6 +1,7 @@
-// ignore_for_file: prefer_const_constructors, use_build_context_synchronously, no_leading_underscores_for_local_identifiers
+// ignore_for_file: prefer_const_constructors, use_build_context_synchronously, no_leading_underscores_for_local_identifiers, unnecessary_string_interpolations
 
 import 'dart:math';
+import 'dart:developer' as dev;
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -18,13 +19,12 @@ import 'dialog.dart';
 class TodoItem extends StatefulWidget {
   TodoItem({
     super.key,
-    required this.title,
-    required this.isChecked,
-    required this.date,
-    required this.onChanged,
-    required this.todoId,
+    // required this.title,
+    // required this.isChecked,
+    // required this.date,
+    // required this.todoId,
     required this.indexId,
-    required this.tileColor,
+    // required this.todoObject,
   });
 
   /* 
@@ -35,20 +35,22 @@ class TodoItem extends StatefulWidget {
   provider 
   */
 
-  int todoId;
+  // int todoId;
   int indexId;
-  final String title;
-  bool? isChecked = false;
-  final DateTime date;
-  Function(bool? value) onChanged;
-  Color tileColor;
+  // final String title;
+  // bool? isChecked = false;
+  // final DateTime date;
+  // final Todo todoObject;
 
   @override
   State<TodoItem> createState() => _TodoItemState();
 }
 
-class _TodoItemState extends State<TodoItem> {
+class _TodoItemState extends State<TodoItem> with TickerProviderStateMixin {
   late Color color;
+
+  late AnimationController _controller;
+  late Animation<double> _animation;
 
   List colors = [
     kGreenColor,
@@ -62,8 +64,24 @@ class _TodoItemState extends State<TodoItem> {
 
   @override
   void initState() {
+    _controller = AnimationController(
+      vsync: this,
+      duration: kAnimationDuration5,
+    );
+    _controller.forward();
+
+    _animation = Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeInOut,
+    ));
     color = colors[Random().nextInt(colors.length).toInt()];
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -75,8 +93,10 @@ class _TodoItemState extends State<TodoItem> {
     bool _isLoading = false;
     String message = '';
 
+    // get a single todo based on index id from list in provider
     Todo todo = todos![widget.indexId];
 
+    // function to delete a todo
     deleteTodo() async {
       setState(() {
         _isLoading = true;
@@ -105,68 +125,146 @@ class _TodoItemState extends State<TodoItem> {
       showSnackbar(context, message);
     }
 
-    return Column(
-      children: [
-        _isLoading ? Loader(size: 25.0, color: kGreenColor) : SizedBox(),
-        ListTile(
-          title: Text(
-            '${widget.todoId}- ${widget.title}',
-            style: kNormalTextStyle.copyWith(
-              fontSize: 16.0,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
+    toggleCompletedStatus() async {
+      // get a single todo based on the index id of a todo passed into this screen
+      // from provider
+      dev.log('EditTodo dialog index todo id -- ${todo.id}');
+
+      TodoModel todoModel = TodoModel(
+        title: '${todo.title}',
+        isCompleted: true,
+        expire: '${todo.expire}',
+      );
+
+      setState(() {
+        _isLoading = true;
+      });
+
+      var data = await _todoView.updateTodo(
+        id: todo.id!,
+        todo: todoModel,
+      );
+
+      if (data is Todo) {
+        // get index of the todo data
+        final index = todos.indexOf(todo);
+
+        // save todo to isar db
+        await _isarService.saveTodo(data, context);
+
+        // store completed todo in provider based on todo id passed into the
+        // update todo function above
+        await _isarService.addCompletedTodo(widget.indexId, context);
+        // await _isarService.addCompletedTodo(todo.id!, context);
+
+        // get user todos
+        await _isarService.getUserTodos(context);
+
+        setState(() {
+          _isLoading = false;
+          message = 'Todo marked as complete';
+        });
+        showSnackbar(context, message);
+      } else {
+        setState(() {
+          _isLoading = false;
+          message = 'Something went wrong. Try again.';
+        });
+      }
+    }
+
+    return Card(
+      elevation: 0.0,
+      color: kBgColor,
+      shadowColor: Colors.transparent,
+      child: Column(
+        children: [
+          _isLoading ? Loader(size: 25.0, color: kGreenColor) : SizedBox(),
+          ListTile(
+            title: Text(
+              '${todo.id}- ${todo.title}',
+              // '${todo.title}',
+              style: kNormalTextStyle.copyWith(
+                fontSize: 16.0,
+                fontWeight: FontWeight.bold,
+                color: todo.isCompleted!
+                    ? Color.fromARGB(255, 145, 145, 145)
+                    : Colors.black,
+              ),
             ),
-          ),
-          tileColor:
-              widget.isChecked! ? Color.fromARGB(255, 218, 218, 218) : color,
-          leading: Checkbox(
-            checkColor: kGreenColor,
-            activeColor: kDarkYellowColor,
+            tileColor:
+                todo.isCompleted! ? Color.fromARGB(255, 218, 218, 218) : color,
+            leading: _isLoading
+                ? Loader(
+                    size: 20.0,
+                    color: Colors.white,
+                  )
+                : Checkbox(
+                    checkColor: Colors.white,
+                    activeColor: Color.fromARGB(255, 145, 145, 145),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5.0)),
+                    value: todo.isCompleted,
+                    // onChanged: widget.isChecked! ? (value) {} : widget.onChanged,
+                    onChanged: todo.isCompleted!
+                        ? (value) {
+                            showSnackbar(context,
+                                'Go to completed todos to un-check this todo');
+                          }
+                        : (value) async {
+                            await toggleCompletedStatus();
+                            setState(() {
+                              // widget.isChecked = value;
+                              todo.isCompleted = value;
+                            });
+                          },
+                  ),
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                IconButton(
+                  onPressed: () {
+                    todo.isCompleted!
+                        ? showSnackbar(
+                            context, 'You cannot edit a completed todo item')
+                        : showDialogBox(
+                            context: context,
+                            screen: EditTodoScreen(
+                              // backendTodoId: todoId,
+                              providerTodoId: widget.indexId,
+                            ),
+                            dismisible: false,
+                          );
+                  },
+                  icon: Icon(Icons.edit),
+                  color: todo.isCompleted!
+                      ? kGreyTextColor.withOpacity(0.3)
+                      : Color.fromARGB(136, 0, 0, 0),
+                ),
+                IconButton(
+                    onPressed: () {
+                      deleteTodo();
+                    },
+                    icon: Icon(Icons.delete),
+                    color: Color.fromARGB(136, 0, 0, 0)),
+              ],
+            ),
+            subtitle: Text(
+              todo.isCompleted!
+                  ? 'Completed'
+                  : 'Expires ${todo.expire.toString().substring(0, 10)}',
+              style: kNormalTextStyle.copyWith(
+                  fontSize: 12.0, color: Colors.black.withOpacity(0.6)),
+            ),
             shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(5.0)),
-            value: widget.isChecked,
-            onChanged: widget.isChecked! ? (value) {} : widget.onChanged,
+              borderRadius: BorderRadius.circular(5.0),
+            ),
+            contentPadding: EdgeInsets.all(0.0),
+            // onTap: onTap,
           ),
-          trailing: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              IconButton(
-                onPressed: () {
-                  widget.isChecked!
-                      ? showSnackbar(
-                          context, 'You cannot edit a completed todo item')
-                      : showDialogBox(
-                          context: context,
-                          screen: EditTodoScreen(
-                            // backendTodoId: todoId,
-                            providerTodoId: widget.indexId,
-                          ),
-                          dismisible: false,
-                        );
-                },
-                icon: Icon(Icons.edit),
-              ),
-              IconButton(
-                onPressed: () {
-                  deleteTodo();
-                },
-                icon: Icon(Icons.delete),
-              ),
-            ],
-          ),
-          subtitle: Text(
-            'Expires ${widget.date.toString().substring(0, 10)}',
-            style: kNormalTextStyle.copyWith(
-                fontSize: 12.0, color: Colors.black.withOpacity(0.6)),
-          ),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(5.0),
-          ),
-          contentPadding: EdgeInsets.all(0.0),
-          // onTap: onTap,
-        ),
-        SizedBox(height: 3.0),
-      ],
+          SizedBox(height: 3.0),
+        ],
+      ),
     );
   }
 }

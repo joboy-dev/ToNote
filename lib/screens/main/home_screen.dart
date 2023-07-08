@@ -17,6 +17,7 @@ import 'package:todoey/shared/loading_screen.dart';
 import 'package:todoey/shared/navigator.dart';
 import 'package:todoey/shared/widgets/button.dart';
 import 'package:todoey/shared/widgets/dialog.dart';
+import 'package:todoey/shared/widgets/note_item.dart';
 import 'package:todoey/shared/widgets/todo_item.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -56,183 +57,109 @@ class _HomeScreenState extends State<HomeScreen> {
         ? ErrorLoadingScreen()
         : Scaffold(
             backgroundColor: kBgColor,
-            body: SingleChildScrollView(
-              child: RefreshIndicator(
-                onRefresh: () async {},
-                child: SafeArea(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // ------------------TODOS-----------------------
-                      CustomAppBar(
-                        textColor: kGreyTextColor,
-                        appBarColor: kBgColor,
-                        dividerColor: kOrangeColor,
-                        appBarText: ' My Latest Todos',
-                        trailing: IconTextButton(
-                          text: 'New',
-                          fontWeight: FontWeight.bold,
-                          icon: FontAwesomeIcons.plus,
-                          iconColor: kOrangeColor,
-                          textColor: kOrangeColor,
-                          fontSize: 17.0,
-                          gap: 20.0,
-                          onPressed: () {
-                            showDialogBox(
-                              context: context,
-                              dismisible: false,
-                              screen: AddTodoScreen(),
-                            );
-                          },
-                        ),
-                      ),
-
-                      // Todos
-                      todos == null || todos.isEmpty
-                          ? Center(
-                              child: Text(
-                                'There are no todos available.',
-                                style: kGreyNormalTextStyle,
-                              ),
-                            )
-                          : Padding(
-                              padding: kAppPadding,
-                              // child: SingleChildScrollView(
-                              // child: SizedBox(
-                              // height: 520.0,
-                              child: ListView.builder(
-                                shrinkWrap: true,
-                                itemCount: todos.length,
-                                itemBuilder: (context, index) {
-                                  // reverse index logic
-                                  final reversedIndex =
-                                      todos.length - 1 - index;
-                                  final todo = todos[reversedIndex];
-                                  isChecked = todo.isCompleted;
-                                  return TodoItem(
-                                    tileColor: kOrangeColor.withOpacity(0.6),
-                                    todoId: todo.id!,
-                                    indexId: index,
-                                    title: '${todo.title}',
-                                    isChecked: todo.isCompleted,
-                                    date: DateTime.parse('${todo.expire}'),
-                                    onChanged: (value) {
-                                      setState(() {
-                                        isChecked = value!;
-                                      });
-                                    },
-                                    // onTap: () {},
-                                  );
-                                },
-                              ),
-                              // ),
-                              // ),
-                            ),
-
-                      // SizedBox(height: 20.0),
-
-                      // ------------------NOTES-----------------------
-                      CustomAppBar(
-                        textColor: kGreyTextColor,
-                        appBarColor: kBgColor,
-                        dividerColor: kOrangeColor,
-                        appBarText: ' My Latest Notes',
-                        trailing: IconTextButton(
-                          text: 'New',
-                          fontWeight: FontWeight.bold,
-                          icon: FontAwesomeIcons.plus,
-                          iconColor: kOrangeColor,
-                          textColor: kOrangeColor,
-                          fontSize: 17.0,
-                          gap: 20.0,
-                          onPressed: () {
-                            navigatorPushNamed(context, AddNotesScreen.id);
-                          },
-                        ),
-                      ),
-
-                      // Notes
-                      todos == null || todos.isEmpty
-                          ? Center(
-                              child: Text(
-                                'There are no notes available.',
-                                style: kGreyNormalTextStyle,
-                              ),
-                            )
-                          : Padding(
-                              padding: kAppPadding,
-                              // child: SingleChildScrollView(
-                              //   child: SizedBox(
-                              //     height: 600.0,
-                              child: Container(
-                                height: 300,
-                                child: ListView.builder(
-                                  // scrollDirection: Axis.horizontal,
-                                  shrinkWrap: true,
-                                  itemCount: todos.length,
-                                  itemBuilder: (context, index) {
-                                    // reverse index logic
-                                    final reversedIndex =
-                                        todos.length - 1 - index;
-                                    final todo = todos[reversedIndex];
-                                    isChecked = todo.isCompleted;
-                                    return TodoItem(
-                                      tileColor: kOrangeColor.withOpacity(0.6),
-                                      todoId: todo.id!,
-                                      indexId: index,
-                                      title: '${todo.title}',
-                                      isChecked: todo.isCompleted,
-                                      date: DateTime.parse('${todo.expire}'),
-                                      onChanged: (value) {
-                                        setState(() {
-                                          isChecked = value!;
-                                        });
-                                      },
-                                      // onTap: () {},
-                                    );
-                                  },
-                                ),
-                              ),
-                            ),
-                      // ),
-                      // ),
-                      // : Padding(
-                      //     padding: kAppPadding,
-                      //     child: SingleChildScrollView(
-                      //       child: SizedBox(
-                      //         height: 210.0,
-                      //         child: ListView(
-                      //           children: [
-                      //             Text('Todos'),
-                      //             Text('Todos'),
-                      //             Text('Todos'),
-                      //             Text('Todos'),
-                      //             Text('Todos'),
-                      //             Text('Todos'),
-                      //             Text('Todos'),
-                      //             Text('Todos'),
-                      //             Text('Todos'),
-                      //             Text('Todos'),
-                      //             Text('Todos'),
-                      //             Text('Todos'),
-                      //             Text('Todos'),
-                      //             Text('Todos'),
-                      //             Text('Todos'),
-                      //             Text('Todos'),
-                      //           ],
-                      //         ),
-                      //       ),
-                      //     ),
-                      //   ),
-                      SizedBox(height: 70.0),
-                    ],
+            body: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // ------------------TODOS-----------------------
+                CustomAppBar(
+                  textColor: kGreyTextColor,
+                  appBarColor: kBgColor,
+                  dividerColor: kOrangeColor,
+                  appBarText: ' My Latest Todos',
+                  trailing: IconTextButton(
+                    text: 'New',
+                    fontWeight: FontWeight.bold,
+                    icon: FontAwesomeIcons.plus,
+                    iconColor: kOrangeColor,
+                    textColor: kOrangeColor,
+                    fontSize: 17.0,
+                    gap: 20.0,
+                    onPressed: () {
+                      showDialogBox(
+                        context: context,
+                        dismisible: false,
+                        screen: AddTodoScreen(),
+                      );
+                    },
                   ),
                 ),
-              ),
+
+                // Todos
+                todos == null || todos.isEmpty
+                    ? Center(
+                        child: Text(
+                          'There are no todos available.',
+                          style: kGreyNormalTextStyle,
+                        ),
+                      )
+                    : Expanded(
+                        child: Padding(
+                          padding: kAppPadding,
+                          child: ListView.builder(
+                            itemCount: todos.length,
+                            itemBuilder: (context, index) {
+                              // reverse index logic
+                              final reversedIndex = todos.length - 1 - index;
+                              final todo = todos[reversedIndex];
+                              isChecked = todo.isCompleted;
+                              return TodoItem(indexId: reversedIndex);
+                            },
+                          ),
+                        ),
+                      ),
+
+                SizedBox(height: 20.0),
+
+                // ------------------NOTES-----------------------
+                CustomAppBar(
+                  textColor: kGreyTextColor,
+                  appBarColor: kBgColor,
+                  dividerColor: kOrangeColor,
+                  appBarText: ' My Latest Notes',
+                  trailing: IconTextButton(
+                    text: 'New',
+                    fontWeight: FontWeight.bold,
+                    icon: FontAwesomeIcons.plus,
+                    iconColor: kOrangeColor,
+                    textColor: kOrangeColor,
+                    fontSize: 17.0,
+                    gap: 20.0,
+                    onPressed: () {
+                      navigatorPushNamed(context, AddNotesScreen.id);
+                    },
+                  ),
+                ),
+
+                // Notes
+                notes == null || notes.isEmpty
+                    ? Center(
+                        child: Text(
+                          'There are no notes available.',
+                          style: kGreyNormalTextStyle,
+                        ),
+                      )
+                    : Expanded(
+                        child: Padding(
+                          padding: kAppPadding,
+                          child: ListView.builder(
+                            itemCount: notes.length,
+                            itemBuilder: (context, index) {
+                              // reverse index logic
+                              final reversedIndex = notes.length - 1 - index;
+                              // get individual notes
+                              return NoteItem(
+                                indexId: reversedIndex,
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+
+                SizedBox(height: 70.0),
+              ],
             ),
           );
-    //   },
-    // );
   }
 }

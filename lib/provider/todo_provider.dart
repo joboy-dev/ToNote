@@ -18,6 +18,7 @@ class TodoProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  // for pagination
   void setMoreTodos(List<Todo> items) {
     _todos.addAll(items);
     notifyListeners();
@@ -25,6 +26,21 @@ class TodoProvider with ChangeNotifier {
 
   void setCompletedTodo(Todo todoItem) {
     _completedTodos.add(todoItem);
+    // _completedTodos.insert(index, todoItem);
     notifyListeners();
+  }
+
+  void setCompletedTodos(List<Todo> todoItems) {
+    // void setCompletedTodos(int index, List<Todo> todoItems) {
+    // _completedTodos = todoItems;
+
+    // check if the list is empty to know the index to place the list items
+    if (todoItems.isEmpty) {
+      _completedTodos.insertAll(0, todoItems);
+      notifyListeners();
+    } else {
+      _completedTodos.insertAll(todoItems.length - 1, todoItems);
+      notifyListeners();
+    }
   }
 }

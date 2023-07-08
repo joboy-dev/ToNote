@@ -316,8 +316,8 @@ class TextareaTextField extends StatelessWidget {
       // onSaved: onSaved,
       onChanged: onChanged,
       validator: (value) {
-        if (value!.isEmpty) {
-          return 'This field cannot be empty';
+        if (value!.isEmpty || value.length < 15) {
+          return 'This field must not be less than 15 characters';
         } else {
           return null;
         }

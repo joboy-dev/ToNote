@@ -20,3 +20,7 @@ showSnackbar(BuildContext context, String text) {
     ),
   );
 }
+
+clearSnackBars(BuildContext context) {
+  ScaffoldMessenger.of(context).clearSnackBars();
+}
