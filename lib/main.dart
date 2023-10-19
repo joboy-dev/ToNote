@@ -46,6 +46,13 @@ class _ToDoEyState extends State<ToDoEy> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'ToDo-Ey',
+      // themeMode: Prefs().isDarkMode() ? ThemeMode.dark : ThemeMode.light,
+      // theme: ThemeData(
+      //   scaffoldBackgroundColor: Color.fromARGB(255, 250, 250, 250),
+      // ),
+      // darkTheme: ThemeData(
+      //   scaffoldBackgroundColor: Color(0xff1E1E1E),
+      // ),
       initialRoute: Onboarding.id,
       routes: {
         Wrapper.id: (context) => const Wrapper(),

@@ -28,7 +28,7 @@ class _OnboardingState extends State<Onboarding>
       var prefs = await Prefs().isDarkMode(context);
       setState(() {
         kBgColor =prefs ? const Color(0xff1E1E1E) : const Color.fromARGB(255, 250, 250, 250);
-        kTextColor = prefs ? const Color.fromARGB(255, 250, 250, 250) : const Color.fromARGB(255, 126, 126, 126);
+        // kTextColor = prefs ? const Color.fromARGB(255, 250, 250, 250) : const Color.fromARGB(255, 126, 126, 126);
       });
     });
     // initialize animation controller
