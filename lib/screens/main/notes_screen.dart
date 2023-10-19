@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
@@ -31,7 +29,7 @@ class _NotesScreenState extends State<NotesScreen> {
     final notes = Provider.of<NoteProvider?>(context)?.notes;
 
     return user == null
-        ? ErrorLoadingScreen()
+        ? const ErrorLoadingScreen()
         : Scaffold(
             backgroundColor: kBgColor,
             body: SingleChildScrollView(
@@ -62,7 +60,7 @@ class _NotesScreenState extends State<NotesScreen> {
 
                     // Notes
                     notes == null || notes.isEmpty
-                        ? Center(
+                        ? const Center(
                             child: Text(
                               'There are no notes available.',
                               style: kGreyNormalTextStyle,
@@ -93,7 +91,7 @@ class _NotesScreenState extends State<NotesScreen> {
                               ),
                             ),
                           ),
-                    SizedBox(height: 60.0),
+                    const SizedBox(height: 60.0),
                   ],
                 ),
               ),

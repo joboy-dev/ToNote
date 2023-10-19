@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
-
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -54,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final notes = Provider.of<NoteProvider?>(context)?.notes;
 
     return user == null
-        ? ErrorLoadingScreen()
+        ? const ErrorLoadingScreen()
         : Scaffold(
             backgroundColor: kBgColor,
             body: Column(
@@ -80,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       showDialogBox(
                         context: context,
                         dismisible: false,
-                        screen: AddTodoScreen(),
+                        screen: const AddTodoScreen(),
                       );
                     },
                   ),
@@ -88,7 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                 // Todos
                 todos == null || todos.isEmpty
-                    ? Center(
+                    ? const Center(
                         child: Text(
                           'There are no todos available.',
                           style: kGreyNormalTextStyle,
@@ -110,7 +108,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
 
-                SizedBox(height: 20.0),
+                const SizedBox(height: 20.0),
 
                 // ------------------NOTES-----------------------
                 CustomAppBar(
@@ -134,7 +132,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                 // Notes
                 notes == null || notes.isEmpty
-                    ? Center(
+                    ? const Center(
                         child: Text(
                           'There are no notes available.',
                           style: kGreyNormalTextStyle,
@@ -157,7 +155,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
 
-                SizedBox(height: 70.0),
+                const SizedBox(height: 70.0),
               ],
             ),
           );

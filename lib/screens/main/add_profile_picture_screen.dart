@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously
 
 import 'dart:developer';
 import 'dart:io';
@@ -154,13 +154,13 @@ class _AddProfilePictureState extends State<AddProfilePicture>
               children: [
                 FadeTransition(
                   opacity: _animation1,
-                  child: Text(
+                  child: const Text(
                     'Add your profile picture.\n\nIf you do not want to perform this action, you can click the skip button below.',
                     style: kGreyNormalTextStyle,
                     textAlign: TextAlign.justify,
                   ),
                 ),
-                SizedBox(height: 20.0),
+                const SizedBox(height: 20.0),
                 FadeTransition(
                   opacity: _animation2,
                   child: Center(
@@ -175,7 +175,7 @@ class _AddProfilePictureState extends State<AddProfilePicture>
                       child: CircleAvatar(
                         backgroundColor: kGreyTextColor,
                         backgroundImage:
-                            AssetImage('assets/images/default.jpg'),
+                            const AssetImage('assets/images/default.jpg'),
                         foregroundImage:
                             NetworkImage('${user?.profilePicture}'),
                         radius: 120.0,
@@ -183,16 +183,16 @@ class _AddProfilePictureState extends State<AddProfilePicture>
                     ),
                   ),
                 ),
-                SizedBox(height: 20.0),
+                const SizedBox(height: 20.0),
                 FadeTransition(
                   opacity: _animation2,
-                  child: Text(
+                  child: const Text(
                     'Select from the two options below on how you want to add your profile picture.',
                     style: kGreyNormalTextStyle,
                     textAlign: TextAlign.justify,
                   ),
                 ),
-                SizedBox(height: 30.0),
+                const SizedBox(height: 30.0),
 
                 // Buttons
                 SlideTransition(
@@ -212,7 +212,7 @@ class _AddProfilePictureState extends State<AddProfilePicture>
                             icon: Icons.photo_library,
                           ),
                         ),
-                        SizedBox(width: 10.0),
+                        const SizedBox(width: 10.0),
                         Expanded(
                           child: ButtonIcon(
                             buttonText: 'Camera',
@@ -228,7 +228,7 @@ class _AddProfilePictureState extends State<AddProfilePicture>
                   ),
                 ),
 
-                SizedBox(height: 10.0),
+                const SizedBox(height: 10.0),
 
                 // Skip button
                 // TextButton(

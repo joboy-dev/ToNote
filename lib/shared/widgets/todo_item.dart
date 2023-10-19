@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, use_build_context_synchronously, no_leading_underscores_for_local_identifiers, unnecessary_string_interpolations, unused_field, must_be_immutable
+// ignore_for_file: unused_field, use_build_context_synchronously
 
 import 'dart:math';
 import 'dart:developer' as dev;
@@ -17,14 +17,14 @@ import 'package:todoey/shared/widgets/snackbar.dart';
 import 'dialog.dart';
 
 class TodoItem extends StatefulWidget {
-  TodoItem({
+  const TodoItem({
     super.key,
     // required this.title,
     // required this.isChecked,
     // required this.date,
     // required this.todoId,
-    required this.indexId,
     // required this.todoObject,
+    required this.indexId,
   });
 
   /* 
@@ -35,8 +35,8 @@ class TodoItem extends StatefulWidget {
   provider 
   */
 
+  final int indexId;
   // int todoId;
-  int indexId;
   // final String title;
   // bool? isChecked = false;
   // final DateTime date;
@@ -57,9 +57,9 @@ class _TodoItemState extends State<TodoItem> with TickerProviderStateMixin {
     kYellowColor,
     kDarkYellowColor,
     kOrangeColor,
-    Color.fromARGB(255, 142, 184, 255),
-    Color.fromARGB(255, 218, 224, 129),
-    Color.fromARGB(255, 255, 184, 184),
+    const Color.fromARGB(255, 142, 184, 255),
+    const Color.fromARGB(255, 218, 224, 129),
+    const Color.fromARGB(255, 255, 184, 184),
   ];
 
   @override
@@ -86,11 +86,11 @@ class _TodoItemState extends State<TodoItem> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final _todoView = TodoView();
-    final _isarService = IsarService();
+    final todoView = TodoView();
+    final isarService = IsarService();
     final todos = Provider.of<TodoProvider?>(context)?.todos;
 
-    bool _isLoading = false;
+    bool isLoading = false;
     String message = '';
 
     // get a single todo based on index id from list in provider
@@ -99,26 +99,26 @@ class _TodoItemState extends State<TodoItem> with TickerProviderStateMixin {
     // function to delete a todo
     deleteTodo() async {
       setState(() {
-        _isLoading = true;
+        isLoading = true;
         message = 'Deleting todo ${todo.title}...';
       });
       showSnackbar(context, message);
 
-      var data = await _todoView.deleteTodo(
+      var data = await todoView.deleteTodo(
         id: todo.id!,
       );
 
       if (data is Map) {
-        await _isarService.deleteTodo(todo.id!);
-        await _isarService.getUserTodos(context);
+        await isarService.deleteTodo(todo.id!);
+        await isarService.getUserTodos(context);
 
         setState(() {
-          _isLoading = false;
+          isLoading = false;
           message = 'Todo deleted.';
         });
       } else {
         setState(() {
-          _isLoading = false;
+          isLoading = false;
           message = 'Something went wrong. Try again.';
         });
       }
@@ -137,10 +137,10 @@ class _TodoItemState extends State<TodoItem> with TickerProviderStateMixin {
       );
 
       setState(() {
-        _isLoading = true;
+        isLoading = true;
       });
 
-      var data = await _todoView.updateTodo(
+      var data = await todoView.updateTodo(
         id: todo.id!,
         todo: todoModel,
       );
@@ -150,24 +150,24 @@ class _TodoItemState extends State<TodoItem> with TickerProviderStateMixin {
         // final index = todos.indexOf(todo);
 
         // save todo to isar db
-        await _isarService.saveTodo(data, context);
+        await isarService.saveTodo(data, context);
 
         // store completed todo in provider based on todo id passed into the
         // update todo function above
-        await _isarService.addCompletedTodo(widget.indexId, context);
+        await isarService.addCompletedTodo(widget.indexId, context);
         // await _isarService.addCompletedTodo(todo.id!, context);
 
         // get user todos
-        await _isarService.getUserTodos(context);
+        await isarService.getUserTodos(context);
 
         setState(() {
-          _isLoading = false;
+          isLoading = false;
           message = 'Todo marked as complete';
         });
         showSnackbar(context, message);
       } else {
         setState(() {
-          _isLoading = false;
+          isLoading = false;
           message = 'Something went wrong. Try again.';
         });
       }
@@ -179,7 +179,7 @@ class _TodoItemState extends State<TodoItem> with TickerProviderStateMixin {
       shadowColor: Colors.transparent,
       child: Column(
         children: [
-          _isLoading ? Loader(size: 25.0, color: kGreenColor) : SizedBox(),
+          isLoading ? const Loader(size: 25.0, color: kGreenColor) : const SizedBox(),
           ListTile(
             title: Text(
               '${todo.title}',
@@ -188,20 +188,20 @@ class _TodoItemState extends State<TodoItem> with TickerProviderStateMixin {
                 fontSize: 16.0,
                 fontWeight: FontWeight.bold,
                 color: todo.isCompleted!
-                    ? Color.fromARGB(255, 145, 145, 145)
+                    ? const Color.fromARGB(255, 145, 145, 145)
                     : Colors.black,
               ),
             ),
             tileColor:
-                todo.isCompleted! ? Color.fromARGB(255, 218, 218, 218) : color,
-            leading: _isLoading
-                ? Loader(
+                todo.isCompleted! ? const Color.fromARGB(255, 218, 218, 218) : color,
+            leading: isLoading
+                ? const Loader(
                     size: 20.0,
                     color: Colors.white,
                   )
                 : Checkbox(
                     checkColor: Colors.white,
-                    activeColor: Color.fromARGB(255, 145, 145, 145),
+                    activeColor: const Color.fromARGB(255, 145, 145, 145),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5.0)),
                     value: todo.isCompleted,
@@ -237,17 +237,17 @@ class _TodoItemState extends State<TodoItem> with TickerProviderStateMixin {
                             dismisible: false,
                           );
                   },
-                  icon: Icon(Icons.edit),
+                  icon: const Icon(Icons.edit),
                   color: todo.isCompleted!
                       ? kGreyTextColor.withOpacity(0.3)
-                      : Color.fromARGB(136, 0, 0, 0),
+                      : const Color.fromARGB(136, 0, 0, 0),
                 ),
                 IconButton(
                     onPressed: () {
                       deleteTodo();
                     },
-                    icon: Icon(Icons.delete),
-                    color: Color.fromARGB(136, 0, 0, 0)),
+                    icon: const Icon(Icons.delete),
+                    color: const Color.fromARGB(136, 0, 0, 0)),
               ],
             ),
             subtitle: Text(
@@ -260,10 +260,10 @@ class _TodoItemState extends State<TodoItem> with TickerProviderStateMixin {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(5.0),
             ),
-            contentPadding: EdgeInsets.all(0.0),
+            contentPadding: const EdgeInsets.all(0.0),
             // onTap: onTap,
           ),
-          SizedBox(height: 3.0),
+          const SizedBox(height: 3.0),
         ],
       ),
     );

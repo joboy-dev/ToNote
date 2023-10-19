@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, must_be_immutable, use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously
 
 import 'dart:developer';
 
@@ -18,13 +18,13 @@ import 'package:todoey/shared/widgets/snackbar.dart';
 import 'package:todoey/shared/widgets/text_field.dart';
 
 class EditTodoScreen extends StatefulWidget {
-  EditTodoScreen({
+  const EditTodoScreen({
     super.key,
     required this.providerTodoId,
   });
 
   // int backendTodoId;
-  int providerTodoId;
+  final int providerTodoId;
 
   @override
   State<EditTodoScreen> createState() => _EditTodoScreenState();
@@ -103,12 +103,12 @@ class _EditTodoScreenState extends State<EditTodoScreen> {
       key: _formKey,
       child: Column(
         children: [
-          DialogHeader(
+          const DialogHeader(
             headerText: 'Edit Todo',
             icon: FontAwesomeIcons.pencil,
             mainColor: kGreenColor,
           ),
-          SizedBox(height: 10.0),
+          const SizedBox(height: 10.0),
 
           // Normal Text Field
           NormalTextField(
@@ -128,7 +128,7 @@ class _EditTodoScreenState extends State<EditTodoScreen> {
             iconColor: kGreenColor,
             prefixIcon: Icons.person,
           ),
-          SizedBox(height: 20.0),
+          const SizedBox(height: 20.0),
 
           // Date field
           DateTimeField(
@@ -147,7 +147,7 @@ class _EditTodoScreenState extends State<EditTodoScreen> {
             },
           ),
 
-          SizedBox(height: 20.0),
+          const SizedBox(height: 20.0),
           Row(
             children: [
               Expanded(
@@ -160,7 +160,7 @@ class _EditTodoScreenState extends State<EditTodoScreen> {
                   inactive: false,
                 ),
               ),
-              SizedBox(width: 5.0),
+              const SizedBox(width: 5.0),
               Expanded(
                 child: Button(
                   buttonText: 'Edit Todo',
@@ -173,14 +173,14 @@ class _EditTodoScreenState extends State<EditTodoScreen> {
               ),
             ],
           ),
-          SizedBox(height: 10.0),
+          const SizedBox(height: 10.0),
 
           _isLoading
-              ? Loader(size: 20.0, color: kGreenColor)
-              : SizedBox(height: 0.0),
+              ? const Loader(size: 20.0, color: kGreenColor)
+              : const SizedBox(height: 0.0),
 
           message.isEmpty
-              ? SizedBox(height: 0.0)
+              ? const SizedBox(height: 0.0)
               : Center(
                   child: Text(
                     message,

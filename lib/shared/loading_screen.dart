@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, must_be_immutable, prefer_const_constructors_in_immutables
-
 import 'package:flutter/material.dart';
 import 'package:todoey/screens/main/loading_data_screen.dart';
 import 'package:todoey/shared/constants.dart';
@@ -8,9 +6,9 @@ import 'package:todoey/shared/navigator.dart';
 import 'package:todoey/shared/widgets/button.dart';
 
 class LoadingScreen extends StatelessWidget {
-  LoadingScreen({super.key, this.color});
+  const LoadingScreen({super.key, this.color});
 
-  Color? color;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
@@ -25,8 +23,8 @@ class LoadingScreen extends StatelessWidget {
                 children: [
                   SizedBox(height: MediaQuery.of(context).size.height * 0.35),
                   Loader(size: 40.0, color: color),
-                  SizedBox(height: 10.0),
-                  Text(
+                  const SizedBox(height: 10.0),
+                  const Text(
                     // _loadingTimer.isLoading
                     // ?
                     'Fetching data',
@@ -45,9 +43,9 @@ class LoadingScreen extends StatelessWidget {
 }
 
 class LoadingScreenNoScaffold extends StatelessWidget {
-  LoadingScreenNoScaffold({super.key, this.color});
+  const LoadingScreenNoScaffold({super.key, this.color});
 
-  Color? color;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
@@ -55,8 +53,8 @@ class LoadingScreenNoScaffold extends StatelessWidget {
       children: [
         SizedBox(height: MediaQuery.of(context).size.height * 0.35),
         Loader(size: 40.0, color: color),
-        SizedBox(height: 10.0),
-        Text(
+        const SizedBox(height: 10.0),
+        const Text(
           // _loadingTimer.isLoading
           // ?
           'Fetching data',
@@ -70,7 +68,7 @@ class LoadingScreenNoScaffold extends StatelessWidget {
 }
 
 class ErrorLoadingScreen extends StatelessWidget {
-  ErrorLoadingScreen({super.key});
+  const ErrorLoadingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -84,18 +82,18 @@ class ErrorLoadingScreen extends StatelessWidget {
               child: Column(
                 children: [
                   SizedBox(height: MediaQuery.of(context).size.height * 0.30),
-                  Icon(
+                  const Icon(
                     Icons.warning,
                     size: 40.0,
                     color: kRedColor,
                   ),
-                  SizedBox(height: 10.0),
-                  Text(
+                  const SizedBox(height: 10.0),
+                  const Text(
                     'We could not fetch your data at this time. Please check your network connection or try again later.',
                     style: kGreyNormalTextStyle,
                     textAlign: TextAlign.center,
                   ),
-                  SizedBox(height: 10.0),
+                  const SizedBox(height: 10.0),
                   Center(
                     child: IconTextButton(
                       icon: Icons.refresh,
@@ -119,25 +117,25 @@ class ErrorLoadingScreen extends StatelessWidget {
 }
 
 class ErrorLoadingScreenNoScaffold extends StatelessWidget {
-  ErrorLoadingScreenNoScaffold({super.key});
+  const ErrorLoadingScreenNoScaffold({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         SizedBox(height: MediaQuery.of(context).size.height * 0.30),
-        Icon(
+        const Icon(
           Icons.warning,
           size: 40.0,
           color: kRedColor,
         ),
-        SizedBox(height: 10.0),
-        Text(
+        const SizedBox(height: 10.0),
+        const Text(
           'We could not fetch your data at this time. Please check your network connection or try again later.',
           style: kGreyNormalTextStyle,
           textAlign: TextAlign.center,
         ),
-        SizedBox(height: 10.0),
+        const SizedBox(height: 10.0),
         Center(
           child: IconTextButton(
             icon: Icons.refresh,
@@ -155,9 +153,9 @@ class ErrorLoadingScreenNoScaffold extends StatelessWidget {
 }
 
 class ConnectingScreen extends StatelessWidget {
-  ConnectingScreen({super.key, required this.color});
+  const ConnectingScreen({super.key, required this.color});
 
-  Color color;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
@@ -171,8 +169,8 @@ class ConnectingScreen extends StatelessWidget {
                 children: [
                   SizedBox(height: MediaQuery.of(context).size.height * 0.35),
                   Loader(size: 40.0, color: color),
-                  SizedBox(height: 10.0),
-                  Text(
+                  const SizedBox(height: 10.0),
+                  const Text(
                     'Connecting...',
                     style: kGreyNormalTextStyle,
                     textAlign: TextAlign.center,

@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -118,7 +118,7 @@ class _AddNotesScreenState extends State<AddNotesScreen> {
                       Expanded(
                         flex: 1,
                         child: _isLoading
-                            ? Loader(
+                            ? const Loader(
                                 size: 20.0,
                                 color: kYellowColor,
                               )
@@ -135,8 +135,8 @@ class _AddNotesScreenState extends State<AddNotesScreen> {
                     ],
                   ),
 
-                  Divider(color: kYellowColor),
-                  SizedBox(height: 10.0),
+                  const Divider(color: kYellowColor),
+                  const SizedBox(height: 10.0),
 
                   // Text area field
                   TextareaTextField(

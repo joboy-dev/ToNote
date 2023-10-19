@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, use_build_context_synchronously, must_be_immutable
+// ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -14,9 +14,9 @@ import 'package:todoey/shared/widgets/dialog_header.dart';
 import 'package:todoey/shared/widgets/snackbar.dart';
 
 class DeleteTodoScreen extends StatefulWidget {
-  DeleteTodoScreen({super.key, required this.providerTodoId});
+  const DeleteTodoScreen({super.key, required this.providerTodoId});
 
-  int providerTodoId;
+  final int providerTodoId;
 
   @override
   State<DeleteTodoScreen> createState() => _DeleteTodoScreenState();
@@ -63,15 +63,15 @@ class _DeleteTodoScreenState extends State<DeleteTodoScreen> {
 
     return Column(
       children: [
-        DialogHeader(
+        const DialogHeader(
           headerText: 'Delete Todo',
           icon: Icons.delete_rounded,
           mainColor: kRedColor,
         ),
-        SizedBox(height: 10.0),
+        const SizedBox(height: 10.0),
         Text("Are you sure you want to detele todo '${todo.title}'?",
             style: kGreyNormalTextStyle),
-        SizedBox(height: 20.0),
+        const SizedBox(height: 20.0),
         DoubleButton(
           inactiveButton: false,
           button2Text: 'Delete',
@@ -80,15 +80,15 @@ class _DeleteTodoScreenState extends State<DeleteTodoScreen> {
             deleteTodo();
           },
         ),
-        SizedBox(height: 10.0),
+        const SizedBox(height: 10.0),
         _isLoading
-            ? Loader(
+            ? const Loader(
                 size: 20.0,
                 color: kGreenColor,
               )
-            : SizedBox(),
+            : const SizedBox(),
         message.isEmpty
-            ? SizedBox(height: 0.0)
+            ? const SizedBox(height: 0.0)
             : Center(
                 child: Text(
                   message,

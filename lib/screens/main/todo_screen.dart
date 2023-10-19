@@ -1,4 +1,5 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, must_be_immutable, prefer_final_fields, use_build_context_synchronously, unused_field
+
+// ignore_for_file: unused_field
 
 import 'dart:developer' as dev;
 
@@ -30,7 +31,7 @@ class _TodoScreenState extends State<TodoScreen> with TickerProviderStateMixin {
   Random random = Random();
   bool? isChecked = false;
 
-  bool _isLoading = true;
+  // bool _isLoading = true;
   String message = '';
 
   late AnimationController _controller;
@@ -65,7 +66,7 @@ class _TodoScreenState extends State<TodoScreen> with TickerProviderStateMixin {
     // Todo? todo;
 
     return user == null
-        ? ErrorLoadingScreen()
+        ? const ErrorLoadingScreen()
         : Scaffold(
             backgroundColor: kBgColor,
             body: SingleChildScrollView(
@@ -90,7 +91,7 @@ class _TodoScreenState extends State<TodoScreen> with TickerProviderStateMixin {
                           showDialogBox(
                             context: context,
                             dismisible: false,
-                            screen: AddTodoScreen(),
+                            screen: const AddTodoScreen(),
                           );
                         },
                       ),
@@ -115,7 +116,7 @@ class _TodoScreenState extends State<TodoScreen> with TickerProviderStateMixin {
 
                     // Todos
                     todos == null || todos.isEmpty
-                        ? Center(
+                        ? const Center(
                             child: Text(
                               'There are no todos available.',
                               style: kGreyNormalTextStyle,
@@ -144,7 +145,7 @@ class _TodoScreenState extends State<TodoScreen> with TickerProviderStateMixin {
                               ),
                             ),
                           ),
-                    SizedBox(height: 10.0),
+                    const SizedBox(height: 10.0),
                   ],
                 ),
               ),

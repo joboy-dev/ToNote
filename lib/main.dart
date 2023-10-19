@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todoey/provider/auth_provider.dart';
@@ -30,7 +28,7 @@ void main() async {
         // ChangeNotifierProvider(create: (_) => LoadingTimer()),
         // ChangeNotifierProvider(create: (_) => LoadingProvider()),
       ],
-      child: ToDoEy(),
+      child: const ToDoEy(),
     ),
   );
 }
@@ -48,22 +46,15 @@ class _ToDoEyState extends State<ToDoEy> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'ToDo-Ey',
-      // themeMode: Prefs().isDarkMode() ? ThemeMode.dark : ThemeMode.light,
-      // theme: ThemeData(
-      //   scaffoldBackgroundColor: Color.fromARGB(255, 250, 250, 250),
-      // ),
-      // darkTheme: ThemeData(
-      //   scaffoldBackgroundColor: Color(0xff1E1E1E),
-      // ),
       initialRoute: Onboarding.id,
       routes: {
-        Wrapper.id: (context) => Wrapper(),
-        Onboarding.id: (context) => Onboarding(),
-        GetStarted.id: (context) => GetStarted(),
-        SignUp.id: (context) => SignUp(),
-        Login.id: (context) => Login(),
-        LoadingDataScreen.id: (context) => LoadingDataScreen(),
-        BottomNavBar.id: (context) => BottomNavBar(),
+        Wrapper.id: (context) => const Wrapper(),
+        Onboarding.id: (context) => const Onboarding(),
+        GetStarted.id: (context) => const GetStarted(),
+        SignUp.id: (context) => const SignUp(),
+        Login.id: (context) => const Login(),
+        LoadingDataScreen.id: (context) => const LoadingDataScreen(),
+        BottomNavBar.id: (context) => const BottomNavBar(),
       },
     );
   }

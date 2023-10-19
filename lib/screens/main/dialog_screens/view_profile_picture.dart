@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -15,7 +13,7 @@ class ViewProfilePictureScreen extends StatelessWidget {
     final user = Provider.of<UserProvider?>(context)?.user;
     return Column(
       children: [
-        DialogHeader(
+        const DialogHeader(
           headerText: 'Profile Picture',
           mainColor: kDarkYellowColor,
           icon: FontAwesomeIcons.image,
@@ -24,13 +22,13 @@ class ViewProfilePictureScreen extends StatelessWidget {
           height: 270.0,
           width: double.infinity,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(5.0)),
+            borderRadius: const BorderRadius.all(Radius.circular(5.0)),
             image: DecorationImage(
               image: NetworkImage('${user?.profilePicture}'),
             ),
           ),
         ),
-        Text(
+        const Text(
           'Tap outside to dismiss.',
           style: kGreyNormalTextStyle,
         ),

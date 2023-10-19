@@ -1,6 +1,3 @@
-// ignore_for_file: prefer_const_constructors, must_be_immutable
-
-
 import 'package:flutter/material.dart';
 import 'package:todoey/shared/constants.dart';
 import 'package:todoey/shared/navigator.dart';
@@ -8,9 +5,9 @@ import 'package:todoey/shared/widgets/button.dart';
 import 'package:todoey/shared/widgets/dialog_header.dart';
 
 class UploadProfilePicture extends StatefulWidget {
-  UploadProfilePicture({super.key, required this.image});
+  const UploadProfilePicture({super.key, required this.image});
 
-  dynamic image;
+  final dynamic image;
 
   @override
   State<UploadProfilePicture> createState() => _UploadProfilePictureState();
@@ -54,13 +51,13 @@ class _UploadProfilePictureState extends State<UploadProfilePicture>
   Widget build(BuildContext context) {
     return Column(
       children: [
-        DialogHeader(
+        const DialogHeader(
           headerText: 'Add Picture',
           icon: Icons.upload_file,
           mainColor: kYellowColor,
         ),
 
-        SizedBox(height: 10.0),
+        const SizedBox(height: 10.0),
 
         // imege from file
         Container(
@@ -72,12 +69,12 @@ class _UploadProfilePictureState extends State<UploadProfilePicture>
                   width: double.infinity,
                   height: 250.0,
                 )
-              : Center(
+              : const Center(
                   child: Text('No image selected', style: kGreyNormalTextStyle),
                 ),
         ),
 
-        SizedBox(height: 20.0),
+        const SizedBox(height: 20.0),
 
         // upload button
         FadeTransition(
@@ -95,7 +92,7 @@ class _UploadProfilePictureState extends State<UploadProfilePicture>
                   inactive: false,
                 ),
               ),
-              SizedBox(width: 5.0),
+              const SizedBox(width: 5.0),
               Expanded(
                 child: ButtonIcon(
                   buttonText: '',

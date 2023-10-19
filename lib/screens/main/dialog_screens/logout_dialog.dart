@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
 import 'package:todoey/backend/user/user_view.dart';
@@ -48,14 +48,14 @@ class _LogoutDialogState extends State<LogoutDialog> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        DialogHeader(
+        const DialogHeader(
           headerText: 'Logout',
           icon: Icons.logout_rounded,
           mainColor: kRedColor,
         ),
-        SizedBox(height: 10.0),
-        Text('Are you sure you want to log out?', style: kGreyNormalTextStyle),
-        SizedBox(height: 20.0),
+        const SizedBox(height: 10.0),
+        const Text('Are you sure you want to log out?', style: kGreyNormalTextStyle),
+        const SizedBox(height: 20.0),
         DoubleButton(
           inactiveButton: false,
           button2Text: 'Logout',
@@ -67,7 +67,7 @@ class _LogoutDialogState extends State<LogoutDialog> {
             _logout();
           },
         ),
-        SizedBox(height: 10.0),
+        const SizedBox(height: 10.0),
         _isLoading
             ? Text(
                 'Logging out...',
@@ -76,9 +76,9 @@ class _LogoutDialogState extends State<LogoutDialog> {
                   fontSize: 12.0,
                 ),
               )
-            : SizedBox(),
+            : const SizedBox(),
         message.isEmpty
-            ? SizedBox(height: 0.0)
+            ? const SizedBox(height: 0.0)
             : Center(
                 child: Text(
                   message,

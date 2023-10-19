@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todoey/provider/user_provider.dart';
@@ -32,7 +30,7 @@ class _LoadingDataScreenState extends State<LoadingDataScreen> {
     final user = Provider.of<UserProvider?>(context)?.user;
 
     return user == null
-        ? Center(child: LoadingScreen(color: kOrangeColor))
-        : BottomNavBar();
+        ? const Center(child: LoadingScreen(color: kOrangeColor))
+        : const BottomNavBar();
   }
 }

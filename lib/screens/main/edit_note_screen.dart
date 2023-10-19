@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_build_context_synchronously, must_be_immutable
+// ignore_for_file: use_build_context_synchronously
 
 import 'dart:developer';
 
@@ -17,11 +17,11 @@ import 'package:todoey/shared/widgets/snackbar.dart';
 import 'package:todoey/shared/widgets/text_field.dart';
 
 class EditNoteScreen extends StatefulWidget {
-  EditNoteScreen({super.key, required this.providerNoteId});
+  const EditNoteScreen({super.key, required this.providerNoteId});
 
   static const String id = 'edit note';
 
-  int providerNoteId;
+  final int providerNoteId;
 
   @override
   State<EditNoteScreen> createState() => _EditNoteScreenState();
@@ -150,7 +150,7 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
                                 },
                               )
                             : _isLoading
-                                ? Loader(
+                                ? const Loader(
                                     size: 20.0,
                                     color: kYellowColor,
                                   )
@@ -171,8 +171,8 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
                     ],
                   ),
 
-                  Divider(color: kYellowColor),
-                  SizedBox(height: 10.0),
+                  const Divider(color: kYellowColor),
+                  const SizedBox(height: 10.0),
 
                   // Text area field
                   TextareaTextField(

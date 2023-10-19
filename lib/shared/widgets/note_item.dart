@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, use_build_context_synchronously, no_leading_underscores_for_local_identifiers, must_be_immutable
+// ignore_for_file: use_build_context_synchronously
 
 import 'dart:math';
 
@@ -14,7 +14,7 @@ import 'package:todoey/shared/loader.dart';
 import 'package:todoey/shared/widgets/snackbar.dart';
 
 class NoteItem extends StatefulWidget {
-  NoteItem({
+  const NoteItem({
     super.key,
     // required this.title,
     // required this.content,
@@ -30,8 +30,8 @@ class NoteItem extends StatefulWidget {
   provider 
   */
 
+  final int indexId;
   // int noteId;
-  int indexId;
   // final String title;
   // final String content;
 
@@ -47,9 +47,9 @@ class _NoteItemState extends State<NoteItem> {
     kYellowColor,
     kDarkYellowColor,
     kOrangeColor,
-    Color.fromARGB(255, 142, 184, 255),
-    Color.fromARGB(255, 218, 224, 129),
-    Color.fromARGB(255, 255, 184, 184),
+    const Color.fromARGB(255, 142, 184, 255),
+    const Color.fromARGB(255, 218, 224, 129),
+    const Color.fromARGB(255, 255, 184, 184),
   ];
 
   @override
@@ -60,11 +60,11 @@ class _NoteItemState extends State<NoteItem> {
 
   @override
   Widget build(BuildContext context) {
-    final _noteView = NoteView();
-    final _isarService = IsarService();
+    final noteView = NoteView();
+    final isarService = IsarService();
     final notes = Provider.of<NoteProvider?>(context)?.notes;
 
-    bool _isLoading = false;
+    bool isLoading = false;
     String message = '';
 
     // access a note with the index id provided
@@ -72,26 +72,26 @@ class _NoteItemState extends State<NoteItem> {
 
     deleteNote() async {
       setState(() {
-        _isLoading = true;
+        isLoading = true;
         message = 'Deleting note ${note.title}...';
       });
       showSnackbar(context, message);
 
-      var data = await _noteView.deleteNote(
+      var data = await noteView.deleteNote(
         id: note.id!,
       );
 
       if (data is Map) {
-        await _isarService.deleteNote(note.id!);
-        await _isarService.getUserNotes(context);
+        await isarService.deleteNote(note.id!);
+        await isarService.getUserNotes(context);
 
         setState(() {
-          _isLoading = false;
+          isLoading = false;
           message = 'Note deleted.';
         });
       } else {
         setState(() {
-          _isLoading = false;
+          isLoading = false;
           message = 'Something went wrong. Try again.';
         });
       }
@@ -103,7 +103,7 @@ class _NoteItemState extends State<NoteItem> {
       elevation: 0.0,
       child: Column(
         children: [
-          _isLoading ? Loader(size: 25.0, color: kYellowColor) : SizedBox(),
+          isLoading ? const Loader(size: 25.0, color: kYellowColor) : const SizedBox(),
           ListTile(
             title: Text(
               // '${widget.noteId}- ${widget.title}',
@@ -127,15 +127,15 @@ class _NoteItemState extends State<NoteItem> {
                       ),
                     );
                   },
-                  icon: Icon(Icons.edit),
-                  color: Color.fromARGB(136, 0, 0, 0),
+                  icon: const Icon(Icons.edit),
+                  color: const Color.fromARGB(136, 0, 0, 0),
                 ),
                 IconButton(
                   onPressed: () {
                     deleteNote();
                   },
-                  icon: Icon(Icons.delete),
-                  color: Color.fromARGB(136, 0, 0, 0),
+                  icon: const Icon(Icons.delete),
+                  color: const Color.fromARGB(136, 0, 0, 0),
                 ),
               ],
             ),
@@ -147,9 +147,9 @@ class _NoteItemState extends State<NoteItem> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(5.0),
             ),
-            contentPadding: EdgeInsets.only(left: 20.0),
+            contentPadding: const EdgeInsets.only(left: 20.0),
           ),
-          SizedBox(height: 3.0),
+          const SizedBox(height: 3.0),
         ],
       ),
     );

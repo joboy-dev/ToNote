@@ -1,6 +1,3 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, use_build_context_synchronously
-
-
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -95,13 +92,13 @@ class _ChangePasswordState extends State<ChangePassword> {
     }
 
     return user == null
-        ? LoadingScreen(color: kDarkYellowColor)
+        ? const LoadingScreen(color: kDarkYellowColor)
         : Form(
             key: _formKey,
             child: Column(
               children: [
                 // Header
-                DialogHeader(
+                const DialogHeader(
                   headerText: 'Change Password',
                   mainColor: kDarkYellowColor,
                   icon: FontAwesomeIcons.lock,
@@ -118,7 +115,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                   readOnly: true,
                   color: kDarkYellowColor,
                 ),
-                SizedBox(height: 10.0),
+                const SizedBox(height: 10.0),
 
                 // Password field
                 PasswordTextField(
@@ -136,7 +133,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                   },
                   color: kDarkYellowColor,
                 ),
-                SizedBox(height: 10.0),
+                const SizedBox(height: 10.0),
 
                 // Password field
                 PasswordTextField(
@@ -155,7 +152,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                   color: kDarkYellowColor,
                 ),
 
-                SizedBox(height: 10.0),
+                const SizedBox(height: 10.0),
 
                 // Password field
                 PasswordTextField(
@@ -173,7 +170,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                   },
                   color: kDarkYellowColor,
                 ),
-                SizedBox(height: 10.0),
+                const SizedBox(height: 10.0),
 
                 DoubleButton(
                   button2Color: kDarkYellowColor,
@@ -184,14 +181,14 @@ class _ChangePasswordState extends State<ChangePassword> {
                   },
                 ),
 
-                SizedBox(height: 10.0),
+                const SizedBox(height: 10.0),
 
                 _isLoading
-                    ? Loader(size: 20.0, color: kDarkYellowColor)
-                    : SizedBox(height: 0.0),
+                    ? const Loader(size: 20.0, color: kDarkYellowColor)
+                    : const SizedBox(height: 0.0),
 
                 message.isEmpty
-                    ? SizedBox(height: 0.0)
+                    ? const SizedBox(height: 0.0)
                     : Center(
                       child: Text(
                           message,

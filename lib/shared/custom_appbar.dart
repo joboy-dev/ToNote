@@ -1,10 +1,8 @@
-// ignore_for_file: prefer_const_constructors, must_be_immutable
-
 import 'package:flutter/material.dart';
 import 'package:todoey/shared/constants.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  CustomAppBar({
+  const CustomAppBar({
     super.key,
     required this.textColor,
     this.appBarText,
@@ -16,14 +14,14 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.trailing,
   });
 
-  Color textColor;
-  String? appBarText;
-  String? otherAppBarText;
-  double? height;
-  String? imageUrl;
-  Color? appBarColor;
-  Color? dividerColor;
-  Widget? trailing;
+  final Color textColor;
+  final String? appBarText;
+  final String? otherAppBarText;
+  final double? height;
+  final String? imageUrl;
+  final Color? appBarColor;
+  final Color? dividerColor;
+  final Widget? trailing;
 
   @override
   Widget build(BuildContext context) {
@@ -44,21 +42,20 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                         ),
                       ),
                     ),
-                    SizedBox(width: 10.0),
+                    const SizedBox(width: 10.0),
                     Expanded(
                       flex: 0,
-                      child: trailing
-                      ??
-                          CircleAvatar(
-                            backgroundColor: textColor.withOpacity(0.5),
-                            foregroundImage: imageUrl == null
-                                ? AssetImage('assets/images/default.jpg')
-                                : NetworkImage(imageUrl!) as ImageProvider,
-                          ),
+                      child: trailing ?? const SizedBox(),
+                          // CircleAvatar(
+                          //   backgroundColor: textColor.withOpacity(0.5),
+                          //   foregroundImage: imageUrl == null
+                          //       ? const AssetImage('assets/images/default.jpg')
+                          //       : NetworkImage(imageUrl!) as ImageProvider,
+                          // ),
                     ),
                   ],
                 ),
-                SizedBox(height: 5.0),
+                const SizedBox(height: 5.0),
                 Divider(
                   color: dividerColor ?? Colors.transparent,
                   thickness: 1.0,

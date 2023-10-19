@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
@@ -36,12 +34,12 @@ class _CompletedTodosScreenState extends State<CompletedTodosScreen> {
               appBarColor: kBgColor,
               dividerColor: kGreenColor,
               appBarText: ' My Completed Todos',
-              trailing: SizedBox(),
+              trailing: const SizedBox(),
             ),
 
             // Todos
             todos == null || todos.isEmpty
-                ? Center(
+                ? const Center(
                     child: Text(
                       'You have no completed todos.',
                       style: kGreyNormalTextStyle,
@@ -74,7 +72,7 @@ class _CompletedTodosScreenState extends State<CompletedTodosScreen> {
                       ),
                     ),
                   ),
-            SizedBox(height: 60.0),
+            const SizedBox(height: 60.0),
           ],
         ),
       ),

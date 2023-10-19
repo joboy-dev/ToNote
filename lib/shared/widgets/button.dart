@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, prefer_const_constructors_in_immutables, must_be_immutable
-
 import 'package:flutter/material.dart';
 import 'package:todoey/shared/constants.dart';
 import 'package:todoey/shared/navigator.dart';
@@ -10,7 +8,8 @@ class Button extends StatelessWidget {
   final Color buttonColor;
   final bool inactive;
 
-  Button({
+  const Button({
+    super.key, 
     required this.buttonText,
     required this.onPressed,
     required this.buttonColor,
@@ -37,7 +36,7 @@ class Button extends StatelessWidget {
       ),
       child: Text(
         buttonText,
-        style: TextStyle(
+        style: const TextStyle(
           color: kButtonTextColor,
           fontSize: 15.0,
           fontFamily: 'Poppins',
@@ -54,7 +53,8 @@ class ButtonIcon extends StatelessWidget {
   final Color buttonColor;
   final IconData icon;
 
-  ButtonIcon({
+  const ButtonIcon({
+    super.key,
     required this.buttonText,
     required this.onPressed,
     required this.buttonColor,
@@ -85,12 +85,12 @@ class ButtonIcon extends StatelessWidget {
               color: kWhiteTextColor,
             ),
           ),
-          SizedBox(width: 5.0),
+          const SizedBox(width: 5.0),
           Expanded(
             flex: 2,
             child: Text(
               buttonText,
-              style: TextStyle(
+              style: const TextStyle(
                 color: kButtonTextColor,
                 fontSize: 15.0,
                 fontFamily: 'Poppins',
@@ -105,7 +105,7 @@ class ButtonIcon extends StatelessWidget {
 }
 
 class ButtonText extends StatelessWidget {
-  ButtonText({
+  const ButtonText({
     super.key,
     required this.firstText,
     required this.secondText,
@@ -139,7 +139,7 @@ class ButtonText extends StatelessWidget {
 }
 
 class DoubleButton extends StatelessWidget {
-  DoubleButton({
+  const DoubleButton({
     super.key,
     required this.inactiveButton,
     required this.button2Text,
@@ -150,7 +150,7 @@ class DoubleButton extends StatelessWidget {
   final bool inactiveButton;
   final String button2Text;
   final Color button2Color;
-  Function() button2onPressed;
+  final Function() button2onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -166,7 +166,7 @@ class DoubleButton extends StatelessWidget {
             inactive: false,
           ),
         ),
-        SizedBox(width: 5.0),
+        const SizedBox(width: 5.0),
         Expanded(
           child: Button(
             buttonText: button2Text,
@@ -181,7 +181,8 @@ class DoubleButton extends StatelessWidget {
 }
 
 class IconTextButton extends StatelessWidget {
-  IconTextButton({
+  const IconTextButton({
+    super.key,
     required this.text,
     required this.icon,
     required this.iconColor,

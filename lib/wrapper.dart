@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, no_leading_underscores_for_local_identifiers, unnecessary_null_comparison, use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, prefer_typing_uninitialized_variables
 
 import 'dart:developer';
 
@@ -44,8 +44,8 @@ class _WrapperState extends State<Wrapper> {
 
       var prefs = await Prefs().isDarkMode(context);
       setState(() {
-        kBgColor = prefs ? Color(0xff1E1E1E) : Color.fromARGB(255, 250, 250, 250);
-        kTextColor = prefs ? Color.fromARGB(255, 250, 250, 250) : Color.fromARGB(255, 126, 126, 126);
+        kBgColor = prefs ? const Color(0xff1E1E1E) : const Color.fromARGB(255, 250, 250, 250);
+        kTextColor = prefs ? const Color.fromARGB(255, 250, 250, 250) : const Color.fromARGB(255, 126, 126, 126);
       });
 
       // get user details before it is stored in provider
@@ -75,7 +75,7 @@ class _WrapperState extends State<Wrapper> {
     log('Wrapper widget read token from storage -- $_token');
 
     if (_token == null && data == null) {
-      return GetStarted();
+      return const GetStarted();
     } else {
       // store user details in future provider
       return FutureProvider.value(
@@ -97,7 +97,7 @@ class _WrapperState extends State<Wrapper> {
               catchError: (context, error) {
                 log('(Wrapper) FutureProvider notes Error -- $error');
               },
-              child: BottomNavBar(),),
+              child: const BottomNavBar(),),
         ),
       );
     }

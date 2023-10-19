@@ -1,5 +1,4 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, use_build_context_synchronously
-
+// ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -96,13 +95,13 @@ class _EditProfileState extends State<EditProfile> {
     }
 
     return user == null
-        ? LoadingScreen(color: kDarkYellowColor)
+        ? const LoadingScreen(color: kDarkYellowColor)
         : Form(
             key: _formKey,
             child: Column(
               children: [
                 // Header
-                DialogHeader(
+                const DialogHeader(
                   headerText: 'Edit Profile',
                   mainColor: kDarkYellowColor,
                   icon: FontAwesomeIcons.pencil,
@@ -126,7 +125,7 @@ class _EditProfileState extends State<EditProfile> {
                   iconColor: kDarkYellowColor,
                   prefixIcon: Icons.person,
                 ),
-                SizedBox(height: 10.0),
+                const SizedBox(height: 10.0),
 
                 // Last name field
                 NormalTextField(
@@ -146,7 +145,7 @@ class _EditProfileState extends State<EditProfile> {
                   iconColor: kDarkYellowColor,
                   prefixIcon: Icons.person,
                 ),
-                SizedBox(height: 10.0),
+                const SizedBox(height: 10.0),
 
                 // Email field
                 EmailTextField(
@@ -158,7 +157,7 @@ class _EditProfileState extends State<EditProfile> {
                     });
                   },
                 ),
-                SizedBox(height: 10.0),
+                const SizedBox(height: 10.0),
 
                 DoubleButton(
                   button2Color: kDarkYellowColor,
@@ -169,14 +168,14 @@ class _EditProfileState extends State<EditProfile> {
                   },
                 ),
 
-                SizedBox(height: 10.0),
+                const SizedBox(height: 10.0),
 
                 _isLoading
-                    ? Loader(size: 20.0, color: kDarkYellowColor)
-                    : SizedBox(height: 0.0),
+                    ? const Loader(size: 20.0, color: kDarkYellowColor)
+                    : const SizedBox(height: 0.0),
 
                 message.isEmpty
-                    ? SizedBox(height: 0.0)
+                    ? const SizedBox(height: 0.0)
                     : Center(
                         child: Text(
                           message,

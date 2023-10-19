@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, unused_field
+// ignore_for_file: unused_field
 
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -20,19 +20,19 @@ class GetStarted extends StatefulWidget {
 
 class _GetStartedState extends State<GetStarted> with TickerProviderStateMixin {
   List<CarouselContainer> carousel = [
-    CarouselContainer(
+    const CarouselContainer(
       image: 'assets/images/onboarding1.png',
       text: 'Manage your tasks with efficiency',
     ),
-    CarouselContainer(
+    const CarouselContainer(
       image: 'assets/images/onboarding4.png',
       text: 'Take notes and ensure you remain up to date on various activities',
     ),
-    CarouselContainer(
+    const CarouselContainer(
       image: 'assets/images/onboarding2.png',
       text: 'Handle tasks wherever you are in the world',
     ),
-    CarouselContainer(
+    const CarouselContainer(
       image: 'assets/images/onboarding3.png',
       text: 'Manage multiple tasks at once',
     ),
@@ -49,12 +49,12 @@ class _GetStartedState extends State<GetStarted> with TickerProviderStateMixin {
   void initState() {
     _controller1 = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 3),
+      duration: const Duration(seconds: 3),
     );
 
     _controller2 = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 1),
+      duration: const Duration(seconds: 1),
     );
 
     _controller1.forward().whenComplete(() {
@@ -116,7 +116,7 @@ class _GetStartedState extends State<GetStarted> with TickerProviderStateMixin {
                     aspectRatio: 16 / 9,
                     autoPlayCurve: Curves.fastOutSlowIn,
                     enableInfiniteScroll: true,
-                    autoPlayAnimationDuration: Duration(milliseconds: 1000),
+                    autoPlayAnimationDuration: const Duration(milliseconds: 1000),
                     viewportFraction: 0.85,
                   ),
                 ),
@@ -140,7 +140,7 @@ class _GetStartedState extends State<GetStarted> with TickerProviderStateMixin {
                         inactive: false,
                       ),
                     ),
-                    SizedBox(height: 20.0),
+                    const SizedBox(height: 20.0),
                     SlideTransition(
                       position: slideTransitionAnimation(
                         dx: 4,

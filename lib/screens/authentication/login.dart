@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
 
@@ -169,7 +169,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
         backgroundColor: kBgColor,
         elevation: 0.0,
         centerTitle: true,
-        shape: RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
             bottomLeft: Radius.circular(10.0),
             bottomRight: Radius.circular(10.0),
@@ -177,13 +177,13 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
         ),
         title: Column(
           children: [
-            SizedBox(height: 30.0),
+            const SizedBox(height: 30.0),
             Text(
               'Login',
               style: kAppBarTextStyle,
             ),
             // Divider(),
-            SizedBox(height: 30.0),
+            const SizedBox(height: 30.0),
           ],
         ),
         iconTheme: IconThemeData(color: kTextColor),
@@ -200,7 +200,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                     dy: -2,
                     animation: _animation,
                   ),
-                  child: SizedBox(
+                  child: const SizedBox(
                     height: 250.0,
                     width: double.infinity,
                     child: Image(
@@ -209,7 +209,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                     ),
                   ),
                 ),
-                SizedBox(height: 30.0),
+                const SizedBox(height: 30.0),
                 Form(
                   key: _formKey,
                   child: Column(
@@ -230,7 +230,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                           },
                         ),
                       ),
-                      SizedBox(height: 10.0),
+                      const SizedBox(height: 10.0),
 
                       // Password
                       SlideTransition(
@@ -256,7 +256,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                         ),
                       ),
 
-                      SizedBox(height: 20.0),
+                      const SizedBox(height: 20.0),
 
                       // Button
                       SlideTransition(
@@ -266,7 +266,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                           animation: _animation2,
                         ),
                         child: _isLoading
-                            ? Loader(size: 30.0)
+                            ? const Loader(size: 30.0)
                             : Button(
                                 buttonText: 'Login',
                                 onPressed: () {
@@ -277,7 +277,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                               ),
                       ),
 
-                      SizedBox(height: 10.0),
+                      const SizedBox(height: 10.0),
 
                       SlideTransition(
                         position: slideTransitionAnimation(

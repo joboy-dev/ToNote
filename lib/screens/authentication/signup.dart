@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_build_context_synchronously, no_leading_underscores_for_local_identifiers
+// ignore_for_file: no_leading_underscores_for_local_identifiers, use_build_context_synchronously
 
 import 'dart:developer';
 
@@ -179,7 +179,7 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
         backgroundColor: kBgColor,
         elevation: 0.0,
         centerTitle: true,
-        shape: RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
             bottomLeft: Radius.circular(10.0),
             bottomRight: Radius.circular(10.0),
@@ -187,12 +187,12 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
         ),
         title: Column(
           children: [
-            SizedBox(height: 30.0),
+            const SizedBox(height: 30.0),
             Text(
               'Create Account',
               style: kAppBarTextStyle,
             ),
-            SizedBox(height: 30.0),
+            const SizedBox(height: 30.0),
           ],
         ),
         iconTheme: IconThemeData(color: kTextColor),
@@ -209,7 +209,7 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                     dy: -2,
                     animation: _animation,
                   ),
-                  child: SizedBox(
+                  child: const SizedBox(
                     height: 250.0,
                     width: double.infinity,
                     child: Image(
@@ -218,7 +218,7 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                     ),
                   ),
                 ),
-                SizedBox(height: 30.0),
+                const SizedBox(height: 30.0),
                 Form(
                   key: _formKey,
                   child: Column(
@@ -244,7 +244,7 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                               ),
                             ),
                           ),
-                          SizedBox(width: 10.0),
+                          const SizedBox(width: 10.0),
 
                           // Last Name
                           Expanded(
@@ -265,7 +265,7 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                           ),
                         ],
                       ),
-                      SizedBox(height: 10.0),
+                      const SizedBox(height: 10.0),
 
                       // Email
                       SlideTransition(
@@ -283,7 +283,7 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                           },
                         ),
                       ),
-                      SizedBox(height: 10.0),
+                      const SizedBox(height: 10.0),
 
                       // Password
                       SlideTransition(
@@ -308,7 +308,7 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                           },
                         ),
                       ),
-                      SizedBox(height: 10.0),
+                      const SizedBox(height: 10.0),
 
                       // Confirm Password
                       SlideTransition(
@@ -333,7 +333,7 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                           },
                         ),
                       ),
-                      SizedBox(height: 20.0),
+                      const SizedBox(height: 20.0),
 
                       // Button
                       SlideTransition(
@@ -343,7 +343,7 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                           animation: _animation2,
                         ),
                         child: _isLoading
-                            ? Loader(size: 30.0)
+                            ? const Loader(size: 30.0)
                             : Button(
                                 buttonText: 'Create Account',
                                 onPressed: () {
@@ -353,7 +353,7 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                                 inactive: inactiveButton,
                               ),
                       ),
-                      SizedBox(height: 10.0),
+                      const SizedBox(height: 10.0),
 
                       SlideTransition(
                         position: slideTransitionAnimation(

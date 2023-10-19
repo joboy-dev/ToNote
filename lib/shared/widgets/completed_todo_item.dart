@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, use_build_context_synchronously, no_leading_underscores_for_local_identifiers, unnecessary_string_interpolations, must_be_immutable
+// ignore_for_file: no_leading_underscores_for_local_identifiers, use_build_context_synchronously
 
 import 'dart:developer' as dev;
 
@@ -13,7 +13,7 @@ import 'package:todoey/shared/loader.dart';
 import 'package:todoey/shared/widgets/snackbar.dart';
 
 class CompletedTodoItem extends StatefulWidget {
-  CompletedTodoItem({
+  const CompletedTodoItem({
     super.key,
     required this.indexId,
     required this.todoId,
@@ -24,7 +24,7 @@ class CompletedTodoItem extends StatefulWidget {
   provider 
   */
 
-  int indexId, todoId;
+  final int indexId, todoId;
 
   @override
   State<CompletedTodoItem> createState() => _CompletedTodoItemState();
@@ -113,19 +113,19 @@ class _CompletedTodoItemState extends State<CompletedTodoItem>
 
     return Column(
       children: [
-        _isLoading ? Loader(size: 25.0, color: kGreenColor) : SizedBox(),
+        _isLoading ? const Loader(size: 25.0, color: kGreenColor) : const SizedBox(),
         ListTile(
           title: Text(
             '${todo.id}- ${todo.title}',
             style: kNormalTextStyle.copyWith(
               fontSize: 16.0,
               fontWeight: FontWeight.bold,
-              color: Color.fromARGB(255, 145, 145, 145),
+              color: const Color.fromARGB(255, 145, 145, 145),
             ),
           ),
-          tileColor: Color.fromARGB(255, 218, 218, 218),
+          tileColor: const Color.fromARGB(255, 218, 218, 218),
           leading: _isLoading
-              ? Loader(
+              ? const Loader(
                   size: 20.0,
                   color: Colors.white,
                 )
@@ -150,14 +150,14 @@ class _CompletedTodoItemState extends State<CompletedTodoItem>
                     showSnackbar(
                         context, 'You cannot edit a completed todo item');
                   },
-                  icon: Icon(Icons.edit),
+                  icon: const Icon(Icons.edit),
                   color: kGreyTextColor.withOpacity(0.3)),
               IconButton(
                 onPressed: () {
                   deleteTodo();
                 },
-                icon: Icon(Icons.delete),
-                color: Color.fromARGB(136, 0, 0, 0),
+                icon: const Icon(Icons.delete),
+                color: const Color.fromARGB(136, 0, 0, 0),
               ),
             ],
           ),
@@ -169,9 +169,9 @@ class _CompletedTodoItemState extends State<CompletedTodoItem>
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(5.0),
           ),
-          contentPadding: EdgeInsets.all(0.0),
+          contentPadding: const EdgeInsets.all(0.0),
         ),
-        SizedBox(height: 3.0),
+        const SizedBox(height: 3.0),
       ],
     );
   }

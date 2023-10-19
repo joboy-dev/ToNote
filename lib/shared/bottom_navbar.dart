@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors, must_be_immutable
-
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
@@ -65,9 +63,9 @@ class _BottomNavBarState extends State<BottomNavBar> {
           routeAndNavigatorSettings: RouteAndNavigatorSettings(
             initialRoute: HomeScreen.id,
             routes: {
-              AddNotesScreen.id: (context) => AddNotesScreen(),
+              AddNotesScreen.id: (context) => const AddNotesScreen(),
               // EditNoteScreen.id: (context) => EditNoteScreen(),
-              LoadingDataScreen.id: (context) => LoadingDataScreen(),
+              LoadingDataScreen.id: (context) => const LoadingDataScreen(),
             },
           ),
         ),
@@ -79,7 +77,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
           routeAndNavigatorSettings: RouteAndNavigatorSettings(
             initialRoute: TodoScreen.id,
             routes: {
-              CompletedTodosScreen.id: (context) => CompletedTodosScreen()
+              CompletedTodosScreen.id: (context) => const CompletedTodosScreen()
             },
           ),
         ),
@@ -92,8 +90,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
           routeAndNavigatorSettings: RouteAndNavigatorSettings(
             initialRoute: NotesScreen.id,
             routes: {
-              AddNotesScreen.id: (context) => AddNotesScreen(),
-              LoadingDataScreen.id: (context) => LoadingDataScreen(),
+              AddNotesScreen.id: (context) => const AddNotesScreen(),
+              LoadingDataScreen.id: (context) => const LoadingDataScreen(),
             },
           ),
         ),
@@ -105,18 +103,18 @@ class _BottomNavBarState extends State<BottomNavBar> {
           routeAndNavigatorSettings: RouteAndNavigatorSettings(
             initialRoute: ProfileScreen.id,
             routes: {
-              AddProfilePicture.id: (context) => AddProfilePicture(),
-              LoadingDataScreen.id: (context) => LoadingDataScreen(),
+              AddProfilePicture.id: (context) => const AddProfilePicture(),
+              LoadingDataScreen.id: (context) => const LoadingDataScreen(),
             },
           ),
         ),
       ];
 
   List<Widget> _buildScreens() => [
-        HomeScreen(),
-        TodoScreen(),
-        NotesScreen(),
-        ProfileScreen(),
+        const HomeScreen(),
+        const TodoScreen(),
+        const NotesScreen(),
+        const ProfileScreen(),
       ];
 
   List<Color> colors = [
@@ -141,8 +139,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
 
     setState(() {
       kBgColor = prefsDarkMode
-          ? Color(0xff1E1E1E)
-          : Color.fromARGB(255, 250, 250, 250);
+          ? const Color(0xff1E1E1E)
+          : const Color.fromARGB(255, 250, 250, 250);
     });
 
     log('Bottom nav bar test -- ${user?.firstName}');
@@ -216,14 +214,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
               bottomScreenMargin: 0,
               backgroundColor: colors[_index],
               hideNavigationBar: _hideNavBar,
-              decoration: NavBarDecoration(
+              decoration: const NavBarDecoration(
                 colorBehindNavBar: kGreyTextColor,
-                // border: Border(
-                //   top: BorderSide(
-                //     color: kGreyTextColor,
-                //     width: 3.0,
-                //   ),
-                // ),
               ),
               itemAnimationProperties: const ItemAnimationProperties(
                 duration: Duration(milliseconds: 400),

@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
@@ -29,8 +27,8 @@ class _OnboardingState extends State<Onboarding>
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       var prefs = await Prefs().isDarkMode(context);
       setState(() {
-        kBgColor =
-            prefs ? Color(0xff1E1E1E) : Color.fromARGB(255, 250, 250, 250);
+        kBgColor =prefs ? const Color(0xff1E1E1E) : const Color.fromARGB(255, 250, 250, 250);
+        kTextColor = prefs ? const Color.fromARGB(255, 250, 250, 250) : const Color.fromARGB(255, 126, 126, 126);
       });
     });
     // initialize animation controller
@@ -73,7 +71,7 @@ class _OnboardingState extends State<Onboarding>
         body: Center(
           child: ScaleTransition(
             scale: animation,
-            child: Image(
+            child: const Image(
               image: AssetImage('assets/images/logo.png'),
               width: 250.0,
               height: 250.0,

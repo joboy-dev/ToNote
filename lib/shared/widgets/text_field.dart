@@ -1,20 +1,18 @@
-// ignore_for_file: prefer_const_constructors, must_be_immutable, use_key_in_widget_constructors
-
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:todoey/shared/constants.dart';
 
 class NameTextField extends StatelessWidget {
-  NameTextField({
+  const NameTextField({
     super.key,
     this.initialValue,
     required this.hintText,
     required this.onChanged,
   });
 
-  String? initialValue;
-  String hintText;
-  Function(String? value) onChanged;
+  final String? initialValue;
+  final String hintText;
+  final Function(String? value) onChanged;
   // Function(String? newValue) onSaved;
 
   @override
@@ -26,8 +24,8 @@ class NameTextField extends StatelessWidget {
       decoration: kTextFieldDecoration.copyWith(
         hintText: hintText,
         hintStyle: kTextFieldStyle.copyWith(color: kGreyTextColor),
-        prefixIcon: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+        prefixIcon: const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 10.0),
           child: Icon(
             Icons.person,
             color: kYellowColor,
@@ -48,7 +46,8 @@ class NameTextField extends StatelessWidget {
 }
 
 class EmailTextField extends StatelessWidget {
-  EmailTextField({
+  const EmailTextField({
+    super.key, 
     this.initialValue,
     this.readOnly,
     required this.onChanged,
@@ -57,7 +56,7 @@ class EmailTextField extends StatelessWidget {
   });
 
   final String? initialValue;
-  bool? readOnly;
+  final bool? readOnly;
   final Color? color;
   // bool disableButton;
 
@@ -94,18 +93,20 @@ class EmailTextField extends StatelessWidget {
 }
 
 class PasswordTextField extends StatelessWidget {
-  PasswordTextField(
-      {required this.hintText,
-      required this.obscureText,
-      required this.onChanged,
-      required this.onTap,
-      this.color});
+  const PasswordTextField({
+    super.key, 
+    required this.hintText,
+    required this.obscureText,
+    required this.onChanged,
+    required this.onTap,
+    this.color
+  });
 
-  String hintText;
-  bool obscureText;
-  Color? color;
-  Function(String? value) onChanged;
-  Function() onTap; // for gesture detector
+  final String hintText;
+  final bool obscureText;
+  final Color? color;
+  final Function(String? value) onChanged;
+  final Function() onTap; // for gesture detector
 
   @override
   Widget build(BuildContext context) {
@@ -154,7 +155,7 @@ class PasswordTextField extends StatelessWidget {
 }
 
 class NormalTextField extends StatelessWidget {
-  NormalTextField({
+  const NormalTextField({
     super.key,
     this.initialValue,
     required this.hintText,
@@ -173,21 +174,21 @@ class NormalTextField extends StatelessWidget {
     this.fontSize,
   });
 
-  String? initialValue;
-  String hintText;
-  bool? readonly;
-  Function(String? value) onChanged;
-  Color enabledBorderColor;
-  bool obscureText;
-  Color focusedBorderColor;
-  Color errorBorderColor;
-  Color focusedErrorBorderColor;
-  Color errorTextStyleColor;
-  Color iconColor;
-  Color cursorColor;
-  IconData prefixIcon;
-  IconData? suffixIcon;
-  double? fontSize;
+  final String? initialValue;
+  final String hintText;
+  final bool? readonly;
+  final Function(String? value) onChanged;
+  final Color enabledBorderColor;
+  final bool obscureText;
+  final Color focusedBorderColor;
+  final Color errorBorderColor;
+  final Color focusedErrorBorderColor;
+  final Color errorTextStyleColor;
+  final Color iconColor;
+  final Color cursorColor;
+  final IconData prefixIcon;
+  final IconData? suffixIcon;
+  final double? fontSize;
   // Function(String? newValue) onSaved;
 
   @override
@@ -207,26 +208,26 @@ class NormalTextField extends StatelessWidget {
           color: iconColor,
         ),
         suffixIcon: Icon(suffixIcon),
-        labelStyle: TextStyle(
+        labelStyle: const TextStyle(
           color: kYellowColor,
           fontWeight: FontWeight.w300,
           fontSize: 10.0,
         ),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(color: enabledBorderColor, width: 1.0),
-          borderRadius: BorderRadius.all(Radius.circular(5.0)),
+          borderRadius: const BorderRadius.all(Radius.circular(5.0)),
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(color: focusedBorderColor, width: 1.0),
-          borderRadius: BorderRadius.all(Radius.circular(5.0)),
+          borderRadius: const BorderRadius.all(Radius.circular(5.0)),
         ),
         errorBorder: OutlineInputBorder(
           borderSide: BorderSide(color: errorBorderColor, width: 1.0),
-          borderRadius: BorderRadius.all(Radius.circular(5.0)),
+          borderRadius: const BorderRadius.all(Radius.circular(5.0)),
         ),
         focusedErrorBorder: OutlineInputBorder(
           borderSide: BorderSide(color: focusedErrorBorderColor, width: 1.0),
-          borderRadius: BorderRadius.all(Radius.circular(5.0)),
+          borderRadius: const BorderRadius.all(Radius.circular(5.0)),
         ),
         errorStyle: TextStyle(
           color: errorTextStyleColor,
@@ -247,7 +248,7 @@ class NormalTextField extends StatelessWidget {
 }
 
 class TextareaTextField extends StatelessWidget {
-  TextareaTextField({
+  const TextareaTextField({
     super.key,
     this.initialValue,
     this.readonly,
@@ -261,16 +262,16 @@ class TextareaTextField extends StatelessWidget {
     required this.cursorColor,
   });
 
-  String? initialValue;
-  String hintText;
-  bool? readonly;
-  Function(String? value) onChanged;
-  Color? enabledBorderColor;
-  Color? focusedBorderColor;
-  Color? errorBorderColor;
-  Color? focusedErrorBorderColor;
-  Color errorTextStyleColor;
-  Color cursorColor;
+  final String? initialValue;
+  final String hintText;
+  final bool? readonly;
+  final Function(String? value) onChanged;
+  final Color? enabledBorderColor;
+  final Color? focusedBorderColor;
+  final Color? errorBorderColor;
+  final Color? focusedErrorBorderColor;
+  final Color errorTextStyleColor;
+  final Color cursorColor;
 
   @override
   Widget build(BuildContext context) {
@@ -284,7 +285,7 @@ class TextareaTextField extends StatelessWidget {
       decoration: InputDecoration(
         hintText: hintText,
         hintStyle: kTextFieldStyle.copyWith(color: kTextColor.withOpacity(0.5)),
-        labelStyle: TextStyle(
+        labelStyle: const TextStyle(
           color: kYellowColor,
           fontWeight: FontWeight.w300,
           fontSize: 10.0,
@@ -292,22 +293,22 @@ class TextareaTextField extends StatelessWidget {
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
               color: enabledBorderColor ?? Colors.transparent, width: 1.0),
-          borderRadius: BorderRadius.all(Radius.circular(5.0)),
+          borderRadius: const BorderRadius.all(Radius.circular(5.0)),
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
               color: focusedBorderColor ?? Colors.transparent, width: 1.0),
-          borderRadius: BorderRadius.all(Radius.circular(5.0)),
+          borderRadius: const BorderRadius.all(Radius.circular(5.0)),
         ),
         errorBorder: OutlineInputBorder(
           borderSide: BorderSide(
               color: errorBorderColor ?? Colors.transparent, width: 1.0),
-          borderRadius: BorderRadius.all(Radius.circular(5.0)),
+          borderRadius: const BorderRadius.all(Radius.circular(5.0)),
         ),
         focusedErrorBorder: OutlineInputBorder(
           borderSide: BorderSide(
               color: focusedErrorBorderColor ?? Colors.transparent, width: 1.0),
-          borderRadius: BorderRadius.all(Radius.circular(5.0)),
+          borderRadius: const BorderRadius.all(Radius.circular(5.0)),
         ),
         errorStyle: TextStyle(
           color: errorTextStyleColor,
@@ -327,7 +328,7 @@ class TextareaTextField extends StatelessWidget {
 }
 
 class DateTimeField extends StatelessWidget {
-  DateTimeField({
+  const DateTimeField({
     super.key,
     required this.hintText,
     required this.enabledBorderColor,
@@ -340,15 +341,15 @@ class DateTimeField extends StatelessWidget {
     this.initialValue,
   });
 
-  String hintText;
-  Color enabledBorderColor;
-  Color focusedBorderColor;
-  Color errorBorderColor;
-  Color focusedErrorBorderColor;
-  Color errorTextStyleColor;
-  Color iconColor;
-  String? initialValue;
-  Function(DateTime? date)? onSaved;
+  final String hintText;
+  final Color enabledBorderColor;
+  final Color focusedBorderColor;
+  final Color errorBorderColor;
+  final Color focusedErrorBorderColor;
+  final Color errorTextStyleColor;
+  final Color iconColor;
+  final String? initialValue;
+  final Function(DateTime? date)? onSaved;
 
   @override
   Widget build(BuildContext context) {
@@ -365,27 +366,27 @@ class DateTimeField extends StatelessWidget {
               FontAwesomeIcons.calendar,
               color: iconColor,
             ),
-            labelStyle: TextStyle(
+            labelStyle: const TextStyle(
               color: kYellowColor,
               fontWeight: FontWeight.w300,
               fontSize: 10.0,
             ),
             enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(color: enabledBorderColor, width: 1.0),
-              borderRadius: BorderRadius.all(Radius.circular(5.0)),
+              borderRadius: const BorderRadius.all(Radius.circular(5.0)),
             ),
             focusedBorder: OutlineInputBorder(
               borderSide: BorderSide(color: focusedBorderColor, width: 1.0),
-              borderRadius: BorderRadius.all(Radius.circular(5.0)),
+              borderRadius: const BorderRadius.all(Radius.circular(5.0)),
             ),
             errorBorder: OutlineInputBorder(
               borderSide: BorderSide(color: errorBorderColor, width: 1.0),
-              borderRadius: BorderRadius.all(Radius.circular(5.0)),
+              borderRadius: const BorderRadius.all(Radius.circular(5.0)),
             ),
             focusedErrorBorder: OutlineInputBorder(
               borderSide:
                   BorderSide(color: focusedErrorBorderColor, width: 1.0),
-              borderRadius: BorderRadius.all(Radius.circular(5.0)),
+              borderRadius: const BorderRadius.all(Radius.circular(5.0)),
             ),
             errorStyle: TextStyle(
               color: errorTextStyleColor,
@@ -415,7 +416,7 @@ class DateTimeField extends StatelessWidget {
                     style: kTextFieldStyle.copyWith(color: kGreyTextColor),
                   ),
                 ),
-                Expanded(
+                const Expanded(
                   flex: 0,
                   child: Icon(
                     Icons.arrow_drop_down,

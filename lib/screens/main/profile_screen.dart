@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, no_leading_underscores_for_local_identifiers, use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously
 
 import 'dart:developer';
 
@@ -44,7 +44,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
     log('$kDarkMode');
     return user == null
-        ? ErrorLoadingScreen()
+        ? const ErrorLoadingScreen()
         : Scaffold(
             backgroundColor: kBgColor,
             body: SingleChildScrollView(
@@ -55,31 +55,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        children: [
-                          Expanded(flex: 2, child: SizedBox()),
-                          Expanded(
-                            flex: 1,
-                            child: IconTextButton(
-                              text: 'Logout',
-                              fontSize: 12.0,
-                              fontWeight: FontWeight.bold,
-                              icon: Icons.logout_rounded,
-                              iconColor: kRedColor,
-                              textColor: kRedColor,
-                              onPressed: () {
-                                showDialogBox(
-                                  context: context,
-                                  screen: LogoutDialog(),
-                                  dismisible: true,
-                                );
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 10.0),
-
                       // Profile picture container
                       // Center(
                       //   child: GestureDetector(
@@ -97,38 +72,36 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       //     ),
                       //   ),
                       // ),
-                      SizedBox(height: 20.0),
+                      const SizedBox(height: 20.0),
 
                       // USER DETAILS
-                      Center(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              '${user.firstName}, ${user.lastName}',
-                              style: kGreyNormalTextStyle.copyWith(
-                                fontWeight: FontWeight.w900,
-                              ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            '${user.firstName}, ${user.lastName}',
+                            style: kGreyNormalTextStyle.copyWith(
+                              fontWeight: FontWeight.w900,
                             ),
-                            SizedBox(height: 10.0),
-                            Text(
-                              '${user.email}',
-                              style: kGreyNormalTextStyle,
-                            ),
-                          ],
-                        ),
+                          ),
+                          const SizedBox(height: 10.0),
+                          Text(
+                            '${user.email}',
+                            style: kGreyNormalTextStyle,
+                          ),
+                        ],
                       ),
 
-                      SizedBox(height: 10.0),
-                      Divider(thickness: 0.35, color: kDarkYellowColor),
-                      SizedBox(height: 10.0),
+                      const SizedBox(height: 10.0),
+                      const Divider(thickness: 0.35, color: kDarkYellowColor),
+                      const SizedBox(height: 10.0),
 
                       // ACCOUNT SETTINGS
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Icons.settings, color: kDarkYellowColor),
-                          SizedBox(width: 10.0),
+                          const Icon(Icons.settings, color: kDarkYellowColor),
+                          const SizedBox(width: 10.0),
                           Text(
                             'Account Settings',
                             style: kOtherAppBarTextStyle.copyWith(
@@ -139,8 +112,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
 
                       // SizedBox(),
-                      Divider(color: kGreyTextColor, thickness: 0.1),
-                      SizedBox(height: 10.0),
+                      const Divider(color: kGreyTextColor, thickness: 0.1),
+                      const SizedBox(height: 10.0),
 
                       IconTextButton(
                         text: 'Edit Profile',
@@ -149,12 +122,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         onPressed: () {
                           showDialogBox(
                             context: context,
-                            screen: EditProfile(),
+                            screen: const EditProfile(),
                             dismisible: false,
                           );
                         },
                       ),
-                      SizedBox(height: 20.0),
+                      const SizedBox(height: 20.0),
 
                       // IconTextButton(
                       //   text: 'Change Profile Picture',
@@ -172,10 +145,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         iconColor: kDarkYellowColor,
                         onPressed: () {
                           showDialogBox(
-                              context: context, screen: ChangePassword());
+                              context: context, screen: const ChangePassword());
                         },
                       ),
-                      SizedBox(height: 10.0),
+                      const SizedBox(height: 10.0),
 
                       Row(
                         children: [
@@ -207,8 +180,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 setState(() {
                                   kDarkMode = value;
                                   kBgColor = kDarkMode
-                                      ? Color(0xff1E1E1E)
-                                      : Color.fromARGB(255, 250, 250, 250);
+                                      ? const Color(0xff1E1E1E)
+                                      : const Color.fromARGB(255, 250, 250, 250);
                                 });
                                 log('ProfileScreen switch Dark Mode - $kDarkMode');
 
@@ -219,6 +192,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           )
                         ],
                       ),
+
+                      const SizedBox(height: 20.0),
+
+                      // Logout button
+                      IconTextButton(
+                        text: 'Logout',
+                        fontSize: 17.0,
+                        fontWeight: FontWeight.bold,
+                        icon: Icons.logout_rounded,
+                        iconColor: kRedColor,
+                        textColor: kRedColor,
+                        onPressed: () {
+                          showDialogBox(
+                            context: context,
+                            screen: const LogoutDialog(),
+                            dismisible: true,
+                          );
+                        },
+                      ),
+                      const SizedBox(height: 10.0),
                     ],
                   ),
                 ),

@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously
 
 import 'dart:developer';
 
@@ -105,7 +105,7 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
       key: _formKey,
       child: Column(
         children: [
-          DialogHeader(
+          const DialogHeader(
             headerText: 'Add Todo',
             icon: FontAwesomeIcons.plus,
             mainColor: kGreenColor,
@@ -129,7 +129,7 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
             iconColor: kGreenColor,
             prefixIcon: Icons.check_circle_outline,
           ),
-          SizedBox(height: 20.0),
+          const SizedBox(height: 20.0),
 
           // Date field
           DateTimeField(
@@ -147,7 +147,7 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
             },
           ),
 
-          SizedBox(height: 20.0),
+          const SizedBox(height: 20.0),
 
           DoubleButton(
             inactiveButton: inactiveButton,
@@ -158,14 +158,14 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
             },
           ),
 
-          SizedBox(height: 10.0),
+          const SizedBox(height: 10.0),
 
           _isLoading
-              ? Loader(size: 20.0, color: kGreenColor)
-              : SizedBox(height: 0.0),
+              ? const Loader(size: 20.0, color: kGreenColor)
+              : const SizedBox(height: 0.0),
 
           message.isEmpty
-              ? SizedBox(height: 0.0)
+              ? const SizedBox(height: 0.0)
               : Center(
                   child: Text(
                     message,
