@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, must_be_immutable, prefer_final_fields, use_build_context_synchronously
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, must_be_immutable, prefer_final_fields, use_build_context_synchronously, unused_field
 
 import 'dart:developer' as dev;
 
@@ -7,20 +7,14 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:todoey/backend/todo/todo_view.dart';
-import 'package:todoey/entities/todo.dart';
 import 'package:todoey/provider/todo_provider.dart';
 import 'package:todoey/provider/user_provider.dart';
-import 'package:todoey/screens/main/completed_todos_screen.dart';
 import 'package:todoey/screens/main/dialog_screens/add_todo.dart';
-import 'package:todoey/services/isar_service.dart';
 import 'package:todoey/shared/constants.dart';
 import 'package:todoey/shared/custom_appbar.dart';
 import 'package:todoey/shared/loading_screen.dart';
-import 'package:todoey/shared/navigator.dart';
 import 'package:todoey/shared/widgets/button.dart';
 import 'package:todoey/shared/widgets/dialog.dart';
-import 'package:todoey/shared/widgets/snackbar.dart';
 import 'package:todoey/shared/widgets/todo_item.dart';
 
 class TodoScreen extends StatefulWidget {
@@ -102,22 +96,22 @@ class _TodoScreenState extends State<TodoScreen> with TickerProviderStateMixin {
                       ),
                     ),
 
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        IconTextButton(
-                          text: 'View all completed todos',
-                          icon: Icons.check_box_rounded,
-                          iconColor: kGreenColor,
-                          gap: 5.0,
-                          fontSize: 14.0,
-                          onPressed: () {
-                            navigatorPushNamed(
-                                context, CompletedTodosScreen.id);
-                          },
-                        ),
-                      ],
-                    ),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.center,
+                    //   children: [
+                    //     IconTextButton(
+                    //       text: 'View all completed todos',
+                    //       icon: Icons.check_box_rounded,
+                    //       iconColor: kGreenColor,
+                    //       gap: 5.0,
+                    //       fontSize: 14.0,
+                    //       onPressed: () {
+                    //         navigatorPushNamed(
+                    //             context, CompletedTodosScreen.id);
+                    //       },
+                    //     ),
+                    //   ],
+                    // ),
 
                     // Todos
                     todos == null || todos.isEmpty

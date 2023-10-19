@@ -3,7 +3,7 @@ import 'package:todoey/entities/todo.dart';
 
 class TodoProvider with ChangeNotifier {
   List<Todo> _todos = [];
-  List<Todo> _completedTodos = [];
+  final List<Todo> _completedTodos = [];
 
   List<Todo> get todos => _todos;
   List<Todo> get completedTodos => _completedTodos;

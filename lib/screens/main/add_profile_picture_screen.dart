@@ -3,22 +3,15 @@
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:path_provider/path_provider.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:todoey/backend/user/user_view.dart';
-import 'package:todoey/entities/user.dart';
 import 'package:todoey/provider/user_provider.dart';
 
-import 'package:todoey/screens/authentication/login.dart';
 import 'package:todoey/screens/main/dialog_screens/upload_profile_picture.dart';
 import 'package:todoey/shared/animations.dart';
 import 'package:todoey/shared/constants.dart';
-import 'package:todoey/shared/loader.dart';
-import 'package:todoey/shared/navigator.dart';
 import 'package:todoey/shared/widgets/button.dart';
 import 'package:todoey/shared/widgets/dialog.dart';
 
@@ -38,10 +31,6 @@ class _AddProfilePictureState extends State<AddProfilePicture>
 
   // File _image = File('asstes/images/default.jpg');
   File? _image;
-
-  // initialize user provider
-  UserProvider _userProvider = UserProvider();
-  UserView _userView = UserView();
 
   // ANIMATION
   late AnimationController _controller1;

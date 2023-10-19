@@ -1,15 +1,12 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import 'package:todoey/backend/user/user_view.dart';
 import 'package:todoey/entities/user.dart';
 import 'package:todoey/screens/authentication/signup.dart';
-import 'package:todoey/screens/main/loading_data_screen.dart';
 import 'package:todoey/services/isar_service.dart';
 import 'package:todoey/shared/animations.dart';
-import 'package:todoey/provider/user_provider.dart';
 import 'package:todoey/shared/constants.dart';
 import 'package:todoey/shared/loader.dart';
 import 'package:todoey/shared/navigator.dart';

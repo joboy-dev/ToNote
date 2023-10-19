@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, use_build_context_synchronously
+// ignore_for_file: prefer_const_constructors, use_build_context_synchronously, must_be_immutable
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -28,7 +28,7 @@ class _DeleteTodoScreenState extends State<DeleteTodoScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final _todoView = TodoView();
+    final todoView = TodoView();
     final todos = Provider.of<TodoProvider?>(context)?.todos;
 
     Todo todo = todos![widget.providerTodoId];
@@ -38,7 +38,7 @@ class _DeleteTodoScreenState extends State<DeleteTodoScreen> {
         _isLoading = true;
       });
 
-      var data = await _todoView.deleteTodo(
+      var data = await todoView.deleteTodo(
         id: todo.id!,
       );
 

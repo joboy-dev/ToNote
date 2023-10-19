@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:todoey/screens/main/loading_data_screen.dart';
-import 'package:todoey/services/timer.dart';
 import 'package:todoey/shared/constants.dart';
 import 'package:todoey/shared/loader.dart';
 import 'package:todoey/shared/navigator.dart';

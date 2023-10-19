@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_build_context_synchronously
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_build_context_synchronously, must_be_immutable
 
 import 'dart:developer';
 
@@ -7,9 +7,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:todoey/backend/note/note_view.dart';
 import 'package:todoey/entities/note.dart';
-import 'package:todoey/entities/todo.dart';
 import 'package:todoey/provider/notes_provider.dart';
-import 'package:todoey/provider/todo_provider.dart';
 import 'package:todoey/services/isar_service.dart';
 import 'package:todoey/shared/constants.dart';
 import 'package:todoey/shared/loader.dart';
@@ -61,7 +59,7 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
             message = 'Title and content cannot be the same';
           });
         } else {
-          NoteModel _note = NoteModel(
+          NoteModel note0 = NoteModel(
             title: title ?? '${note.title}',
             content: content ?? '${note.content}',
           );
@@ -71,7 +69,7 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
           });
 
           // perform adding todo function
-          var data = await _noteView.updateNote(note: _note, id: note.id!);
+          var data = await _noteView.updateNote(note: note0, id: note.id!);
 
           if (data is Note) {
             await _isarService.saveNote(data, context);

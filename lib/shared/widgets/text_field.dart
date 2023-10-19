@@ -115,7 +115,7 @@ class PasswordTextField extends StatelessWidget {
       obscureText: obscureText,
       decoration: kTextFieldDecoration.copyWith(
         hintText: hintText,
-        hintStyle: kGreyNormalTextStyle.copyWith(fontSize: 12.0),
+        hintStyle: kGreyNormalTextStyle.copyWith(fontSize: 14.0),
         prefixIcon: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10.0),
           child: Icon(
@@ -195,13 +195,13 @@ class NormalTextField extends StatelessWidget {
     return TextFormField(
       readOnly: readonly ?? false,
       initialValue: initialValue,
-      style: kTextFieldStyle.copyWith(fontSize: fontSize ?? 12.0),
+      style: kTextFieldStyle.copyWith(fontSize: fontSize ?? 14.0),
       cursorColor: cursorColor,
       obscureText: obscureText,
       decoration: InputDecoration(
         hintText: hintText,
         hintStyle: kTextFieldStyle.copyWith(
-            color: kTextColor, fontSize: fontSize ?? 12.0),
+            color: kTextColor, fontSize: fontSize ?? 14.0),
         prefixIcon: Icon(
           prefixIcon,
           color: iconColor,
@@ -352,7 +352,7 @@ class DateTimeField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    DateTime now = DateTime.now();
+    // DateTime now = DateTime.now();
     return FormField<DateTime>(
       // initialValue: DateTime.parse(initialValue!) ?? DateTime.parse( now.toIso8601String().substring(0, 10)),
       builder: (dateState) {

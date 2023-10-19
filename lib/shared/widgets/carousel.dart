@@ -7,7 +7,7 @@ class CarouselContainer extends StatelessWidget {
   final String image;
   final String text;
 
-  CarouselContainer({required this.image, required this.text});
+  const CarouselContainer({super.key, required this.image, required this.text});
 
   @override
   Widget build(BuildContext context) {

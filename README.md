@@ -1,16 +1,19 @@
-# todoey
+# Todoey
 
-A new Flutter project.
+This is a mobile application built with Flutter. This application is designed for users to effectively create tasks and notes anytime anywhere.
+This application makes use of a backend server built with Django rest framework. The link to the github repository can be found here:
+[https://github.com/joboy-dev/todo-notes-api](https://github.com/joboy-dev/todo-notes-api)
 
-## Getting Started
+### Features of the application
+1. Creating account and logging in.
+2. Creating todo tasks.
+3. Creating notes.
+4. Updating user details.
+5. Changing password.
+6. Updating todo tasks and notes.
 
-This project is a starting point for a Flutter application.
+Dark mode is also implemented for users who prefer to use dark mode.
 
-A few resources to get you started if this is your first Flutter project:
+### Download
+You can download and test the application from here:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.

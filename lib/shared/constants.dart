@@ -30,33 +30,33 @@ const fontFamily = 'Poppins';
 
 // TEXT STYLE
 var kAppBarTextStyle = TextStyle(
-  fontSize: 20.0,
+  fontSize: 22.0,
   fontWeight: FontWeight.bold,
   color: kTextColor,
   fontFamily: fontFamily,
 );
 
 const kOtherAppBarTextStyle = TextStyle(
-  fontSize: 17.0,
+  fontSize: 20.0,
   fontWeight: FontWeight.bold,
   color: kWhiteTextColor,
   fontFamily: fontFamily,
 );
 
 var kNormalTextStyle = TextStyle(
-  fontSize: 15.0,
+  fontSize: 17.0,
   color: kTextColor,
   fontFamily: fontFamily,
 );
 
 const kGreyNormalTextStyle = TextStyle(
-  fontSize: 15.0,
+  fontSize: 17.0,
   color: kGreyTextColor,
   fontFamily: fontFamily,
 );
 
 var kTextFieldStyle = TextStyle(
-  fontSize: 12.0,
+  fontSize: 14.0,
   color: kTextColor,
   fontFamily: fontFamily,
 );

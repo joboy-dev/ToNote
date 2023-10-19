@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, use_build_context_synchronously, no_leading_underscores_for_local_identifiers, unnecessary_string_interpolations
+// ignore_for_file: prefer_const_constructors, use_build_context_synchronously, no_leading_underscores_for_local_identifiers, unnecessary_string_interpolations, unused_field, must_be_immutable
 
 import 'dart:math';
 import 'dart:developer' as dev;
@@ -147,7 +147,7 @@ class _TodoItemState extends State<TodoItem> with TickerProviderStateMixin {
 
       if (data is Todo) {
         // get index of the todo data
-        final index = todos.indexOf(todo);
+        // final index = todos.indexOf(todo);
 
         // save todo to isar db
         await _isarService.saveTodo(data, context);
@@ -182,7 +182,7 @@ class _TodoItemState extends State<TodoItem> with TickerProviderStateMixin {
           _isLoading ? Loader(size: 25.0, color: kGreenColor) : SizedBox(),
           ListTile(
             title: Text(
-              '${todo.id}- ${todo.title}',
+              '${todo.title}',
               // '${todo.title}',
               style: kNormalTextStyle.copyWith(
                 fontSize: 16.0,
@@ -209,7 +209,8 @@ class _TodoItemState extends State<TodoItem> with TickerProviderStateMixin {
                     onChanged: todo.isCompleted!
                         ? (value) {
                             showSnackbar(context,
-                                'Go to completed todos to un-check this todo');
+                                // 'Go to completed todos to un-check this todo');
+                                'You cannot un-check a completed todo.');
                           }
                         : (value) async {
                             await toggleCompletedStatus();

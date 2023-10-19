@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, must_be_immutable
 
 import 'package:flutter/material.dart';
 import 'package:todoey/shared/constants.dart';
@@ -47,7 +47,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                     SizedBox(width: 10.0),
                     Expanded(
                       flex: 0,
-                      child: trailing ??
+                      child: trailing
+                      ??
                           CircleAvatar(
                             backgroundColor: textColor.withOpacity(0.5),
                             foregroundImage: imageUrl == null

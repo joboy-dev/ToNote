@@ -46,8 +46,8 @@ class _EditTodoScreenState extends State<EditTodoScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final _isarService = IsarService();
-    final _todoView = TodoView();
+    final isarService = IsarService();
+    final todoView = TodoView();
 
     // get all todos from provider
     final todos = Provider.of<TodoProvider?>(context)?.todos;
@@ -75,14 +75,14 @@ class _EditTodoScreenState extends State<EditTodoScreen> {
           _isLoading = true;
         });
 
-        var data = await _todoView.updateTodo(
+        var data = await todoView.updateTodo(
           id: todo.id!,
           todo: todoModel,
         );
 
         if (data is Todo) {
-          await _isarService.saveTodo(data, context);
-          await _isarService.getUserTodos(context);
+          await isarService.saveTodo(data, context);
+          await isarService.getUserTodos(context);
 
           setState(() {
             _isLoading = false;

@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, use_build_context_synchronously, no_leading_underscores_for_local_identifiers, unnecessary_string_interpolations
+// ignore_for_file: prefer_const_constructors, use_build_context_synchronously, no_leading_underscores_for_local_identifiers, unnecessary_string_interpolations, must_be_immutable
 
 import 'dart:developer' as dev;
 
@@ -37,7 +37,7 @@ class _CompletedTodoItemState extends State<CompletedTodoItem>
     final _todoView = TodoView();
     final _isarService = IsarService();
     final todos = Provider.of<TodoProvider?>(context)?.todos;
-    final completedTodos = Provider.of<TodoProvider?>(context)?.completedTodos;
+    // final completedTodos = Provider.of<TodoProvider?>(context)?.completedTodos;
 
     bool _isLoading = false;
     String message = '';

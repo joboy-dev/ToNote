@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:todoey/backend/user/user_view.dart';
 import 'package:todoey/entities/user.dart';
 import 'package:todoey/provider/user_provider.dart';
-import 'package:todoey/services/isar_service.dart';
+// import 'package:todoey/services/isar_service.dart';
 import 'package:todoey/shared/constants.dart';
 import 'package:todoey/shared/loader.dart';
 import 'package:todoey/shared/loading_screen.dart';
@@ -42,7 +42,7 @@ class _ChangePasswordState extends State<ChangePassword> {
 
   final UserView _userView = UserView();
 
-  final IsarService _isarService = IsarService();
+  // final IsarService _isarService = IsarService();
 
   @override
   Widget build(BuildContext context) {

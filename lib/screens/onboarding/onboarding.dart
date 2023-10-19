@@ -4,8 +4,6 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todoey/screens/onboarding/get_started.dart';
-import 'package:todoey/services/isar_service.dart';
 import 'package:todoey/services/user_preferences.dart';
 import 'package:todoey/shared/constants.dart';
 import 'package:todoey/shared/navigator.dart';

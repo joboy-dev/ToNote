@@ -29,9 +29,9 @@ class _LoadingDataScreenState extends State<LoadingDataScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final _user = Provider.of<UserProvider?>(context)?.user;
+    final user = Provider.of<UserProvider?>(context)?.user;
 
-    return _user == null
+    return user == null
         ? Center(child: LoadingScreen(color: kOrangeColor))
         : BottomNavBar();
   }

@@ -3,14 +3,10 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:todoey/backend/user/user_api.dart';
 import 'package:todoey/backend/user/user_view.dart';
 import 'package:todoey/entities/user.dart';
 import 'package:todoey/screens/authentication/login.dart';
-import 'package:todoey/screens/main/add_profile_picture_screen.dart';
-import 'package:todoey/services/isar_service.dart';
 import 'package:todoey/shared/animations.dart';
-import 'package:todoey/shared/bottom_navbar.dart';
 import 'package:todoey/shared/constants.dart';
 import 'package:todoey/shared/loader.dart';
 import 'package:todoey/shared/navigator.dart';
@@ -342,8 +338,8 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                       // Button
                       SlideTransition(
                         position: slideTransitionAnimation(
-                          dx: 0,
-                          dy: 3,
+                          dx: 4,
+                          dy: 0,
                           animation: _animation2,
                         ),
                         child: _isLoading
@@ -361,8 +357,8 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
 
                       SlideTransition(
                         position: slideTransitionAnimation(
-                          dx: 0,
-                          dy: 5,
+                          dx: -5,
+                          dy: 0,
                           animation: _animation2,
                         ),
                         child: ButtonText(

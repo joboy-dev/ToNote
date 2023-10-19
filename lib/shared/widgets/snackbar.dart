@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:todoey/shared/constants.dart';
 
 showSnackbar(BuildContext context, String text) {
-  double width = MediaQuery.of(context).size.width;
-
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
       content:

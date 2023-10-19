@@ -4,7 +4,6 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todoey/entities/todo.dart';
 import 'package:todoey/provider/todo_provider.dart';
 import 'package:todoey/shared/constants.dart';
 import 'package:todoey/shared/custom_appbar.dart';

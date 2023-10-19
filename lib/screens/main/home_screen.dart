@@ -33,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
   math.Random random = math.Random();
   bool? isChecked = false;
 
-  LoadingTimer _loadingTimer = LoadingTimer();
+  final LoadingTimer _loadingTimer = LoadingTimer();
 
   @override
   void initState() {

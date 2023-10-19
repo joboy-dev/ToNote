@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:todoey/backend/user/user_view.dart';
-import 'package:todoey/screens/authentication/login.dart';
 import 'package:todoey/services/isar_service.dart';
 import 'package:todoey/shared/constants.dart';
 import 'package:todoey/shared/navigator.dart';

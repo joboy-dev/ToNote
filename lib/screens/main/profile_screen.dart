@@ -6,18 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:todoey/backend/todo/todo_view.dart';
-import 'package:todoey/entities/user.dart';
 import 'package:todoey/provider/device_prefs_provider.dart';
 import 'package:todoey/provider/user_provider.dart';
-import 'package:todoey/screens/main/add_profile_picture_screen.dart';
 import 'package:todoey/screens/main/dialog_screens/edit_profile.dart';
 import 'package:todoey/screens/main/dialog_screens/logout_dialog.dart';
-import 'package:todoey/screens/main/dialog_screens/view_profile_picture.dart';
-import 'package:todoey/services/isar_service.dart';
 import 'package:todoey/services/user_preferences.dart';
 import 'package:todoey/shared/constants.dart';
 import 'package:todoey/shared/loading_screen.dart';
-import 'package:todoey/shared/navigator.dart';
 import 'package:todoey/shared/widgets/button.dart';
 import 'package:todoey/shared/widgets/dialog.dart';
 import 'package:todoey/shared/widgets/snackbar.dart';
@@ -86,22 +81,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       SizedBox(height: 10.0),
 
                       // Profile picture container
-                      Center(
-                        child: GestureDetector(
-                          onTap: () {
-                            showDialogBox(
-                              context: context,
-                              screen: ViewProfilePictureScreen(),
-                            );
-                          },
-                          child: CircleAvatar(
-                            backgroundColor: kDarkYellowColor.withOpacity(0.5),
-                            foregroundImage:
-                                NetworkImage('${user.profilePicture}'),
-                            radius: 70.0,
-                          ),
-                        ),
-                      ),
+                      // Center(
+                      //   child: GestureDetector(
+                      //     onTap: () {
+                      //       showDialogBox(
+                      //         context: context,
+                      //         screen: ViewProfilePictureScreen(),
+                      //       );
+                      //     },
+                      //     child: CircleAvatar(
+                      //       backgroundColor: kDarkYellowColor.withOpacity(0.5),
+                      //       foregroundImage:
+                      //           NetworkImage('${user.profilePicture}'),
+                      //       radius: 70.0,
+                      //     ),
+                      //   ),
+                      // ),
                       SizedBox(height: 20.0),
 
                       // USER DETAILS
@@ -161,15 +156,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       SizedBox(height: 20.0),
 
-                      IconTextButton(
-                        text: 'Change Profile Picture',
-                        icon: Icons.camera_rounded,
-                        iconColor: kDarkYellowColor,
-                        onPressed: () {
-                          navigatorPushNamed(context, AddProfilePicture.id);
-                        },
-                      ),
-                      SizedBox(height: 20.0),
+                      // IconTextButton(
+                      //   text: 'Change Profile Picture',
+                      //   icon: Icons.camera_rounded,
+                      //   iconColor: kDarkYellowColor,
+                      //   onPressed: () {
+                      //     navigatorPushNamed(context, AddProfilePicture.id);
+                      //   },
+                      // ),
+                      // SizedBox(height: 20.0),
 
                       IconTextButton(
                         text: 'Change Password',

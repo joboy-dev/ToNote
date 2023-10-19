@@ -40,7 +40,7 @@ class _AddNotesScreenState extends State<AddNotesScreen> {
           message = 'Title and content cannot be the same';
         });
       } else {
-        NoteModel _note = NoteModel(
+        NoteModel note = NoteModel(
           title: title,
           content: content,
         );
@@ -50,7 +50,7 @@ class _AddNotesScreenState extends State<AddNotesScreen> {
         });
 
         // perform adding todo function
-        var data = await _noteView.addNote(note: _note);
+        var data = await _noteView.addNote(note: note);
 
         if (data is Note) {
           await _isarService.saveNote(data, context);

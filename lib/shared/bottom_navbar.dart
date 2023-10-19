@@ -1,28 +1,21 @@
 // ignore_for_file: prefer_const_constructors, must_be_immutable
 
 import 'dart:developer';
-import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:isar/isar.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:provider/provider.dart';
-import 'package:todoey/entities/user.dart';
 import 'package:todoey/provider/device_prefs_provider.dart';
 import 'package:todoey/provider/user_provider.dart';
 import 'package:todoey/screens/main/add_notes_screen.dart';
 import 'package:todoey/screens/main/add_profile_picture_screen.dart';
 import 'package:todoey/screens/main/completed_todos_screen.dart';
-import 'package:todoey/screens/main/edit_note_screen.dart';
 import 'package:todoey/screens/main/home_screen.dart';
 import 'package:todoey/screens/main/loading_data_screen.dart';
 import 'package:todoey/screens/main/notes_screen.dart';
 import 'package:todoey/screens/main/profile_screen.dart';
 import 'package:todoey/screens/main/todo_screen.dart';
-import 'package:todoey/services/isar_service.dart';
-import 'package:todoey/services/timer.dart';
 import 'package:todoey/shared/constants.dart';
 import 'package:todoey/shared/loading_screen.dart';
 
@@ -68,7 +61,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
           icon: const Icon(Icons.home),
           title: "Home",
           activeColorPrimary: kBgColor,
-          inactiveColorPrimary: kGreyTextColor,
+          inactiveColorPrimary: kInactiveColor,
           routeAndNavigatorSettings: RouteAndNavigatorSettings(
             initialRoute: HomeScreen.id,
             routes: {
@@ -82,7 +75,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
           icon: const Icon(Icons.checklist_rounded),
           title: "Todo",
           activeColorPrimary: kBgColor,
-          inactiveColorPrimary: kGreyTextColor,
+          inactiveColorPrimary: kInactiveColor,
           routeAndNavigatorSettings: RouteAndNavigatorSettings(
             initialRoute: TodoScreen.id,
             routes: {
@@ -94,7 +87,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
           icon: const Icon(FontAwesomeIcons.noteSticky),
           title: "Notes",
           activeColorPrimary: kBgColor,
-          inactiveColorPrimary: kGreyTextColor,
+          inactiveColorPrimary: kInactiveColor,
           // Adding routes
           routeAndNavigatorSettings: RouteAndNavigatorSettings(
             initialRoute: NotesScreen.id,
@@ -108,7 +101,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
           icon: const Icon(Icons.person),
           title: "Profile",
           activeColorPrimary: kBgColor,
-          inactiveColorPrimary: kGreyTextColor,
+          inactiveColorPrimary: kInactiveColor,
           routeAndNavigatorSettings: RouteAndNavigatorSettings(
             initialRoute: ProfileScreen.id,
             routes: {
@@ -225,12 +218,12 @@ class _BottomNavBarState extends State<BottomNavBar> {
               hideNavigationBar: _hideNavBar,
               decoration: NavBarDecoration(
                 colorBehindNavBar: kGreyTextColor,
-                border: Border(
-                  top: BorderSide(
-                    color: kGreyTextColor,
-                    width: 3.0,
-                  ),
-                ),
+                // border: Border(
+                //   top: BorderSide(
+                //     color: kGreyTextColor,
+                //     width: 3.0,
+                //   ),
+                // ),
               ),
               itemAnimationProperties: const ItemAnimationProperties(
                 duration: Duration(milliseconds: 400),
