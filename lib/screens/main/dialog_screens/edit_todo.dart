@@ -64,37 +64,48 @@ class _EditTodoScreenState extends State<EditTodoScreen> {
         _formKey.currentState!.save();
 
         TodoModel todoModel = TodoModel(
-            title: title ?? '${todo.title}',
-            isCompleted: todo.isCompleted!,
-            expire: selectedDate!.toIso8601String().substring(0, 10)
-            // ??
-            // '${todo.expire}',
-            );
+          title: title ?? '${todo.title}',
+          isCompleted: todo.isCompleted!,
+          expire: selectedDate!.toIso8601String().substring(0, 10)
+          // ??
+          // '${todo.expire}',
+        );
 
         setState(() {
           _isLoading = true;
         });
 
-        var data = await todoView.updateTodo(
-          id: todo.id!,
-          todo: todoModel,
-        );
-
-        if (data is Todo) {
-          await isarService.saveTodo(data, context);
-          await isarService.getUserTodos(context);
-
+        if (selectedDate!.isBefore(DateTime.now())) {
           setState(() {
             _isLoading = false;
-            message = 'Todo edit successful';
+            message = 'Date is in the past.';
           });
-          navigatorPop(context);
-          showSnackbar(context, message);
         } else {
           setState(() {
-            _isLoading = false;
-            message = 'Something went wrong. Try again.';
+            message = '';
           });
+          
+          var data = await todoView.updateTodo(
+            id: todo.id!,
+            todo: todoModel,
+          );
+
+          if (data is Todo) {
+            await isarService.saveTodo(data, context);
+            await isarService.getUserTodos(context);
+
+            setState(() {
+              _isLoading = false;
+              message = 'Todo edit successful';
+            });
+            navigatorPop(context);
+            showSnackbar(context, message);
+          } else {
+            setState(() {
+              _isLoading = false;
+              message = 'Something went wrong. Try again.';
+            });
+          }
         }
       } else {}
     }

@@ -201,7 +201,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
     return Scaffold(
       appBar: appBars()[_index],
       body: user == null
-          ? LoadingScreen(color: kOrangeColor)
+          ? const LoadingScreen(color: kOrangeColor)
           : PersistentTabView(
               context,
               controller: _controller,

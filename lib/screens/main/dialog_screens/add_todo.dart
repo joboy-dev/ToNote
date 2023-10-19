@@ -63,6 +63,10 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
               'Date is in the past.';
         });
       } else {
+        setState(() {
+            message = '';
+        });
+        
         // perform adding todo function
         var data = await _todoView.addTodo(todo: todo);
 
