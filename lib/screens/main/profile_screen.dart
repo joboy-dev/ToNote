@@ -10,12 +10,10 @@ import 'package:todoey/provider/device_prefs_provider.dart';
 import 'package:todoey/provider/user_provider.dart';
 import 'package:todoey/screens/main/dialog_screens/edit_profile.dart';
 import 'package:todoey/screens/main/dialog_screens/logout_dialog.dart';
-import 'package:todoey/services/user_preferences.dart';
 import 'package:todoey/shared/constants.dart';
 import 'package:todoey/shared/loading_screen.dart';
 import 'package:todoey/shared/widgets/button.dart';
 import 'package:todoey/shared/widgets/dialog.dart';
-import 'package:todoey/shared/widgets/snackbar.dart';
 
 import 'dialog_screens/change_password.dart';
 
@@ -32,21 +30,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider?>(context)?.user;
-    kDarkMode = Provider.of<DevicePrefsProvider>(context).darkMode;
-    // kDarkMode = Prefs().isDarkMode();
+    // read from the provider
+    final themeSwitch = context.read<DevicePrefsProvider>();
+    // watch value in privider
+    bool theme = context.watch<DevicePrefsProvider>().isDarkMode;
     log('ProfileScreen dark mode constant $kDarkMode');
 
-    toggleTheme() async {
-      await Prefs().setDarkMode(context, value: !kDarkMode);
-
-      showSnackbar(context, 'Theme updated.');
-    }
 
     log('$kDarkMode');
     return user == null
         ? const ErrorLoadingScreen()
         : Scaffold(
-            backgroundColor: kBgColor,
+            // backgroundColor: kBgColor,
             body: SingleChildScrollView(
               child: SafeArea(
                 child: Padding(
@@ -155,10 +150,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           Expanded(
                             flex: 4,
                             child: IconTextButton(
-                              text: kDarkMode
+                              text: theme
                                   ? 'Switch to light mode'
                                   : 'Switch to dark mode',
-                              icon: kDarkMode
+                              icon: theme
                                   ? Icons.brightness_high_rounded
                                   : FontAwesomeIcons.moon,
                               iconColor: kDarkYellowColor,
@@ -174,14 +169,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               inactiveThumbColor:
                                   kDarkYellowColor.withOpacity(0.5),
                               inactiveTrackColor: kDarkYellowColor,
-                              value: kDarkMode,
+                              value: theme,
                               onChanged: (value) async {
-                                await toggleTheme();
+                                await themeSwitch.toggleThemeMode();
                                 setState(() {
-                                  kDarkMode = value;
-                                  kBgColor = kDarkMode
-                                      ? const Color(0xff1E1E1E)
-                                      : const Color.fromARGB(255, 250, 250, 250);
+                                  theme = value;
+                                  // kBgColor = kDarkMode
+                                  //     ? const Color(0xff1E1E1E)
+                                  //     : const Color.fromARGB(255, 250, 250, 250);
                                 });
                                 log('ProfileScreen switch Dark Mode - $kDarkMode');
 

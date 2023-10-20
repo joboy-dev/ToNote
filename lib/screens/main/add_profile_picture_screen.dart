@@ -143,7 +143,6 @@ class _AddProfilePictureState extends State<AddProfilePicture>
       //   ),
       //   iconTheme: IconThemeData(color: kTextColor),
       // ),
-      backgroundColor: kBgColor,
       body: SingleChildScrollView(
         child: SafeArea(
           child: Padding(

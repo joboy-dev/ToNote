@@ -24,7 +24,6 @@ class _CompletedTodosScreenState extends State<CompletedTodosScreen> {
     final todos = Provider.of<TodoProvider?>(context)?.completedTodos;
 
     return Scaffold(
-      backgroundColor: kBgColor,
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,

@@ -25,8 +25,6 @@ void main() async {
         ChangeNotifierProvider(create: (_) => AuthProvider()),
         ChangeNotifierProvider(create: (_) => UserProvider()),
         ChangeNotifierProvider(create: (_) => DevicePrefsProvider()),
-        // ChangeNotifierProvider(create: (_) => LoadingTimer()),
-        // ChangeNotifierProvider(create: (_) => LoadingProvider()),
       ],
       child: const ToDoEy(),
     ),
@@ -43,26 +41,32 @@ class ToDoEy extends StatefulWidget {
 class _ToDoEyState extends State<ToDoEy> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'ToDo-Ey',
-      // themeMode: Prefs().isDarkMode() ? ThemeMode.dark : ThemeMode.light,
-      // theme: ThemeData(
-      //   scaffoldBackgroundColor: Color.fromARGB(255, 250, 250, 250),
-      // ),
-      // darkTheme: ThemeData(
-      //   scaffoldBackgroundColor: Color(0xff1E1E1E),
-      // ),
-      initialRoute: Onboarding.id,
-      routes: {
-        Wrapper.id: (context) => const Wrapper(),
-        Onboarding.id: (context) => const Onboarding(),
-        GetStarted.id: (context) => const GetStarted(),
-        SignUp.id: (context) => const SignUp(),
-        Login.id: (context) => const Login(),
-        LoadingDataScreen.id: (context) => const LoadingDataScreen(),
-        BottomNavBar.id: (context) => const BottomNavBar(),
-      },
+    return Consumer<DevicePrefsProvider>(
+      builder: (context, theme, child) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'ToDo-Ey',
+          themeMode: context.watch<DevicePrefsProvider>().isDarkMode ? ThemeMode.dark : ThemeMode.light,
+          theme: ThemeData(
+            useMaterial3: true,
+            scaffoldBackgroundColor: const Color.fromARGB(255, 250, 250, 250),
+          ),
+          darkTheme: ThemeData(
+            useMaterial3: true,
+            scaffoldBackgroundColor: const Color(0xff1E1E1E),
+          ),
+          initialRoute: Onboarding.id,
+          routes: {
+            Wrapper.id: (context) => const Wrapper(),
+            Onboarding.id: (context) => const Onboarding(),
+            GetStarted.id: (context) => const GetStarted(),
+            SignUp.id: (context) => const SignUp(),
+            Login.id: (context) => const Login(),
+            LoadingDataScreen.id: (context) => const LoadingDataScreen(),
+            BottomNavBar.id: (context) => const BottomNavBar(),
+          },
+        );
+      }
     );
   }
 }

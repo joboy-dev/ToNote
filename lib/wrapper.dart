@@ -10,9 +10,7 @@ import 'package:todoey/entities/user.dart';
 import 'package:todoey/services/isar_service.dart';
 import 'package:todoey/services/token_storage.dart';
 import 'package:todoey/screens/onboarding/get_started.dart';
-import 'package:todoey/services/user_preferences.dart';
 import 'package:todoey/shared/bottom_navbar.dart';
-import 'package:todoey/shared/constants.dart';
 
 class Wrapper extends StatefulWidget {
   const Wrapper({super.key});
@@ -40,12 +38,6 @@ class _WrapperState extends State<Wrapper> {
       String? token = await _storage.getToken();
       setState(() {
         _token = token;
-      });
-
-      var prefs = await Prefs().isDarkMode(context);
-      setState(() {
-        kBgColor = prefs ? const Color(0xff1E1E1E) : const Color.fromARGB(255, 250, 250, 250);
-        // kTextColor = prefs ? const Color.fromARGB(255, 250, 250, 250) : const Color.fromARGB(255, 126, 126, 126);
       });
 
       // get user details before it is stored in provider

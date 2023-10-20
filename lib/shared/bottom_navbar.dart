@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:provider/provider.dart';
-import 'package:todoey/provider/device_prefs_provider.dart';
 import 'package:todoey/provider/user_provider.dart';
 import 'package:todoey/screens/main/add_notes_screen.dart';
 import 'package:todoey/screens/main/add_profile_picture_screen.dart';
@@ -135,14 +134,6 @@ class _BottomNavBarState extends State<BottomNavBar> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider?>(context)?.user;
-    final prefsDarkMode = Provider.of<DevicePrefsProvider>(context).darkMode;
-
-    setState(() {
-      kBgColor = prefsDarkMode
-          ? const Color(0xff1E1E1E)
-          : const Color.fromARGB(255, 250, 250, 250);
-    });
-
     log('Bottom nav bar test -- ${user?.firstName}');
 
     List<PreferredSizeWidget> appBars() => user == null
@@ -151,25 +142,21 @@ class _BottomNavBarState extends State<BottomNavBar> {
               textColor: kOrangeColor,
               appBarText: 'Loading...',
               imageUrl: user?.profilePicture,
-              appBarColor: kBgColor,
             ),
             CustomAppBar(
               textColor: kGreenColor,
               appBarText: 'Loading...',
               imageUrl: user?.profilePicture,
-              appBarColor: kBgColor,
             ),
             CustomAppBar(
               textColor: kYellowColor,
               appBarText: 'Loading...',
               imageUrl: user?.profilePicture,
-              appBarColor: kBgColor,
             ),
             CustomAppBar(
               textColor: kDarkYellowColor,
               appBarText: 'Loading...',
               imageUrl: user?.profilePicture,
-              appBarColor: kBgColor,
             ),
           ]
         : [
@@ -177,28 +164,25 @@ class _BottomNavBarState extends State<BottomNavBar> {
               textColor: kOrangeColor,
               appBarText: '$greeting, ${user.firstName}',
               imageUrl: user.profilePicture,
-              appBarColor: kBgColor,
             ),
             CustomAppBar(
               textColor: kGreenColor,
               appBarText: '$greeting, ${user.firstName}',
               imageUrl: user.profilePicture,
-              appBarColor: kBgColor,
             ),
             CustomAppBar(
               textColor: kYellowColor,
               appBarText: '$greeting, ${user.firstName}',
               imageUrl: user.profilePicture,
-              appBarColor: kBgColor,
             ),
-            CustomAppBar(
+            const CustomAppBar(
               textColor: kDarkYellowColor,
               otherAppBarText: 'My Profile',
-              appBarColor: kBgColor,
             ),
           ];
 
     return Scaffold(
+      // backgroundColor: kBgColor,
       appBar: appBars()[_index],
       body: user == null
           ? const LoadingScreen(color: kOrangeColor)

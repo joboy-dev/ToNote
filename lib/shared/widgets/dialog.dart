@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:todoey/shared/constants.dart';
 
 showDialogBox(
     {required BuildContext context,
@@ -10,7 +9,7 @@ showDialogBox(
     barrierDismissible: dismisible,
     builder: (context) {
       return AlertDialog(
-        backgroundColor: kBgColor,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         surfaceTintColor: Colors.black,
         elevation: 4.0,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.0)),

@@ -98,7 +98,6 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
     }
 
     return Scaffold(
-      backgroundColor: kBgColor,
       body: SingleChildScrollView(
         child: SafeArea(
           child: Padding(

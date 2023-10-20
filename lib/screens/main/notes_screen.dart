@@ -31,7 +31,7 @@ class _NotesScreenState extends State<NotesScreen> {
     return user == null
         ? const ErrorLoadingScreen()
         : Scaffold(
-            backgroundColor: kBgColor,
+            // backgroundColor: kBgColor,
             body: SingleChildScrollView(
               child: SafeArea(
                 child: Column(
@@ -41,7 +41,7 @@ class _NotesScreenState extends State<NotesScreen> {
                     // Main Body
                     CustomAppBar(
                       textColor: kGreyTextColor,
-                      appBarColor: kBgColor,
+                      // appBarColor: kBgColor,
                       dividerColor: kYellowColor,
                       appBarText: ' My Notes',
                       trailing: IconTextButton(

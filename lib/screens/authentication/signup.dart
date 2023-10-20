@@ -174,9 +174,8 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kBgColor,
       appBar: AppBar(
-        backgroundColor: kBgColor,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 0.0,
         centerTitle: true,
         shape: const RoundedRectangleBorder(

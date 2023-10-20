@@ -68,7 +68,7 @@ class _TodoScreenState extends State<TodoScreen> with TickerProviderStateMixin {
     return user == null
         ? const ErrorLoadingScreen()
         : Scaffold(
-            backgroundColor: kBgColor,
+            // backgroundColor: kBgColor,
             body: SingleChildScrollView(
               child: SafeArea(
                 child: Column(
@@ -76,7 +76,7 @@ class _TodoScreenState extends State<TodoScreen> with TickerProviderStateMixin {
                   children: [
                     CustomAppBar(
                       textColor: kGreyTextColor,
-                      appBarColor: kBgColor,
+                      // appBarColor: kBgColor,
                       dividerColor: kGreenColor,
                       appBarText: ' My Todos',
                       trailing: IconTextButton(

@@ -54,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return user == null
         ? const ErrorLoadingScreen()
         : Scaffold(
-            backgroundColor: kBgColor,
+            // backgroundColor: kBgColor,
             body: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -63,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 // ------------------TODOS-----------------------
                 CustomAppBar(
                   textColor: kGreyTextColor,
-                  appBarColor: kBgColor,
+                  // appBarColor: kBgColor,
                   dividerColor: kOrangeColor,
                   appBarText: ' My Latest Todos',
                   trailing: IconTextButton(
@@ -113,7 +113,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 // ------------------NOTES-----------------------
                 CustomAppBar(
                   textColor: kGreyTextColor,
-                  appBarColor: kBgColor,
+                  // appBarColor: kBgColor,
                   dividerColor: kOrangeColor,
                   appBarText: ' My Latest Notes',
                   trailing: IconTextButton(
