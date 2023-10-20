@@ -13,7 +13,6 @@ class LoadingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kBgColor,
       body: SingleChildScrollView(
         child: SafeArea(
           child: Padding(

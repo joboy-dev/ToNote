@@ -125,7 +125,7 @@ class _TodoScreenState extends State<TodoScreen> with TickerProviderStateMixin {
                         : Padding(
                             padding: kAppPadding,
                             child: SizedBox(
-                              height: 520.00,
+                              height: MediaQuery.of(context).size.height * 0.75,
                               child: ListView.builder(
                                 itemCount: todos.length,
                                 itemBuilder: (context, index) {

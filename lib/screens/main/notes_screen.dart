@@ -69,7 +69,7 @@ class _NotesScreenState extends State<NotesScreen> {
                         : Padding(
                             padding: kAppPadding,
                             child: SizedBox(
-                              height: 520.0,
+                              height: MediaQuery.of(context).size.height * 0.75,
                               child: ListView.builder(
                                 itemCount: notes.length,
                                 itemBuilder: (context, index) {
