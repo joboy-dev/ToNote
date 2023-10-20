@@ -56,7 +56,6 @@ class _OnboardingState extends State<Onboarding>
     //   },
     //   child: 
     return Scaffold(
-      backgroundColor: kBgColor,
       body: Center(
         child: ScaleTransition(
           scale: animation,
