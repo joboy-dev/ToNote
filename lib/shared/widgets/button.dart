@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:todoey/shared/constants.dart';
 import 'package:todoey/shared/navigator.dart';
 
@@ -21,7 +22,7 @@ class Button extends StatelessWidget {
     return MaterialButton(
       onPressed: onPressed,
       minWidth: double.infinity,
-      height: 50.0,
+      height: 50.h,
       color: inactive ? kInactiveColor : buttonColor,
       focusColor: inactive
           ? kInactiveColor.withOpacity(0.5)
@@ -32,13 +33,13 @@ class Button extends StatelessWidget {
           ? kInactiveColor.withOpacity(0.5)
           : buttonColor.withOpacity(0.5),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(7.0),
+        borderRadius: BorderRadius.circular(7.r),
       ),
       child: Text(
         buttonText,
-        style: const TextStyle(
+        style: TextStyle(
           color: kButtonTextColor,
-          fontSize: 15.0,
+          fontSize: 15.sp,
           fontFamily: 'Poppins',
           fontWeight: FontWeight.bold,
         ),
@@ -66,14 +67,14 @@ class ButtonIcon extends StatelessWidget {
     return MaterialButton(
       onPressed: onPressed,
       minWidth: double.infinity,
-      height: 50.0,
+      height: 50.h,
       color: buttonColor,
       focusColor: buttonColor.withOpacity(0.5),
       elevation: 2.0,
       focusElevation: 4.0,
       splashColor: buttonColor.withOpacity(0.5),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(7.0),
+        borderRadius: BorderRadius.circular(7.r),
       ),
       child: Row(
         children: [
@@ -81,7 +82,7 @@ class ButtonIcon extends StatelessWidget {
             flex: 1,
             child: Icon(
               icon,
-              size: 20.0,
+              size: 20.r,
               color: kWhiteTextColor,
             ),
           ),
@@ -90,9 +91,9 @@ class ButtonIcon extends StatelessWidget {
             flex: 2,
             child: Text(
               buttonText,
-              style: const TextStyle(
+              style: TextStyle(
                 color: kButtonTextColor,
-                fontSize: 15.0,
+                fontSize: 15.sp,
                 fontFamily: 'Poppins',
                 fontWeight: FontWeight.bold,
               ),
@@ -122,11 +123,11 @@ class ButtonText extends StatelessWidget {
       child: RichText(
         text: TextSpan(
           text: firstText,
-          style: kGreyNormalTextStyle,
+          style: kGreyNormalTextStyle(context),
           children: [
             TextSpan(
               text: secondText,
-              style: kNormalTextStyle.copyWith(
+              style: kNormalTextStyle().copyWith(
                 color: kGreenColor,
                 fontWeight: FontWeight.bold,
               ),
@@ -166,7 +167,7 @@ class DoubleButton extends StatelessWidget {
             inactive: false,
           ),
         ),
-        const SizedBox(width: 5.0),
+        SizedBox(width: 5.h),
         Expanded(
           child: Button(
             buttonText: button2Text,
@@ -207,16 +208,16 @@ class IconTextButton extends StatelessWidget {
     return GestureDetector(
       onTap: onPressed,
       child: Padding(
-        padding: const EdgeInsets.only(left: 10.0),
+        padding: EdgeInsets.only(left: 10.r),
         child: Row(
           children: [
-            Icon(icon, color: iconColor),
-            SizedBox(width: gap ?? 20.0),
+            Icon(icon, color: iconColor, size: 25.r,),
+            SizedBox(width: gap ?? 20.sp),
             Text(
               text,
-              style: kGreyNormalTextStyle.copyWith(
-                fontSize: fontSize ?? 17.0,
-                color: textColor ?? kGreyTextColor,
+              style: kGreyNormalTextStyle(context).copyWith(
+                fontSize: fontSize ?? 17.sp,
+                color: textColor ?? kTextTheme(context).withOpacity(0.7),
                 fontWeight: fontWeight ?? FontWeight.normal,
               ),
             ),

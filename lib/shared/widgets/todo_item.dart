@@ -4,6 +4,7 @@ import 'dart:math';
 import 'dart:developer' as dev;
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:todoey/backend/todo/todo_view.dart';
 import 'package:todoey/entities/todo.dart';
@@ -63,7 +64,7 @@ class _TodoItemState extends State<TodoItem> with TickerProviderStateMixin {
   @override
   void initState() {
     Color mainColor = colors[Random().nextInt(colors.length).toInt()];
-    color = mainColor.withOpacity(0.25);
+    color = mainColor.withOpacity(0.5);
     borderColor = mainColor;
 
     super.initState();
@@ -164,42 +165,40 @@ class _TodoItemState extends State<TodoItem> with TickerProviderStateMixin {
       shadowColor: Colors.transparent,
       child: Column(
         children: [
-          isLoading ? const Loader(size: 25.0, color: kGreenColor) : const SizedBox(),
+          isLoading ? Loader(size: 25.r, color: kGreenColor) : const SizedBox(),
           ListTile(
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10.0),
+              borderRadius: BorderRadius.circular(10.r),
               side: BorderSide(
                 color: todo.isCompleted! ? const Color.fromARGB(255, 218, 218, 218) : borderColor, 
-                width: 2.0,
+                width: 2.w,
               )
             ),
             title: Text(
               '${todo.title}',
-              // '${todo.title}',
-              style: kNormalTextStyle.copyWith(
-                fontSize: 16.0,
+              style: kNormalTextStyle().copyWith(
+                fontSize: 16.sp,
                 fontWeight: FontWeight.bold,
                 color: todo.isCompleted!
                     ? const Color.fromARGB(255, 192, 192, 192)
-                    : kFontTheme(context),
+                    : kTextTheme(context),
               ),
             ),
             tileColor:
                 todo.isCompleted! ? const Color.fromARGB(255, 218, 218, 218).withOpacity(0.5) : color,
             leading: isLoading
-                ? const Loader(
-                    size: 20.0,
+                ? Loader(
+                    size: 20.r,
                     color: Colors.white,
                   )
                 : Checkbox(
                     checkColor: Colors.white,
-                    activeColor: kFontTheme(context),
+                    activeColor: Colors.grey,
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5.0),
+                        borderRadius: BorderRadius.circular(5.r),
                     ),
-                    side: BorderSide(color: kFontTheme(context)),
+                    side: BorderSide(color: kTextTheme(context)),
                     value: todo.isCompleted,
-                    // onChanged: widget.isChecked! ? (value) {} : widget.onChanged,
                     onChanged: todo.isCompleted!
                         ? (value) {
                             showSnackbar(context,
@@ -228,18 +227,18 @@ class _TodoItemState extends State<TodoItem> with TickerProviderStateMixin {
                       dismisible: false,
                     );
                   },
-                  icon: const Icon(Icons.edit),
+                  icon: Icon(Icons.edit, size: 20.r),
                   color: todo.isCompleted!
                       ? kGreyTextColor.withOpacity(0.3)
-                      : kFontTheme(context),
+                      : kTextTheme(context),
                 ),
                 IconButton(
                     onPressed: () {
                       deleteTodo();
                       // showDialogBox(context: context, screen: DeleteTodoScreen(providerTodoId: widget.indexId-1));
                     },
-                    icon: const Icon(Icons.delete),
-                    color: kFontTheme(context,)
+                    icon: Icon(Icons.delete, size: 20.r),
+                    color: kTextTheme(context,)
                 ),
               ],
             ),
@@ -247,13 +246,14 @@ class _TodoItemState extends State<TodoItem> with TickerProviderStateMixin {
               todo.isCompleted!
                   ? 'Completed'
                   : 'Expires ${todo.expire.toString().substring(0, 10)}',
-              style: kNormalTextStyle.copyWith(
-                  fontSize: 12.0, color: kFontTheme(context)),
+              style: kGreyNormalTextStyle(context).copyWith(
+                  fontSize: 12.sp,
+              ),
             ),
             contentPadding: const EdgeInsets.all(0.0),
             // onTap: onTap,
           ),
-          const SizedBox(height: 3.0),
+          SizedBox(height: 3.h),
         ],
       ),
     );

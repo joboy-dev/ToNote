@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:device_preview/device_preview.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:todoey/provider/auth_provider.dart';
 import 'package:todoey/provider/device_prefs_provider.dart';
@@ -30,6 +33,10 @@ void main() async {
         ChangeNotifierProvider(create: (_) => UserProvider()),
         ChangeNotifierProvider(create: (_) => DevicePrefsProvider()),
       ],
+      // child: DevicePreview(
+      //   enabled: !kReleaseMode,
+      //   builder: (context) => const ToDoEy(),
+      // ),
       child: const ToDoEy(),
     ),
   );
@@ -49,30 +56,35 @@ class _ToDoEyState extends State<ToDoEy> {
 
     return Consumer<DevicePrefsProvider>(
       builder: (context, theme, child) {
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'ToDo-Ey',
-          themeMode: context.read<DevicePrefsProvider>().isDarkMode ? ThemeMode.dark : ThemeMode.light,
-          theme: ThemeData(
-            useMaterial3: true,
-            scaffoldBackgroundColor: const Color.fromARGB(255, 250, 250, 250),
+        return ScreenUtilInit(
+          designSize: const Size(360, 690),
+          minTextAdapt: true,
+          splitScreenMode: true,
+          builder: (_, child) =>MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'ToDo-Ey',
+            themeMode: context.read<DevicePrefsProvider>().isDarkMode ? ThemeMode.dark : ThemeMode.light,
+            theme: ThemeData(
+              useMaterial3: true,
+              scaffoldBackgroundColor: const Color.fromARGB(255, 250, 250, 250),
+            ),
+            darkTheme: ThemeData(
+              useMaterial3: true,
+              scaffoldBackgroundColor: const Color(0xff1E1E1E),
+            ),
+            initialRoute: Onboarding.id,
+            routes: {
+              Wrapper.id: (context) => const Wrapper(),
+              Onboarding.id: (context) => const Onboarding(),
+              GetStarted.id: (context) => const GetStarted(),
+              SignUp.id: (context) => const SignUp(),
+              Login.id: (context) => const Login(),
+              LoadingDataScreen.id: (context) => const LoadingDataScreen(),
+              BottomNavBar.id: (context) => const BottomNavBar(),
+            },
+            themeAnimationDuration: kAnimationDurationMs(100),
+            themeAnimationCurve: Curves.linear,
           ),
-          darkTheme: ThemeData(
-            useMaterial3: true,
-            scaffoldBackgroundColor: const Color(0xff1E1E1E),
-          ),
-          initialRoute: Onboarding.id,
-          routes: {
-            Wrapper.id: (context) => const Wrapper(),
-            Onboarding.id: (context) => const Onboarding(),
-            GetStarted.id: (context) => const GetStarted(),
-            SignUp.id: (context) => const SignUp(),
-            Login.id: (context) => const Login(),
-            LoadingDataScreen.id: (context) => const LoadingDataScreen(),
-            BottomNavBar.id: (context) => const BottomNavBar(),
-          },
-          themeAnimationDuration: kAnimationDurationMs(100),
-          themeAnimationCurve: Curves.linear,
         );
       }
     );

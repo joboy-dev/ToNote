@@ -4,6 +4,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:todoey/backend/todo/todo_view.dart';
 // import 'package:todoey/backend/user/user_view.dart';
@@ -135,7 +136,6 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
             iconColor: kGreenColor,
             prefixIcon: Icons.check_circle_outline,
           ),
-          const SizedBox(height: 20.0),
 
           // Date field
           DateTimeField(
@@ -153,8 +153,6 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
             },
           ),
 
-          const SizedBox(height: 20.0),
-
           DoubleButton(
             inactiveButton: inactiveButton,
             button2Text: 'Add Todo',
@@ -164,10 +162,10 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
             },
           ),
 
-          const SizedBox(height: 10.0),
+          SizedBox(height: 10.h),
 
           _isLoading
-              ? const Loader(size: 20.0, color: kGreenColor)
+              ? Loader(size: 20.r, color: kGreenColor)
               : const SizedBox(height: 0.0),
 
           message.isEmpty
@@ -175,7 +173,7 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
               : Center(
                   child: Text(
                     message,
-                    style: kNormalTextStyle.copyWith(color: kRedColor),
+                    style: kNormalTextStyle().copyWith(color: kRedColor),
                   ),
                 ),
         ].animate(

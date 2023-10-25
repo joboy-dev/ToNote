@@ -4,6 +4,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:todoey/backend/user/user_view.dart';
 import 'package:todoey/entities/user.dart';
 import 'package:todoey/screens/authentication/login.dart';
@@ -120,20 +121,22 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
         surfaceTintColor: kScaffoldBgColor(context),
         elevation: 0.0,
         centerTitle: true,
-        shape: const RoundedRectangleBorder(
+        shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(10.0),
-            bottomRight: Radius.circular(10.0),
+            bottomLeft: Radius.circular(10.r),
+            bottomRight: Radius.circular(10.r),
           ),
         ),
         title: Column(
           children: [
-            const SizedBox(height: 30.0),
+            SizedBox(height: 30.h),
             Text(
               'Create Account',
-              style: kAppBarTextStyle,
+              style: kAppBarTextStyle().copyWith(
+                color: kTextTheme(context),
+              ),
             ),
-            const SizedBox(height: 30.0),
+            SizedBox(height: 30.h),
           ],
         ),
         iconTheme: IconThemeData(color: kTextColor),
@@ -141,11 +144,11 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
       body: SingleChildScrollView(
         child: SafeArea(
           child: Padding(
-            padding: kAppPadding,
+            padding: kAppPadding(),
             child: Column(
               children: [
                 SizedBox(
-                  height: kHeightWidth(context).height * 0.35,
+                  height: 200.h,
                   width: double.infinity,
                   child: const Image(
                     image: AssetImage('assets/images/signup.png'),
@@ -154,7 +157,7 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                 ).animate(
                   effects: MyEffects.fadeSlide()
                   ),
-                const SizedBox(height: 30.0),
+                SizedBox(height: 30.h),
                 Form(
                   key: _formKey,
                   child: Column(
@@ -173,7 +176,6 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                               },
                             ),
                           ),
-                          const SizedBox(width: 10.0),
 
                           // Last Name
                           Expanded(
@@ -187,7 +189,6 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 10.0),
 
                       // Email
                       EmailTextField(
@@ -198,7 +199,6 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                           });
                         },
                       ),
-                      const SizedBox(height: 10.0),
 
                       // Password
                       PasswordTextField(
@@ -216,7 +216,6 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                           });
                         },
                       ),
-                      const SizedBox(height: 10.0),
 
                       // Confirm Password
                       PasswordTextField(
@@ -234,11 +233,10 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                           });
                         },
                       ),
-                      const SizedBox(height: 20.0),
 
                       // Button
                       _isLoading
-                          ? const Loader(size: 30.0)
+                          ? Loader(size: 30.r)
                           : Button(
                               buttonText: 'Create Account',
                               onPressed: () {
@@ -247,7 +245,7 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                               buttonColor: kGreenColor,
                               inactive: inactiveButton,
                             ),
-                      const SizedBox(height: 10.0),
+                      SizedBox(height: 10.h),
 
                       ButtonText(
                         firstText: 'Already have an account? ',

@@ -2,15 +2,12 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:provider/provider.dart';
 import 'package:todoey/provider/user_provider.dart';
-import 'package:todoey/screens/main/add_notes_screen.dart';
-import 'package:todoey/screens/main/add_profile_picture_screen.dart';
-import 'package:todoey/screens/main/completed_todos_screen.dart';
 import 'package:todoey/screens/main/home_screen.dart';
-import 'package:todoey/screens/main/loading_data_screen.dart';
 import 'package:todoey/screens/main/notes_screen.dart';
 import 'package:todoey/screens/main/profile_screen.dart';
 import 'package:todoey/screens/main/todo_screen.dart';
@@ -57,57 +54,28 @@ class _BottomNavBarState extends State<BottomNavBar> {
   // List of persistent nav bar items
   List<PersistentBottomNavBarItem> _navBarsItems() => [
         PersistentBottomNavBarItem(
-          icon: const Icon(Icons.home),
+          icon: Icon(Icons.home, size: 30.sp),
           title: "Home",
           activeColorPrimary: kScaffoldBgColor(context),
           inactiveColorPrimary: kScaffoldBgColor(context).withOpacity(0.55),
-          routeAndNavigatorSettings: RouteAndNavigatorSettings(
-            initialRoute: HomeScreen.id,
-            routes: {
-              AddNotesScreen.id: (context) => const AddNotesScreen(),
-              // EditNoteScreen.id: (context) => EditNoteScreen(),
-              LoadingDataScreen.id: (context) => const LoadingDataScreen(),
-            },
-          ),
         ),
         PersistentBottomNavBarItem(
-          icon: const Icon(Icons.checklist_rounded),
+          icon: Icon(Icons.checklist_rounded, size: 30.sp),
           title: "Todo",
           activeColorPrimary: kScaffoldBgColor(context),
           inactiveColorPrimary: kScaffoldBgColor(context).withOpacity(0.55),
-          routeAndNavigatorSettings: RouteAndNavigatorSettings(
-            initialRoute: TodoScreen.id,
-            routes: {
-              CompletedTodosScreen.id: (context) => const CompletedTodosScreen()
-            },
-          ),
         ),
         PersistentBottomNavBarItem(
-          icon: const Icon(FontAwesomeIcons.noteSticky),
+          icon: Icon(FontAwesomeIcons.noteSticky, size: 30.sp),
           title: "Notes",
           activeColorPrimary: kScaffoldBgColor(context),
           inactiveColorPrimary: kScaffoldBgColor(context).withOpacity(0.55),
-          // Adding routes
-          routeAndNavigatorSettings: RouteAndNavigatorSettings(
-            initialRoute: NotesScreen.id,
-            routes: {
-              AddNotesScreen.id: (context) => const AddNotesScreen(),
-              LoadingDataScreen.id: (context) => const LoadingDataScreen(),
-            },
-          ),
         ),
         PersistentBottomNavBarItem(
-          icon: const Icon(Icons.person),
+          icon: Icon(Icons.person, size: 30.sp),
           title: "Profile",
           activeColorPrimary: kScaffoldBgColor(context),
           inactiveColorPrimary: kScaffoldBgColor(context).withOpacity(0.55),
-          routeAndNavigatorSettings: RouteAndNavigatorSettings(
-            initialRoute: ProfileScreen.id,
-            routes: {
-              AddProfilePicture.id: (context) => const AddProfilePicture(),
-              LoadingDataScreen.id: (context) => const LoadingDataScreen(),
-            },
-          ),
         ),
       ];
 
@@ -196,7 +164,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
               resizeToAvoidBottomInset: true,
               navBarHeight: MediaQuery.of(context).viewInsets.bottom > 0
                   ? 0.0
-                  : kBottomNavigationBarHeight,
+                  : 50.h,
               bottomScreenMargin: 0,
               backgroundColor: colors[_index],
               hideNavigationBar: _hideNavBar,

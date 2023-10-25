@@ -131,30 +131,19 @@ class _AddProfilePictureState extends State<AddProfilePicture>
     }
 
     return Scaffold(
-      // appBar: AppBar(
-      //   backgroundColor: kBgColor,
-      //   elevation: 0.0,
-      //   shape: RoundedRectangleBorder(
-      //     borderRadius: BorderRadius.only(
-      //       bottomLeft: Radius.circular(10.0),
-      //       bottomRight: Radius.circular(10.0),
-      //     ),
-      //   ),
-      //   iconTheme: IconThemeData(color: kTextColor),
-      // ),
       body: SingleChildScrollView(
         child: SafeArea(
           child: Padding(
-            padding: kAppPadding,
+            padding: kAppPadding(),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 FadeTransition(
                   opacity: _animation1,
-                  child: const Text(
+                  child: Text(
                     'Add your profile picture.\n\nIf you do not want to perform this action, you can click the skip button below.',
-                    style: kGreyNormalTextStyle,
+                    style: kGreyNormalTextStyle(context),
                     textAlign: TextAlign.justify,
                   ),
                 ),
@@ -184,9 +173,9 @@ class _AddProfilePictureState extends State<AddProfilePicture>
                 const SizedBox(height: 20.0),
                 FadeTransition(
                   opacity: _animation2,
-                  child: const Text(
+                  child: Text(
                     'Select from the two options below on how you want to add your profile picture.',
-                    style: kGreyNormalTextStyle,
+                    style: kGreyNormalTextStyle(context),
                     textAlign: TextAlign.justify,
                   ),
                 ),

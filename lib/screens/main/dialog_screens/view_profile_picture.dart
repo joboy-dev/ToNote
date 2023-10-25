@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:todoey/provider/user_provider.dart';
@@ -19,18 +20,18 @@ class ViewProfilePictureScreen extends StatelessWidget {
           icon: FontAwesomeIcons.image,
         ),
         Container(
-          height: 270.0,
+          height: 270.h,
           width: double.infinity,
           decoration: BoxDecoration(
-            borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+            borderRadius: BorderRadius.all(Radius.circular(5.r)),
             image: DecorationImage(
               image: NetworkImage('${user?.profilePicture}'),
             ),
           ),
         ),
-        const Text(
+        Text(
           'Tap outside to dismiss.',
-          style: kGreyNormalTextStyle,
+          style: kGreyNormalTextStyle(context),
         ),
       ],
     );

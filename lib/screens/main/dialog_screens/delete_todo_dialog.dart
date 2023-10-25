@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:todoey/backend/todo/todo_view.dart';
 import 'package:todoey/entities/todo.dart';
@@ -71,9 +72,11 @@ class _DeleteTodoScreenState extends State<DeleteTodoScreen> {
           mainColor: kRedColor,
         ),
         const SizedBox(height: 10.0),
+
         Text("Are you sure you want to detele todo '${todo.title}'?",
-            style: kGreyNormalTextStyle),
+            style: kGreyNormalTextStyle(context)),
         const SizedBox(height: 20.0),
+
         DoubleButton(
           inactiveButton: false,
           button2Text: 'Delete',
@@ -82,10 +85,10 @@ class _DeleteTodoScreenState extends State<DeleteTodoScreen> {
             deleteTodo();
           },
         ),
-        const SizedBox(height: 10.0),
+        SizedBox(height: 10.h),
         _isLoading
-            ? const Loader(
-                size: 20.0,
+            ? Loader(
+                size: 20.r,
                 color: kGreenColor,
               )
             : const SizedBox(),
@@ -94,7 +97,7 @@ class _DeleteTodoScreenState extends State<DeleteTodoScreen> {
             : Center(
                 child: Text(
                   message,
-                  style: kNormalTextStyle.copyWith(color: kRedColor),
+                  style: kNormalTextStyle().copyWith(color: kRedColor),
                 ),
               ),
       ].animate(

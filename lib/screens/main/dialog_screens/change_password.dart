@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
@@ -117,7 +118,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                   readOnly: true,
                   color: kDarkYellowColor,
                 ),
-                const SizedBox(height: 10.0),
+                
 
                 // Password field
                 PasswordTextField(
@@ -135,7 +136,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                   },
                   color: kDarkYellowColor,
                 ),
-                const SizedBox(height: 10.0),
+                
 
                 // Password field
                 PasswordTextField(
@@ -154,8 +155,6 @@ class _ChangePasswordState extends State<ChangePassword> {
                   color: kDarkYellowColor,
                 ),
 
-                const SizedBox(height: 10.0),
-
                 // Password field
                 PasswordTextField(
                   hintText: 'Confirm new password',
@@ -172,7 +171,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                   },
                   color: kDarkYellowColor,
                 ),
-                const SizedBox(height: 10.0),
+                
 
                 DoubleButton(
                   button2Color: kDarkYellowColor,
@@ -183,10 +182,10 @@ class _ChangePasswordState extends State<ChangePassword> {
                   },
                 ),
 
-                const SizedBox(height: 10.0),
+                SizedBox(height: 10.h),
 
                 _isLoading
-                    ? const Loader(size: 20.0, color: kDarkYellowColor)
+                    ? Loader(size: 20.r, color: kDarkYellowColor)
                     : const SizedBox(height: 0.0),
 
                 message.isEmpty
@@ -194,7 +193,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                     : Center(
                       child: Text(
                           message,
-                          style: kNormalTextStyle.copyWith(color: kRedColor),
+                          style: kNormalTextStyle().copyWith(color: kRedColor),
                         ),
                     ),
               ].animate(

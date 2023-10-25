@@ -9,9 +9,11 @@ environment:
 
 dependencies:
   carousel_slider: ^4.2.1
+  device_preview: ^1.1.0
   cupertino_icons: ^1.0.2
   flutter:
     sdk: flutter
+  flutter_screenutil: ^5.9.0
   flutter_secure_storage: ^8.0.0
   flutter_spinkit: ^5.1.0
   font_awesome_flutter: ^10.2.1

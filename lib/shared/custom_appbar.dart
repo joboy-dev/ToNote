@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:todoey/shared/constants.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -31,55 +32,49 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: otherAppBarText == null
           ? Column(
               children: [
-                const SizedBox(height: 40.0),
+                SizedBox(height: 20.h),
                 Row(
                   children: [
                     Expanded(
                       flex: 2,
                       child: Text(
                         appBarText ?? 'greeting, {user.firstName}',
-                        style: kOtherAppBarTextStyle.copyWith(
+                        style: kOtherAppBarTextStyle().copyWith(
                           color: textColor,
-                          fontSize: 17.0,
+                          fontSize: 17.sp,
                         ),
                       ),
                     ),
-                    const SizedBox(width: 10.0),
+                    SizedBox(width: 10.w),
                     Expanded(
                       flex: 0,
                       child: trailing ?? const SizedBox(),
-                          // CircleAvatar(
-                          //   backgroundColor: textColor.withOpacity(0.5),
-                          //   foregroundImage: imageUrl == null
-                          //       ? const AssetImage('assets/images/default.jpg')
-                          //       : NetworkImage(imageUrl!) as ImageProvider,
-                          // ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 5.0),
+                SizedBox(height: 5.h),
                 Divider(
                   color: dividerColor ?? Colors.transparent,
-                  thickness: 1.0,
+                  thickness: 1.r,
                 )
               ],
             )
           : Text(
               otherAppBarText!,
-              style: kOtherAppBarTextStyle.copyWith(
+              style: kOtherAppBarTextStyle().copyWith(
                 color: textColor,
-                fontSize: 17.0,
+                fontSize: 17.sp,
               ),
             ),
       elevation: 0,
       centerTitle: false,
       foregroundColor: appBarColor ?? kScaffoldBgColor(context),
       backgroundColor: appBarColor ?? kScaffoldBgColor(context),
-      toolbarHeight: height ?? kToolbarHeight,
+      toolbarHeight: height ?? 40.h,
     );
   }
 
   // important when implementing  PreferredSizeWidget class for custom appbars
   @override
-  Size get preferredSize => Size.fromHeight(height ?? kToolbarHeight);
+  Size get preferredSize => Size.fromHeight(height ?? 40.h);
 }

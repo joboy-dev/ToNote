@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:todoey/backend/note/note_view.dart';
 import 'package:todoey/entities/note.dart';
@@ -85,7 +86,7 @@ class _AddNotesScreenState extends State<AddNotesScreen> {
       body: SingleChildScrollView(
         child: SafeArea(
           child: Padding(
-            padding: kAppPadding,
+            padding: kAppPadding(),
             child: Form(
               key: _formKey,
               child: Column(
@@ -100,7 +101,7 @@ class _AddNotesScreenState extends State<AddNotesScreen> {
                         flex: 2,
                         child: NormalTextField(
                           hintText: 'Title',
-                          fontSize: 17.0,
+                          fontSize: 17.sp,
                           onChanged: (value) {
                             setState(() {
                               title = value!;
@@ -119,15 +120,15 @@ class _AddNotesScreenState extends State<AddNotesScreen> {
                       Expanded(
                         flex: 1,
                         child: _isLoading
-                            ? const Loader(
-                                size: 20.0,
+                            ? Loader(
+                                size: 20.r,
                                 color: kYellowColor,
                               )
                             : IconTextButton(
                                 text: 'Save',
                                 icon: Icons.save_rounded,
                                 iconColor: kYellowColor,
-                                fontSize: 15.0,
+                                fontSize: 15.sp,
                                 onPressed: () {
                                   validateForm();
                                 },
@@ -137,7 +138,7 @@ class _AddNotesScreenState extends State<AddNotesScreen> {
                   ),
 
                   const Divider(color: kYellowColor),
-                  const SizedBox(height: 10.0),
+                  SizedBox(height: 10.h),
 
                   // Text area field
                   TextareaTextField(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:todoey/shared/constants.dart';
 import 'package:todoey/shared/navigator.dart';
 import 'package:todoey/wrapper.dart';
@@ -20,10 +21,10 @@ class _OnboardingState extends State<Onboarding>
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: const Image(
-          image: AssetImage('assets/images/logo.png'),
-          width: 250.0,
-          height: 250.0,
+        child: Image(
+          image: const AssetImage('assets/images/logo.png'),
+          width: 250.w,
+          height: 250.h,
         ).animate(
           onComplete: (controller) {
             navigatorPushReplacement(context, const Wrapper());

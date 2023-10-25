@@ -4,6 +4,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:todoey/backend/todo/todo_view.dart';
@@ -141,7 +142,6 @@ class _EditTodoScreenState extends State<EditTodoScreen> {
             iconColor: kGreenColor,
             prefixIcon: Icons.person,
           ),
-          const SizedBox(height: 20.0),
 
           // Date field
           DateTimeField(
@@ -160,36 +160,16 @@ class _EditTodoScreenState extends State<EditTodoScreen> {
             },
           ),
 
-          const SizedBox(height: 20.0),
-          Row(
-            children: [
-              Expanded(
-                child: Button(
-                  buttonText: 'Cancel',
-                  onPressed: () {
-                    navigatorPop(context);
-                  },
-                  buttonColor: kRedColor,
-                  inactive: false,
-                ),
-              ),
-              const SizedBox(width: 5.0),
-              Expanded(
-                child: Button(
-                  buttonText: 'Edit Todo',
-                  onPressed: () {
-                    validateForm();
-                  },
-                  buttonColor: kGreenColor,
-                  inactive: false,
-                ),
-              ),
-            ],
+          DoubleButton(
+            inactiveButton: false, 
+            button2Text: 'Edit Todo', 
+            button2Color: kGreenColor, 
+            button2onPressed: validateForm
           ),
-          const SizedBox(height: 10.0),
+          SizedBox(height: 10.h),
 
           _isLoading
-              ? const Loader(size: 20.0, color: kGreenColor)
+              ? Loader(size: 20.r, color: kGreenColor)
               : const SizedBox(height: 0.0),
 
           message.isEmpty
@@ -197,7 +177,7 @@ class _EditTodoScreenState extends State<EditTodoScreen> {
               : Center(
                   child: Text(
                     message,
-                    style: kNormalTextStyle.copyWith(color: kRedColor),
+                    style: kNormalTextStyle().copyWith(color: kRedColor),
                   ),
                 ),
         ].animate(

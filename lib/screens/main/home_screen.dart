@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:todoey/provider/notes_provider.dart';
@@ -64,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 // ------------------TODOS-----------------------
                 CustomAppBar(
-                  textColor: kGreyTextColor,
+                  textColor: kTextTheme(context).withOpacity(0.7),
                   dividerColor: kOrangeColor,
                   appBarText: ' My Latest Todos',
                   trailing: IconTextButton(
@@ -73,8 +74,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     icon: FontAwesomeIcons.plus,
                     iconColor: kOrangeColor,
                     textColor: kOrangeColor,
-                    fontSize: 17.0,
-                    gap: 20.0,
+                    fontSize: 17.sp,
+                    gap: 20.r,
                     onPressed: () {
                       showDialogBox(
                         context: context,
@@ -87,15 +88,15 @@ class _HomeScreenState extends State<HomeScreen> {
 
                 // Todos
                 todos == null || todos.isEmpty
-                    ? const Center(
+                    ? Center(
                         child: Text(
                           'There are no todos available.',
-                          style: kGreyNormalTextStyle,
+                          style: kGreyNormalTextStyle(context),
                         ),
                       )
                     : Expanded(
                         child: Padding(
-                          padding: kAppPadding,
+                          padding: kAppPadding(),
                           child: ListView.builder(
                             itemCount: todos.length,
                             itemBuilder: (context, index) {
@@ -112,12 +113,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
 
-                const SizedBox(height: 20.0),
+                SizedBox(height: 20.h),
 
                 // ------------------NOTES-----------------------
                 CustomAppBar(
-                  textColor: kGreyTextColor,
-                  // appBarColor: kBgColor,
+                  textColor: kTextTheme(context).withOpacity(0.7),
                   dividerColor: kOrangeColor,
                   appBarText: ' My Latest Notes',
                   trailing: IconTextButton(
@@ -126,8 +126,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     icon: FontAwesomeIcons.plus,
                     iconColor: kOrangeColor,
                     textColor: kOrangeColor,
-                    fontSize: 17.0,
-                    gap: 20.0,
+                    fontSize: 17.sp,
+                    gap: 20.r,
                     onPressed: () {
                       navigatorPush(context, const AddNotesScreen());
                     },
@@ -136,15 +136,15 @@ class _HomeScreenState extends State<HomeScreen> {
 
                 // Notes
                 notes == null || notes.isEmpty
-                    ? const Center(
+                    ? Center(
                         child: Text(
                           'There are no notes available.',
-                          style: kGreyNormalTextStyle,
+                          style: kGreyNormalTextStyle(context),
                         ),
                       )
                     : Expanded(
                         child: Padding(
-                          padding: kAppPadding,
+                          padding: kAppPadding(),
                           child: ListView.builder(
                             itemCount: notes.length,
                             itemBuilder: (context, index) {
@@ -162,7 +162,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
 
-                const SizedBox(height: 70.0),
+                SizedBox(height: 70.h),
               ].animate(
                 delay: kAnimationDurationMs(200),
                 interval: kAnimationDurationMs(50),

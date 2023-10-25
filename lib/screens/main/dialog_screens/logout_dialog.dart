@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:todoey/backend/user/user_view.dart';
 import 'package:todoey/services/isar_service.dart';
 import 'package:todoey/shared/constants.dart';
@@ -54,9 +55,10 @@ class _LogoutDialogState extends State<LogoutDialog> {
           icon: Icons.logout_rounded,
           mainColor: kRedColor,
         ),
-        const SizedBox(height: 10.0),
-        const Text('Are you sure you want to log out?', style: kGreyNormalTextStyle),
-        const SizedBox(height: 20.0),
+        SizedBox(height: 10.h),
+        Text('Are you sure you want to log out?', style: kGreyNormalTextStyle(context)),
+        SizedBox(height: 20.h),
+
         DoubleButton(
           inactiveButton: false,
           button2Text: 'Logout',
@@ -68,13 +70,13 @@ class _LogoutDialogState extends State<LogoutDialog> {
             _logout();
           },
         ),
-        const SizedBox(height: 10.0),
+        SizedBox(height: 10.h),
         _isLoading
             ? Text(
                 'Logging out...',
-                style: kNormalTextStyle.copyWith(
+                style: kNormalTextStyle().copyWith(
                   color: kDarkYellowColor,
-                  fontSize: 12.0,
+                  fontSize: 12.sp,
                 ),
               )
             : const SizedBox(),
@@ -83,7 +85,7 @@ class _LogoutDialogState extends State<LogoutDialog> {
             : Center(
                 child: Text(
                   message,
-                  style: kNormalTextStyle.copyWith(color: kRedColor),
+                  style: kNormalTextStyle().copyWith(color: kRedColor),
                 ),
               ),
       ],

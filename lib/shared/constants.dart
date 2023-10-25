@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:todoey/provider/device_prefs_provider.dart';
 
@@ -13,10 +14,10 @@ const kGreenColor = Color(0xFF51D89D);
 const kOrangeColor = Color(0xFFFFA500);
 Color kTextColor = Color.fromARGB(255, 126, 126, 126);
 const kWhiteTextColor = Colors.white;
-const kGreyTextColor = Color.fromARGB(255, 126, 126, 126);
+const kGreyTextColor = Color.fromARGB(255, 78, 78, 78);
 // const kTextColor = Colors.white;
 const kButtonTextColor = Colors.white;
-Color kBgColor = Color.fromARGB(255, 250, 250, 250);
+Color kLightColor = Color.fromARGB(255, 250, 250, 250);
 const kRedColor = Color.fromARGB(255, 206, 15, 15);
 const kInactiveColor = Color.fromARGB(255, 199, 199, 199);
 kScaffoldBgColor(BuildContext context) =>Theme.of(context).scaffoldBackgroundColor;
@@ -44,68 +45,72 @@ const kAnimationDuration5 = Duration(seconds: 5);
 const fontFamily = 'Poppins';
 
 // TEXT STYLE
-var kAppBarTextStyle = TextStyle(
-  fontSize: 22.0,
+TextStyle kAppBarTextStyle() => TextStyle(
+  fontSize: 22.sp,
   fontWeight: FontWeight.bold,
   color: kTextColor,
   fontFamily: fontFamily,
 );
 
-const kOtherAppBarTextStyle = TextStyle(
-  fontSize: 20.0,
+TextStyle kOtherAppBarTextStyle() => TextStyle(
+  fontSize: 20.sp,
   fontWeight: FontWeight.bold,
   color: kWhiteTextColor,
   fontFamily: fontFamily,
 );
 
-var kNormalTextStyle = TextStyle(
-  fontSize: 17.0,
+TextStyle kNormalTextStyle() => TextStyle(
+  fontSize: 17.sp,
   color: kTextColor,
   fontFamily: fontFamily,
 );
 
-const kGreyNormalTextStyle = TextStyle(
-  fontSize: 17.0,
-  color: kGreyTextColor,
+TextStyle kGreyNormalTextStyle(BuildContext context) => TextStyle(
+  fontSize: 17.sp,
+  color: kTextTheme(context).withOpacity(0.7),
   fontFamily: fontFamily,
 );
 
-var kTextFieldStyle = TextStyle(
-  fontSize: 14.0,
-  color: kTextColor,
-  fontFamily: fontFamily,
+TextStyle kTextFieldStyle(BuildContext context) => kGreyNormalTextStyle(context).copyWith(
+  fontSize: 14.sp,
 );
+
+Color kTextTheme(BuildContext context) {
+  final darkMode = context.watch<DevicePrefsProvider>().isDarkMode;
+  return darkMode ? kLightColor : kGreyTextColor;
+}
 
 // APPLICATION GENERAL PADDING
-const kAppPadding = EdgeInsets.only(left: 15.0, right: 15.0, top: 15.0);
+EdgeInsets kAppPadding() => EdgeInsets.only(left: 15.r, right: 15.r, top: 15.r);
 
 // TEXT FIELD DECORATION
-var kTextFieldDecoration = InputDecoration(
+InputDecoration kTextFieldDecoration(BuildContext context) => InputDecoration(
   hintText: '',
-  hintStyle: kTextFieldStyle.copyWith(color: Colors.black.withOpacity(0.5)),
+  hintStyle: kTextFieldStyle(context).copyWith(color: Colors.black.withOpacity(0.5)),
   prefixIcon: const Icon(Icons.person),
-  labelStyle: const TextStyle(
+  labelStyle: TextStyle(
     color: kYellowColor,
     fontWeight: FontWeight.w300,
-    fontSize: 10.0,
+    fontSize: 10.sp,
   ),
-  enabledBorder: const OutlineInputBorder(
-    borderSide: BorderSide(color: kDarkYellowColor, width: 1.0),
-    borderRadius: BorderRadius.all(Radius.circular(5.0)),
+  enabledBorder: OutlineInputBorder(
+    borderSide: BorderSide(color: kDarkYellowColor, width: 1.w),
+    borderRadius: BorderRadius.all(Radius.circular(5.r)),
   ),
-  focusedBorder: const OutlineInputBorder(
-    borderSide: BorderSide(color: kDarkYellowColor, width: 1.0),
-    borderRadius: BorderRadius.all(Radius.circular(5.0)),
+  focusedBorder: OutlineInputBorder(
+    borderSide: BorderSide(color: kDarkYellowColor, width: 1.w),
+    borderRadius: BorderRadius.all(Radius.circular(5.r)),
   ),
-  errorBorder: const OutlineInputBorder(
-    borderSide: BorderSide(color: kRedColor, width: 1.0),
-    borderRadius: BorderRadius.all(Radius.circular(5.0)),
+  errorBorder: OutlineInputBorder(
+    borderSide: BorderSide(color: kRedColor, width: 1.w),
+    borderRadius: BorderRadius.all(Radius.circular(5.r)),
   ),
-  focusedErrorBorder: const OutlineInputBorder(
-    borderSide: BorderSide(color: kRedColor, width: 1.0),
-    borderRadius: BorderRadius.all(Radius.circular(5.0)),
+  focusedErrorBorder: OutlineInputBorder(
+    borderSide: BorderSide(color: kRedColor, width: 1.w),
+    borderRadius: BorderRadius.all(Radius.circular(5.r)),
   ),
-  errorStyle: const TextStyle(
+  errorStyle: TextStyle(
     color: kRedColor,
+    fontSize: 14.sp
   ),
 );

@@ -69,8 +69,8 @@ class _UploadProfilePictureState extends State<UploadProfilePicture>
                   width: double.infinity,
                   height: 250.0,
                 )
-              : const Center(
-                  child: Text('No image selected', style: kGreyNormalTextStyle),
+              : Center(
+                  child: Text('No image selected', style: kGreyNormalTextStyle(context)),
                 ),
         ),
 

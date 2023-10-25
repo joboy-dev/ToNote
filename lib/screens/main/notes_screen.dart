@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:todoey/provider/notes_provider.dart';
@@ -42,7 +43,7 @@ class _NotesScreenState extends State<NotesScreen> {
                   children: [
                     // Main Body
                     CustomAppBar(
-                      textColor: kGreyTextColor,
+                      textColor: kTextTheme(context).withOpacity(0.7),
                       // appBarColor: kBgColor,
                       dividerColor: kYellowColor,
                       appBarText: ' My Notes',
@@ -52,8 +53,8 @@ class _NotesScreenState extends State<NotesScreen> {
                         icon: FontAwesomeIcons.plus,
                         iconColor: kYellowColor,
                         textColor: kYellowColor,
-                        fontSize: 17.0,
-                        gap: 20.0,
+                        fontSize: 17.sp,
+                        gap: 20.r,
                         onPressed: () {
                           navigatorPush(context, const AddNotesScreen());
                         },
@@ -62,16 +63,16 @@ class _NotesScreenState extends State<NotesScreen> {
 
                     // Notes
                     notes == null || notes.isEmpty
-                        ? const Center(
+                        ? Center(
                             child: Text(
                               'There are no notes available.',
-                              style: kGreyNormalTextStyle,
+                              style: kGreyNormalTextStyle(context),
                             ),
                           )
                         : Padding(
-                            padding: kAppPadding,
+                            padding: kAppPadding(),
                             child: SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.75,
+                              height: MediaQuery.of(context).size.height * 0.70,
                               child: ListView.builder(
                                 itemCount: notes.length,
                                 itemBuilder: (context, index) {
@@ -96,7 +97,7 @@ class _NotesScreenState extends State<NotesScreen> {
                               ),
                             ),
                           ),
-                    const SizedBox(height: 60.0),
+                    SizedBox(height: 60.h),
                   ].animate(
                     delay: kAnimationDurationMs(200),
                     interval: kAnimationDurationMs(50),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:todoey/shared/constants.dart';
 
 class DialogHeader extends StatelessWidget {
@@ -20,17 +21,17 @@ class DialogHeader extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, color: mainColor, size: 30.0),
-            const SizedBox(width: 10.0),
+            Icon(icon, color: mainColor, size: 30.r),
+            SizedBox(width: 10.w),
             Text(
               headerText,
-              style: kOtherAppBarTextStyle.copyWith(color: mainColor),
+              style: kOtherAppBarTextStyle().copyWith(color: mainColor),
             )
           ],
         ),
-        const SizedBox(height: 10.0),
+        SizedBox(height: 10.h),
         Divider(color: mainColor),
-        const SizedBox(height: 10.0),
+        SizedBox(height: 10.h),
       ],
     );
   }

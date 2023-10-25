@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:todoey/provider/todo_provider.dart';
 import 'package:todoey/shared/constants.dart';
@@ -30,7 +31,7 @@ class _CompletedTodosScreenState extends State<CompletedTodosScreen> {
           children: [
             CustomAppBar(
               textColor: kGreyTextColor,
-              appBarColor: kBgColor,
+              appBarColor: kScaffoldBgColor(context),
               dividerColor: kGreenColor,
               appBarText: ' My Completed Todos',
               trailing: const SizedBox(),
@@ -38,16 +39,16 @@ class _CompletedTodosScreenState extends State<CompletedTodosScreen> {
 
             // Todos
             todos == null || todos.isEmpty
-                ? const Center(
+                ? Center(
                     child: Text(
                       'You have no completed todos.',
-                      style: kGreyNormalTextStyle,
+                      style: kGreyNormalTextStyle(context),
                     ),
                   )
                 : Padding(
-                    padding: kAppPadding,
+                    padding: kAppPadding(),
                     child: SizedBox(
-                      height: 520.0,
+                      height: 520.h,
                       child: ListView.builder(
                         shrinkWrap: true,
                         itemCount: todos.length,
@@ -71,7 +72,7 @@ class _CompletedTodosScreenState extends State<CompletedTodosScreen> {
                       ),
                     ),
                   ),
-            const SizedBox(height: 60.0),
+            SizedBox(height: 60.h),
           ],
         ),
       ),

@@ -138,12 +138,12 @@ class IsarService {
       log('${Provider.of<TodoProvider>(context, listen: false).todos}');
 
       // query isar db for all completed todos
-      final completedTodos = await isar.txn(
-          () => isar.todos.where().filter().isCompletedEqualTo(true).findAll());
+      // final completedTodos = await isar.txn(
+      //     () => isar.todos.where().filter().isCompletedEqualTo(true).findAll());
 
       // save all completed todos in provider
-      Provider.of<TodoProvider>(context, listen: false)
-          .setCompletedTodos(completedTodos);
+      // Provider.of<TodoProvider>(context, listen: false)
+      //     .setCompletedTodos(completedTodos);
       return todos;
     } else {
       return null;

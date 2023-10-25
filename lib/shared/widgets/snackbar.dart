@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:todoey/shared/constants.dart';
 
 showSnackbar(BuildContext context, String text) {
@@ -6,12 +7,12 @@ showSnackbar(BuildContext context, String text) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
       content:
-          Text(text, style: kNormalTextStyle.copyWith(color: Colors.white)),
+          Text(text, style: kNormalTextStyle().copyWith(color: Colors.white)),
       backgroundColor: kDarkYellowColor,
-      padding: const EdgeInsets.symmetric(vertical: 30.0, horizontal: 10.0),
-      margin: const EdgeInsets.all(10.0),
+      padding: EdgeInsets.symmetric(vertical: 30.r, horizontal: 10.r),
+      margin: EdgeInsets.all(10.r),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
+        borderRadius: BorderRadius.circular(10.r),
       ),
       duration: const Duration(seconds: 5),
       behavior: SnackBarBehavior.floating,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:todoey/shared/constants.dart';
 
 class CarouselContainer extends StatelessWidget {
@@ -11,34 +12,28 @@ class CarouselContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const SizedBox(height: 15.0),
+        SizedBox(height: 20.h),
         Container(
           decoration: BoxDecoration(
-            // color: Colors.white,
-            borderRadius: BorderRadius.circular(10.0),
-            // boxShadow: [
-            //   BoxShadow(
-            //     blurRadius: 50.0,
-            //     color: Color.fromARGB(255, 177, 177, 177).withOpacity(0.5),
-            //     spreadRadius: 10.0,
-            //     offset: Offset(0, 3),
-            //   ),
-            // ],
+            borderRadius: BorderRadius.circular(10.r),
           ),
-          height: kHeightWidth(context).height * 0.45,
+          height: kHeightWidth(context).height * 0.35,
           child: Image(
             image: AssetImage(image),
             fit: BoxFit.cover,
           ),
         ),
-        const SizedBox(height: 30.0),
+        SizedBox(height: 20.h),
         Text(
           text,
-          style: const TextStyle(
-            color: kGreyTextColor,
-            fontSize: 20.0,
-            fontFamily: 'Poppins',
-            fontWeight: FontWeight.bold,
+          // style: TextStyle(
+          //   color: kGreyTextColor,
+          //   fontSize: 20.sp,
+          //   fontFamily: 'Poppins',
+          //   fontWeight: FontWeight.bold,
+          // ),
+          style: kGreyNormalTextStyle(context).copyWith(
+            fontSize: 20.sp,
           ),
           textAlign: TextAlign.center,
         ),

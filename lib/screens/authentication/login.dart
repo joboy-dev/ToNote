@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:todoey/backend/user/user_view.dart';
 import 'package:todoey/entities/user.dart';
@@ -110,21 +111,23 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
         surfaceTintColor: kScaffoldBgColor(context),
         elevation: 0.0,
         centerTitle: true,
-        shape: const RoundedRectangleBorder(
+        shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(10.0),
-            bottomRight: Radius.circular(10.0),
+            bottomLeft: Radius.circular(10.r),
+            bottomRight: Radius.circular(10.r),
           ),
         ),
         title: Column(
           children: [
-            const SizedBox(height: 30.0),
+            SizedBox(height: 30.h),
             Text(
               'Login',
-              style: kAppBarTextStyle,
+              style: kAppBarTextStyle().copyWith(
+                color: kTextTheme(context),
+              ),
             ),
             // Divider(),
-            const SizedBox(height: 30.0),
+            SizedBox(height: 30.h),
           ],
         ),
         iconTheme: IconThemeData(color: kTextColor),
@@ -132,11 +135,11 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
       body: SingleChildScrollView(
         child: SafeArea(
           child: Padding(
-            padding: kAppPadding,
+            padding: kAppPadding(),
             child: Column(
               children: [
                 SizedBox(
-                  height: kHeightWidth(context).height * 0.35,
+                  height: 200.h,
                   width: double.infinity,
                   child: const Image(
                     image: AssetImage('assets/images/login.png'),
@@ -145,7 +148,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                 ).animate(
                     effects: MyEffects.fadeSlide()
                   ),
-                const SizedBox(height: 30.0),
+                SizedBox(height: 30.h),
                 Form(
                   key: _formKey,
                   child: Column(
@@ -159,7 +162,6 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                           });
                         },
                       ),
-                      const SizedBox(height: 10.0),
 
                       // Password
                       PasswordTextField(
@@ -178,11 +180,10 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                         },
                       ),
 
-                      const SizedBox(height: 20.0),
 
                       // Button
                       _isLoading
-                          ? const Loader(size: 30.0)
+                          ? Loader(size: 30.r)
                           : Button(
                               buttonText: 'Login',
                               onPressed: () {
@@ -192,7 +193,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                               inactive: inactiveButton,
                             ),
 
-                      const SizedBox(height: 10.0),
+                      SizedBox(height: 10.h),
 
                       ButtonText(
                         firstText: 'Don\'t have an account? ',

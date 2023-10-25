@@ -30,17 +30,17 @@ class TodoProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void setCompletedTodos(List<Todo> todoItems) {
-    // void setCompletedTodos(int index, List<Todo> todoItems) {
-    // _completedTodos = todoItems;
+  // void setCompletedTodos(List<Todo> todoItems) {
+  //   // void setCompletedTodos(int index, List<Todo> todoItems) {
+  //   // _completedTodos = todoItems;
 
-    // check if the list is empty to know the index to place the list items
-    if (todoItems.isEmpty) {
-      _completedTodos.insertAll(0, todoItems);
-      notifyListeners();
-    } else {
-      _completedTodos.insertAll(todoItems.length - 1, todoItems);
-      notifyListeners();
-    }
-  }
+  //   // check if the list is empty to know the index to place the list items
+  //   if (todoItems.isEmpty) {
+  //     _completedTodos.insertAll(0, todoItems);
+  //     notifyListeners();
+  //   } else {
+  //     _completedTodos.insertAll(todoItems.length - 1, todoItems);
+  //     notifyListeners();
+  //   }
+  // }
 }

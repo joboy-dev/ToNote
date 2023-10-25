@@ -3,6 +3,7 @@
 import 'dart:developer' as dev;
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:todoey/backend/todo/todo_view.dart';
 import 'package:todoey/entities/todo.dart';
@@ -113,27 +114,27 @@ class _CompletedTodoItemState extends State<CompletedTodoItem>
 
     return Column(
       children: [
-        _isLoading ? const Loader(size: 25.0, color: kGreenColor) : const SizedBox(),
+        _isLoading ? Loader(size: 25.r, color: kGreenColor) : const SizedBox(),
         ListTile(
           title: Text(
             '${todo.id}- ${todo.title}',
-            style: kNormalTextStyle.copyWith(
-              fontSize: 16.0,
+            style: kNormalTextStyle().copyWith(
+              fontSize: 16.sp,
               fontWeight: FontWeight.bold,
               color: const Color.fromARGB(255, 145, 145, 145),
             ),
           ),
           tileColor: const Color.fromARGB(255, 218, 218, 218),
           leading: _isLoading
-              ? const Loader(
-                  size: 20.0,
+              ? Loader(
+                  size: 20.r,
                   color: Colors.white,
                 )
               : Checkbox(
                   checkColor: Colors.white,
                   activeColor: kDarkYellowColor,
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5.0)),
+                      borderRadius: BorderRadius.circular(5.r)),
                   value: todo.isCompleted,
                   onChanged: (value) async {
                     await toggleCompletedStatus();
@@ -163,11 +164,11 @@ class _CompletedTodoItemState extends State<CompletedTodoItem>
           ),
           subtitle: Text(
             'Completed',
-            style: kNormalTextStyle.copyWith(
-                fontSize: 12.0, color: Colors.black.withOpacity(0.6)),
+            style: kNormalTextStyle().copyWith(
+                fontSize: 12.sp, color: Colors.black.withOpacity(0.6)),
           ),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(5.0),
+            borderRadius: BorderRadius.circular(5.r),
           ),
           contentPadding: const EdgeInsets.all(0.0),
         ),

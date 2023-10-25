@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:todoey/screens/authentication/login.dart';
 import 'package:todoey/screens/authentication/signup.dart';
 import 'package:todoey/shared/animations.dart';
@@ -40,53 +41,6 @@ class _GetStartedState extends State<GetStarted> with TickerProviderStateMixin {
     ),
   ];
 
-  late Animation<double> _animation1;
-  late Animation<double> _animation2;
-  late Animation<double> _animation3;
-  
-  late AnimationController _controller1;
-  late AnimationController _controller2;
-
-  @override
-  void initState() {
-    _controller1 = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 3),
-    );
-
-    _controller2 = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 1),
-    );
-
-    _controller1.forward().whenComplete(() {
-      _controller2.forward();
-    });
-
-    _animation1 = Tween(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-      parent: _controller2,
-      curve: Curves.easeIn,
-    ));
-
-    _animation2 = Tween(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-      parent: _controller2,
-      curve: Curves.easeIn,
-    ));
-
-    _animation3 = Tween(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-      parent: _controller1,
-      curve: Curves.bounceIn,
-    ));
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _controller1.dispose();
-    _controller2.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -105,18 +59,18 @@ class _GetStartedState extends State<GetStarted> with TickerProviderStateMixin {
                   );
                 }).toList(),
                 options: CarouselOptions(
-                  height: kHeightWidth(context).height * 0.7,
+                  height: kHeightWidth(context).height * 0.65,
                   enlargeCenterPage: true,
                   autoPlay: true,
                   aspectRatio: 16 / 9,
                   autoPlayCurve: Curves.fastOutSlowIn,
                   enableInfiniteScroll: true,
-                  autoPlayAnimationDuration: const Duration(milliseconds: 1000),
+                  autoPlayAnimationDuration: kAnimationDurationMs(1000),
                   viewportFraction: 0.9,
                 ),
               ),
               Padding(
-                padding: kAppPadding,
+                padding: kAppPadding(),
                 child: Column(
                   children: [
                     Button(
@@ -127,7 +81,7 @@ class _GetStartedState extends State<GetStarted> with TickerProviderStateMixin {
                       buttonColor: kGreenColor,
                       inactive: false,
                     ),
-                    const SizedBox(height: 20.0),
+                    SizedBox(height: 20.h),
                     Button(
                       buttonText: 'Login',
                       onPressed: () {

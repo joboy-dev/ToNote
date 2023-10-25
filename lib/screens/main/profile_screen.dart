@@ -4,6 +4,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:todoey/backend/todo/todo_view.dart';
@@ -47,7 +48,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             body: SingleChildScrollView(
               child: SafeArea(
                 child: Padding(
-                  padding: kAppPadding,
+                  padding: kAppPadding(),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -65,11 +66,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       //       backgroundColor: kDarkYellowColor.withOpacity(0.5),
                       //       foregroundImage:
                       //           NetworkImage('${user.profilePicture}'),
-                      //       radius: 70.0,
+                      //       radius: 70.r,
                       //     ),
                       //   ),
                       // ),
-                      const SizedBox(height: 20.0),
+                      SizedBox(height: 10.h),
 
                       // USER DETAILS
                       Column(
@@ -77,78 +78,44 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         children: [
                           Text(
                             '${user.firstName}, ${user.lastName}',
-                            style: kGreyNormalTextStyle.copyWith(
+                            style: kGreyNormalTextStyle(context).copyWith(
                               fontWeight: FontWeight.w900,
                             ),
                           ),
-                          const SizedBox(height: 10.0),
+                          SizedBox(height: 10.h),
                           Text(
                             '${user.email}',
-                            style: kGreyNormalTextStyle,
+                            style: kGreyNormalTextStyle(context),
                           ),
                         ],
                       ),
 
-                      const SizedBox(height: 10.0),
-                      const Divider(thickness: 0.35, color: kDarkYellowColor),
-                      const SizedBox(height: 10.0),
+                      SizedBox(height: 10.h),
+                      Divider(thickness: 0.35.r, color: kDarkYellowColor),
+                      SizedBox(height: 10.h),
 
                       // ACCOUNT SETTINGS
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Icon(Icons.settings, color: kDarkYellowColor),
-                          const SizedBox(width: 10.0),
+                          Icon(Icons.settings, color: kDarkYellowColor, size: 30.r,),
+                          SizedBox(width: 10.w),
                           Text(
                             'Account Settings',
-                            style: kOtherAppBarTextStyle.copyWith(
-                              color: kGreyTextColor,
+                            style: kOtherAppBarTextStyle().copyWith(
+                              color: kTextTheme(context).withOpacity(0.75),
                             ),
                           ),
                         ],
                       ),
 
                       // SizedBox(),
-                      const Divider(color: kGreyTextColor, thickness: 0.1),
-                      const SizedBox(height: 10.0),
+                      Divider(color: kGreyTextColor, thickness: 0.1.r),
+                      SizedBox(height: 10.h),
 
                       Column(
                         children: [
-                          IconTextButton(
-                            text: 'Edit Profile',
-                            icon: FontAwesomeIcons.pencil,
-                            iconColor: kDarkYellowColor,
-                            onPressed: () {
-                              showDialogBox(
-                                context: context,
-                                screen: const EditProfile(),
-                                dismisible: false,
-                              );
-                            },
-                          ),
-                          const SizedBox(height: 20.0),
-
-                          // IconTextButton(
-                          //   text: 'Change Profile Picture',
-                          //   icon: Icons.camera_rounded,
-                          //   iconColor: kDarkYellowColor,
-                          //   onPressed: () {
-                          //     navigatorPushNamed(context, AddProfilePicture.id);
-                          //   },
-                          // ),
-                          // SizedBox(height: 20.0),
-
-                          IconTextButton(
-                            text: 'Change Password',
-                            icon: FontAwesomeIcons.lock,
-                            iconColor: kDarkYellowColor,
-                            onPressed: () {
-                              showDialogBox(
-                                  context: context, screen: const ChangePassword());
-                            },
-                          ),
-                          const SizedBox(height: 10.0),
-
+                          
                           Row(
                             children: [
                               Expanded(
@@ -192,12 +159,52 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ],
                           ),
 
-                          const SizedBox(height: 20.0),
+                          SizedBox(height: 10.h),
+                          Divider(color: kGreyTextColor, thickness: 0.5.r),
+
+                          SizedBox(height: 20.h),
+
+
+                          
+                          IconTextButton(
+                            text: 'Edit Profile',
+                            icon: FontAwesomeIcons.pencil,
+                            iconColor: kDarkYellowColor,
+                            onPressed: () {
+                              showDialogBox(
+                                context: context,
+                                screen: const EditProfile(),
+                                dismisible: false,
+                              );
+                            },
+                          ),
+                          SizedBox(height: 20.h),
+
+                          // IconTextButton(
+                          //   text: 'Change Profile Picture',
+                          //   icon: Icons.camera_rounded,
+                          //   iconColor: kDarkYellowColor,
+                          //   onPressed: () {
+                          //     navigatorPushNamed(context, AddProfilePicture.id);
+                          //   },
+                          // ),
+                          // SizedBox(height: 20.0),
+
+                          IconTextButton(
+                            text: 'Change Password',
+                            icon: FontAwesomeIcons.lock,
+                            iconColor: kDarkYellowColor,
+                            onPressed: () {
+                              showDialogBox(
+                                  context: context, screen: const ChangePassword());
+                            },
+                          ),
+                          SizedBox(height: 20.h),
 
                           // Logout button
                           IconTextButton(
                             text: 'Logout',
-                            fontSize: 17.0,
+                            fontSize: 17.sp,
                             fontWeight: FontWeight.bold,
                             icon: Icons.logout_rounded,
                             iconColor: kRedColor,
@@ -210,7 +217,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               );
                             },
                           ),
-                          const SizedBox(height: 10.0),
                         ].animate(
                           delay: kAnimationDurationMs(500),
                           interval: kAnimationDurationMs(150),

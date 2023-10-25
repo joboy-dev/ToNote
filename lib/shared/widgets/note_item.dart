@@ -3,6 +3,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:todoey/backend/note/note_view.dart';
 import 'package:todoey/entities/note.dart';
@@ -57,7 +58,7 @@ class _NoteItemState extends State<NoteItem> {
   @override
   void initState() {
     Color mainColor = colors[Random().nextInt(colors.length).toInt()];
-    color = mainColor.withOpacity(0.25);
+    color = mainColor.withOpacity(0.5);
     borderColor = mainColor;
     super.initState();
   }
@@ -108,22 +109,22 @@ class _NoteItemState extends State<NoteItem> {
       shadowColor: Colors.transparent,
       child: Column(
         children: [
-          isLoading ? const Loader(size: 25.0, color: kYellowColor) : const SizedBox(),
+          isLoading ? Loader(size: 25.r, color: kYellowColor) : const SizedBox(),
           ListTile(
             shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10.0),
+            borderRadius: BorderRadius.circular(10.r),
             side: BorderSide(
               color: borderColor, 
-              width: 1.0,
+              width: 1.w,
             )
           ),
             title: Text(
               // '${widget.noteId}- ${widget.title}',
               '${note.title}',
-              style: kNormalTextStyle.copyWith(
-                fontSize: 16.0,
+              style: kNormalTextStyle().copyWith(
+                fontSize: 16.sp,
                 fontWeight: FontWeight.bold,
-                color: kFontTheme(context),
+                color: kTextTheme(context),
               ),
             ),
             tileColor: color,
@@ -134,26 +135,26 @@ class _NoteItemState extends State<NoteItem> {
                   onPressed: () {
                     navigatorPush(context, EditNoteScreen(providerNoteId: widget.indexId));
                   },
-                  icon: const Icon(Icons.edit),
-                  color: kFontTheme(context),
+                  icon: Icon(Icons.edit, size: 20.r,),
+                  color: kTextTheme(context),
                 ),
                 IconButton(
                   onPressed: () {
                     deleteNote();
                   },
-                  icon: const Icon(Icons.delete),
-                  color: kFontTheme(context),
+                  icon: Icon(Icons.delete, size: 20.r,),
+                  color: kTextTheme(context),
                 ),
               ],
             ),
             subtitle: Text(
               '${note.content?.substring(0, 15)}...',
-              style: kNormalTextStyle.copyWith(
-                  fontSize: 12.0, color: kFontTheme(context)),
+              style: kGreyNormalTextStyle(context).copyWith(
+                  fontSize: 12.sp,),
             ),
-            contentPadding: const EdgeInsets.only(left: 20.0),
+            contentPadding: EdgeInsets.only(left: 20.r),
           ),
-          const SizedBox(height: 3.0),
+          SizedBox(height: 3.h),
         ],
       ),
     );

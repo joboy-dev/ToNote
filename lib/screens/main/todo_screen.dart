@@ -7,6 +7,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:todoey/provider/todo_provider.dart';
@@ -77,7 +78,7 @@ class _TodoScreenState extends State<TodoScreen> with TickerProviderStateMixin {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     CustomAppBar(
-                      textColor: kGreyTextColor,
+                      textColor: kTextTheme(context).withOpacity(0.7),
                       // appBarColor: kBgColor,
                       dividerColor: kGreenColor,
                       appBarText: ' My Todos',
@@ -87,8 +88,8 @@ class _TodoScreenState extends State<TodoScreen> with TickerProviderStateMixin {
                         icon: FontAwesomeIcons.plus,
                         iconColor: kGreenColor,
                         textColor: kGreenColor,
-                        fontSize: 17.0,
-                        gap: 20.0,
+                        fontSize: 17.sp,
+                        gap: 20.r,
                         onPressed: () {
                           showDialogBox(
                             context: context,
@@ -118,16 +119,16 @@ class _TodoScreenState extends State<TodoScreen> with TickerProviderStateMixin {
 
                     // Todos
                     todos == null || todos.isEmpty
-                        ? const Center(
+                        ? Center(
                             child: Text(
                               'There are no todos available.',
-                              style: kGreyNormalTextStyle,
+                              style: kGreyNormalTextStyle(context),
                             ),
                           )
                         : Padding(
-                            padding: kAppPadding,
+                            padding: kAppPadding(),
                             child: SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.75,
+                              height: MediaQuery.of(context).size.height * 0.70,
                               child: ListView.builder(
                                 itemCount: todos.length,
                                 itemBuilder: (context, index) {
@@ -150,7 +151,7 @@ class _TodoScreenState extends State<TodoScreen> with TickerProviderStateMixin {
                               ),
                             ),
                           ),
-                    const SizedBox(height: 10.0),
+                    SizedBox(height: 10.h),
                   ].animate(
                     delay: kAnimationDurationMs(200),
                     interval: kAnimationDurationMs(50),
