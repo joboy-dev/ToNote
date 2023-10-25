@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 import 'package:todoey/backend/user/user_view.dart';
 import 'package:todoey/entities/user.dart';
 import 'package:todoey/provider/user_provider.dart';
+import 'package:todoey/shared/animations.dart';
 // import 'package:todoey/services/isar_service.dart';
 import 'package:todoey/shared/constants.dart';
 import 'package:todoey/shared/loader.dart';
@@ -195,7 +197,11 @@ class _ChangePasswordState extends State<ChangePassword> {
                           style: kNormalTextStyle.copyWith(color: kRedColor),
                         ),
                     ),
-              ],
+              ].animate(
+                delay: kAnimationDurationMs(500),
+                interval: kAnimationDurationMs(50),
+                effects: MyEffects.fadeSlide(offset: const Offset(-0.05, 0))
+              ),
             ),
           );
   }

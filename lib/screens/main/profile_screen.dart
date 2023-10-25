@@ -3,6 +3,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:todoey/backend/todo/todo_view.dart';
@@ -10,6 +11,7 @@ import 'package:todoey/provider/device_prefs_provider.dart';
 import 'package:todoey/provider/user_provider.dart';
 import 'package:todoey/screens/main/dialog_screens/edit_profile.dart';
 import 'package:todoey/screens/main/dialog_screens/logout_dialog.dart';
+import 'package:todoey/shared/animations.dart';
 import 'package:todoey/shared/constants.dart';
 import 'package:todoey/shared/loading_screen.dart';
 import 'package:todoey/shared/widgets/button.dart';
@@ -110,104 +112,114 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       const Divider(color: kGreyTextColor, thickness: 0.1),
                       const SizedBox(height: 10.0),
 
-                      IconTextButton(
-                        text: 'Edit Profile',
-                        icon: FontAwesomeIcons.pencil,
-                        iconColor: kDarkYellowColor,
-                        onPressed: () {
-                          showDialogBox(
-                            context: context,
-                            screen: const EditProfile(),
-                            dismisible: false,
-                          );
-                        },
-                      ),
-                      const SizedBox(height: 20.0),
-
-                      // IconTextButton(
-                      //   text: 'Change Profile Picture',
-                      //   icon: Icons.camera_rounded,
-                      //   iconColor: kDarkYellowColor,
-                      //   onPressed: () {
-                      //     navigatorPushNamed(context, AddProfilePicture.id);
-                      //   },
-                      // ),
-                      // SizedBox(height: 20.0),
-
-                      IconTextButton(
-                        text: 'Change Password',
-                        icon: FontAwesomeIcons.lock,
-                        iconColor: kDarkYellowColor,
-                        onPressed: () {
-                          showDialogBox(
-                              context: context, screen: const ChangePassword());
-                        },
-                      ),
-                      const SizedBox(height: 10.0),
-
-                      Row(
+                      Column(
                         children: [
-                          Expanded(
-                            flex: 4,
-                            child: IconTextButton(
-                              text: theme
-                                  ? 'Switch to light mode'
-                                  : 'Switch to dark mode',
-                              icon: theme
-                                  ? Icons.brightness_high_rounded
-                                  : FontAwesomeIcons.moon,
-                              iconColor: kDarkYellowColor,
-                              onPressed: () {},
-                            ),
+                          IconTextButton(
+                            text: 'Edit Profile',
+                            icon: FontAwesomeIcons.pencil,
+                            iconColor: kDarkYellowColor,
+                            onPressed: () {
+                              showDialogBox(
+                                context: context,
+                                screen: const EditProfile(),
+                                dismisible: false,
+                              );
+                            },
                           ),
-                          Expanded(
-                            flex: 1,
-                            child: Switch.adaptive(
-                              activeColor: kDarkYellowColor,
-                              activeTrackColor:
-                                  kDarkYellowColor.withOpacity(0.5),
-                              inactiveThumbColor:
-                                  kDarkYellowColor.withOpacity(0.5),
-                              inactiveTrackColor: kDarkYellowColor,
-                              value: theme,
-                              onChanged: (value) async {
-                                await themeSwitch.toggleThemeMode();
-                                setState(() {
-                                  theme = value;
-                                  // kBgColor = kDarkMode
-                                  //     ? const Color(0xff1E1E1E)
-                                  //     : const Color.fromARGB(255, 250, 250, 250);
-                                });
-                                log('ProfileScreen switch Dark Mode - $kDarkMode');
+                          const SizedBox(height: 20.0),
 
-                                var todos = await TodoView().getUserTodos();
-                                log('User todos-- $todos');
-                              },
-                            ),
-                          )
-                        ],
+                          // IconTextButton(
+                          //   text: 'Change Profile Picture',
+                          //   icon: Icons.camera_rounded,
+                          //   iconColor: kDarkYellowColor,
+                          //   onPressed: () {
+                          //     navigatorPushNamed(context, AddProfilePicture.id);
+                          //   },
+                          // ),
+                          // SizedBox(height: 20.0),
+
+                          IconTextButton(
+                            text: 'Change Password',
+                            icon: FontAwesomeIcons.lock,
+                            iconColor: kDarkYellowColor,
+                            onPressed: () {
+                              showDialogBox(
+                                  context: context, screen: const ChangePassword());
+                            },
+                          ),
+                          const SizedBox(height: 10.0),
+
+                          Row(
+                            children: [
+                              Expanded(
+                                flex: 4,
+                                child: IconTextButton(
+                                  text: theme
+                                      ? 'Switch to light mode'
+                                      : 'Switch to dark mode',
+                                  icon: theme
+                                      ? Icons.brightness_high_rounded
+                                      : Icons.nightlight,
+                                  iconColor: kDarkYellowColor,
+                                  onPressed: () {},
+                                ),
+                              ),
+                              Expanded(
+                                flex: 1,
+                                child: Switch.adaptive(
+                                  activeColor: kDarkYellowColor,
+                                  activeTrackColor:
+                                      kDarkYellowColor.withOpacity(0.5),
+                                  inactiveThumbColor:
+                                      kDarkYellowColor.withOpacity(0.5),
+                                  inactiveTrackColor: kDarkYellowColor,
+                                  value: theme,
+                                  onChanged: (value) async {
+                                    await themeSwitch.toggleThemeMode();
+                                    setState(() {
+                                      theme = value;
+                                      // kBgColor = kDarkMode
+                                      //     ? const Color(0xff1E1E1E)
+                                      //     : const Color.fromARGB(255, 250, 250, 250);
+                                    });
+                                    log('ProfileScreen switch Dark Mode - $kDarkMode');
+
+                                    var todos = await TodoView().getUserTodos();
+                                    log('User todos-- $todos');
+                                  },
+                                ),
+                              )
+                            ],
+                          ),
+
+                          const SizedBox(height: 20.0),
+
+                          // Logout button
+                          IconTextButton(
+                            text: 'Logout',
+                            fontSize: 17.0,
+                            fontWeight: FontWeight.bold,
+                            icon: Icons.logout_rounded,
+                            iconColor: kRedColor,
+                            textColor: kRedColor,
+                            onPressed: () {
+                              showDialogBox(
+                                context: context,
+                                screen: const LogoutDialog(),
+                                dismisible: true,
+                              );
+                            },
+                          ),
+                          const SizedBox(height: 10.0),
+                        ].animate(
+                          delay: kAnimationDurationMs(500),
+                          interval: kAnimationDurationMs(150),
+                          effects: MyEffects.fadeSlide(offset: const Offset(-0.05, 0)),
+                        ),
                       ),
-
-                      const SizedBox(height: 20.0),
-
-                      // Logout button
-                      IconTextButton(
-                        text: 'Logout',
-                        fontSize: 17.0,
-                        fontWeight: FontWeight.bold,
-                        icon: Icons.logout_rounded,
-                        iconColor: kRedColor,
-                        textColor: kRedColor,
-                        onPressed: () {
-                          showDialogBox(
-                            context: context,
-                            screen: const LogoutDialog(),
-                            dismisible: true,
-                          );
-                        },
-                      ),
-                      const SizedBox(height: 10.0),
-                    ],
+                    ].animate(
+                      effects: MyEffects.fadeSlide()
+                    ),
                   ),
                 ),
               ),

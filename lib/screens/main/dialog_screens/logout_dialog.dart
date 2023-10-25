@@ -31,11 +31,12 @@ class _LogoutDialogState extends State<LogoutDialog> {
       _isLoading = false;
     });
     if (data == 200) {
+      navigatorPop(context);
       setState(() {
         message = 'Successfully logged out. See you soon.';
       });
       showSnackbar(context, message);
-      navigatorPushReplacementNamed(context, Wrapper.id);
+      navigatorPushReplacement(context, const Wrapper());
     } else {
       setState(() {
         message = 'An error occured while signing you out. Try again .';

@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:provider/provider.dart';
@@ -13,6 +14,7 @@ import 'package:todoey/screens/main/loading_data_screen.dart';
 import 'package:todoey/screens/main/notes_screen.dart';
 import 'package:todoey/screens/main/profile_screen.dart';
 import 'package:todoey/screens/main/todo_screen.dart';
+import 'package:todoey/shared/animations.dart';
 import 'package:todoey/shared/constants.dart';
 import 'package:todoey/shared/loading_screen.dart';
 
@@ -57,8 +59,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
         PersistentBottomNavBarItem(
           icon: const Icon(Icons.home),
           title: "Home",
-          activeColorPrimary: kBgColor,
-          inactiveColorPrimary: kInactiveColor,
+          activeColorPrimary: kScaffoldBgColor(context),
+          inactiveColorPrimary: kScaffoldBgColor(context).withOpacity(0.55),
           routeAndNavigatorSettings: RouteAndNavigatorSettings(
             initialRoute: HomeScreen.id,
             routes: {
@@ -71,8 +73,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
         PersistentBottomNavBarItem(
           icon: const Icon(Icons.checklist_rounded),
           title: "Todo",
-          activeColorPrimary: kBgColor,
-          inactiveColorPrimary: kInactiveColor,
+          activeColorPrimary: kScaffoldBgColor(context),
+          inactiveColorPrimary: kScaffoldBgColor(context).withOpacity(0.55),
           routeAndNavigatorSettings: RouteAndNavigatorSettings(
             initialRoute: TodoScreen.id,
             routes: {
@@ -83,8 +85,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
         PersistentBottomNavBarItem(
           icon: const Icon(FontAwesomeIcons.noteSticky),
           title: "Notes",
-          activeColorPrimary: kBgColor,
-          inactiveColorPrimary: kInactiveColor,
+          activeColorPrimary: kScaffoldBgColor(context),
+          inactiveColorPrimary: kScaffoldBgColor(context).withOpacity(0.55),
           // Adding routes
           routeAndNavigatorSettings: RouteAndNavigatorSettings(
             initialRoute: NotesScreen.id,
@@ -97,8 +99,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
         PersistentBottomNavBarItem(
           icon: const Icon(Icons.person),
           title: "Profile",
-          activeColorPrimary: kBgColor,
-          inactiveColorPrimary: kInactiveColor,
+          activeColorPrimary: kScaffoldBgColor(context),
+          inactiveColorPrimary: kScaffoldBgColor(context).withOpacity(0.55),
           routeAndNavigatorSettings: RouteAndNavigatorSettings(
             initialRoute: ProfileScreen.id,
             routes: {
@@ -216,6 +218,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
                   _index = value;
                 });
               },
+            ).animate(
+              effects: MyEffects.fadeSlide()
             ),
     );
   }

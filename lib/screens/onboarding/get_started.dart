@@ -2,10 +2,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:todoey/screens/authentication/login.dart';
 import 'package:todoey/screens/authentication/signup.dart';
 import 'package:todoey/shared/animations.dart';
 import 'package:todoey/shared/constants.dart';
+import 'package:todoey/shared/navigator.dart';
 import 'package:todoey/shared/widgets/button.dart';
 import 'package:todoey/shared/widgets/carousel.dart';
 
@@ -94,71 +96,57 @@ class _GetStartedState extends State<GetStarted> with TickerProviderStateMixin {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SlideTransition(
-                position: slideTransitionAnimation(
-                  dx: -1,
-                  dy: -1,
-                  animation: _animation3,
-                ),
-                child: CarouselSlider(
-                  // map through the list of carousel
-                  items: carousel.map((newCarousel) {
-                    return CarouselContainer(
-                      image: newCarousel.image,
-                      text: newCarousel.text,
-                    );
-                  }).toList(),
-                  options: CarouselOptions(
-                    height: 585.0,
-                    enlargeCenterPage: true,
-                    autoPlay: true,
-                    aspectRatio: 16 / 9,
-                    autoPlayCurve: Curves.fastOutSlowIn,
-                    enableInfiniteScroll: true,
-                    autoPlayAnimationDuration: const Duration(milliseconds: 1000),
-                    viewportFraction: 0.85,
-                  ),
+              CarouselSlider(
+                // map through the list of carousel
+                items: carousel.map((newCarousel) {
+                  return CarouselContainer(
+                    image: newCarousel.image,
+                    text: newCarousel.text,
+                  );
+                }).toList(),
+                options: CarouselOptions(
+                  height: kHeightWidth(context).height * 0.7,
+                  enlargeCenterPage: true,
+                  autoPlay: true,
+                  aspectRatio: 16 / 9,
+                  autoPlayCurve: Curves.fastOutSlowIn,
+                  enableInfiniteScroll: true,
+                  autoPlayAnimationDuration: const Duration(milliseconds: 1000),
+                  viewportFraction: 0.9,
                 ),
               ),
               Padding(
                 padding: kAppPadding,
                 child: Column(
                   children: [
-                    SlideTransition(
-                      position: slideTransitionAnimation(
-                        dx: -2,
-                        dy: 0,
-                        animation: _animation2,
-                      ),
-                      child: Button(
-                        buttonText: 'Create Account',
-                        onPressed: () {
-                          Navigator.pushNamed(context, SignUp.id);
-                        },
-                        buttonColor: kGreenColor,
-                        inactive: false,
-                      ),
+                    Button(
+                      buttonText: 'Create Account',
+                      onPressed: () {
+                        navigatorPush(context, const SignUp());
+                      },
+                      buttonColor: kGreenColor,
+                      inactive: false,
                     ),
                     const SizedBox(height: 20.0),
-                    SlideTransition(
-                      position: slideTransitionAnimation(
-                        dx: 4,
-                        dy: 0,
-                        animation: _animation2,
-                      ),
-                      child: Button(
-                        buttonText: 'Login',
-                        onPressed: () {
-                          Navigator.pushNamed(context, Login.id);
-                        },
-                        buttonColor: kYellowColor,
-                        inactive: false,
-                      ),
+                    Button(
+                      buttonText: 'Login',
+                      onPressed: () {
+                        navigatorPush(context, const Login());
+                      },
+                      buttonColor: kYellowColor,
+                      inactive: false,
                     ),
-                  ],
+                  ].animate(
+                    interval: kAnimationDurationMs(300),
+                    delay: kAnimationDurationMs(900),
+                    effects: MyEffects.fadeSlide(offset: const Offset(-0.2, 0)),
+                  ),
                 ),
               ),
-            ],
+            ].animate(
+              interval: kAnimationDurationMs(900),
+              effects: MyEffects.fadeSlide(),
+            ),
           ),
         ),
       ),

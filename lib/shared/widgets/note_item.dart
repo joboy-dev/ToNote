@@ -11,6 +11,7 @@ import 'package:todoey/screens/main/edit_note_screen.dart';
 import 'package:todoey/services/isar_service.dart';
 import 'package:todoey/shared/constants.dart';
 import 'package:todoey/shared/loader.dart';
+import 'package:todoey/shared/navigator.dart';
 import 'package:todoey/shared/widgets/snackbar.dart';
 
 class NoteItem extends StatefulWidget {
@@ -41,6 +42,7 @@ class NoteItem extends StatefulWidget {
 
 class _NoteItemState extends State<NoteItem> {
   late Color color;
+  late Color borderColor;
 
   List colors = [
     kGreenColor,
@@ -54,7 +56,9 @@ class _NoteItemState extends State<NoteItem> {
 
   @override
   void initState() {
-    color = colors[Random().nextInt(colors.length).toInt()];
+    Color mainColor = colors[Random().nextInt(colors.length).toInt()];
+    color = mainColor.withOpacity(0.25);
+    borderColor = mainColor;
     super.initState();
   }
 
@@ -99,19 +103,27 @@ class _NoteItemState extends State<NoteItem> {
     }
 
     return Card(
-      color: kBgColor,
+      color: Colors.transparent,
       elevation: 0.0,
+      shadowColor: Colors.transparent,
       child: Column(
         children: [
           isLoading ? const Loader(size: 25.0, color: kYellowColor) : const SizedBox(),
           ListTile(
+            shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+            side: BorderSide(
+              color: borderColor, 
+              width: 1.0,
+            )
+          ),
             title: Text(
               // '${widget.noteId}- ${widget.title}',
               '${note.title}',
               style: kNormalTextStyle.copyWith(
                 fontSize: 16.0,
                 fontWeight: FontWeight.bold,
-                color: Colors.black,
+                color: kFontTheme(context),
               ),
             ),
             tileColor: color,
@@ -120,32 +132,24 @@ class _NoteItemState extends State<NoteItem> {
               children: [
                 IconButton(
                   onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            EditNoteScreen(providerNoteId: widget.indexId),
-                      ),
-                    );
+                    navigatorPush(context, EditNoteScreen(providerNoteId: widget.indexId));
                   },
                   icon: const Icon(Icons.edit),
-                  color: const Color.fromARGB(136, 0, 0, 0),
+                  color: kFontTheme(context),
                 ),
                 IconButton(
                   onPressed: () {
                     deleteNote();
                   },
                   icon: const Icon(Icons.delete),
-                  color: const Color.fromARGB(136, 0, 0, 0),
+                  color: kFontTheme(context),
                 ),
               ],
             ),
             subtitle: Text(
               '${note.content?.substring(0, 15)}...',
               style: kNormalTextStyle.copyWith(
-                  fontSize: 12.0, color: Colors.black.withOpacity(0.6)),
-            ),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(5.0),
+                  fontSize: 12.0, color: kFontTheme(context)),
             ),
             contentPadding: const EdgeInsets.only(left: 20.0),
           ),

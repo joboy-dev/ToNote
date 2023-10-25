@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
 import 'package:todoey/provider/auth_provider.dart';
 import 'package:todoey/provider/device_prefs_provider.dart';
@@ -11,11 +13,13 @@ import 'package:todoey/screens/onboarding/get_started.dart';
 import 'package:todoey/screens/onboarding/onboarding.dart';
 import 'package:todoey/shared/bottom_navbar.dart';
 import 'package:todoey/wrapper.dart';
+import 'package:todoey/shared/constants.dart';
 
 import 'provider/user_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   runApp(
     MultiProvider(
@@ -41,12 +45,14 @@ class ToDoEy extends StatefulWidget {
 class _ToDoEyState extends State<ToDoEy> {
   @override
   Widget build(BuildContext context) {
+    Animate.restartOnHotReload = true;
+
     return Consumer<DevicePrefsProvider>(
       builder: (context, theme, child) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'ToDo-Ey',
-          themeMode: context.watch<DevicePrefsProvider>().isDarkMode ? ThemeMode.dark : ThemeMode.light,
+          themeMode: context.read<DevicePrefsProvider>().isDarkMode ? ThemeMode.dark : ThemeMode.light,
           theme: ThemeData(
             useMaterial3: true,
             scaffoldBackgroundColor: const Color.fromARGB(255, 250, 250, 250),
@@ -65,6 +71,8 @@ class _ToDoEyState extends State<ToDoEy> {
             LoadingDataScreen.id: (context) => const LoadingDataScreen(),
             BottomNavBar.id: (context) => const BottomNavBar(),
           },
+          themeAnimationDuration: kAnimationDurationMs(100),
+          themeAnimationCurve: Curves.linear,
         );
       }
     );

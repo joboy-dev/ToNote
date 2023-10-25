@@ -68,6 +68,7 @@ class EmailTextField extends StatelessWidget {
       readOnly: readOnly ?? false,
       initialValue: initialValue,
       cursorColor: kYellowColor,
+      keyboardType: TextInputType.emailAddress,
       style: kTextFieldStyle.copyWith(color: kGreyTextColor),
       decoration: kTextFieldDecoration.copyWith(
         hintText: 'Email',
@@ -172,6 +173,7 @@ class NormalTextField extends StatelessWidget {
     this.suffixIcon,
     this.readonly,
     this.fontSize,
+    this.textInputType,
   });
 
   final String? initialValue;
@@ -189,6 +191,7 @@ class NormalTextField extends StatelessWidget {
   final IconData prefixIcon;
   final IconData? suffixIcon;
   final double? fontSize;
+  final TextInputType? textInputType;
   // Function(String? newValue) onSaved;
 
   @override
@@ -199,6 +202,7 @@ class NormalTextField extends StatelessWidget {
       style: kTextFieldStyle.copyWith(fontSize: fontSize ?? 14.0),
       cursorColor: cursorColor,
       obscureText: obscureText,
+      keyboardType: textInputType ?? TextInputType.text,
       decoration: InputDecoration(
         hintText: hintText,
         hintStyle: kTextFieldStyle.copyWith(

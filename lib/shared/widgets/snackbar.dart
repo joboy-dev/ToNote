@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:todoey/shared/constants.dart';
 
 showSnackbar(BuildContext context, String text) {
+  clearSnackBars(context);
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
       content:

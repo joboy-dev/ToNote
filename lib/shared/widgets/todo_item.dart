@@ -48,9 +48,7 @@ class TodoItem extends StatefulWidget {
 
 class _TodoItemState extends State<TodoItem> with TickerProviderStateMixin {
   late Color color;
-
-  late AnimationController _controller;
-  late Animation<double> _animation;
+  late Color borderColor;
 
   List colors = [
     kGreenColor,
@@ -64,24 +62,11 @@ class _TodoItemState extends State<TodoItem> with TickerProviderStateMixin {
 
   @override
   void initState() {
-    _controller = AnimationController(
-      vsync: this,
-      duration: kAnimationDuration5,
-    );
-    _controller.forward();
+    Color mainColor = colors[Random().nextInt(colors.length).toInt()];
+    color = mainColor.withOpacity(0.25);
+    borderColor = mainColor;
 
-    _animation = Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-      parent: _controller,
-      curve: Curves.easeInOut,
-    ));
-    color = colors[Random().nextInt(colors.length).toInt()];
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
   }
 
   @override
@@ -110,12 +95,12 @@ class _TodoItemState extends State<TodoItem> with TickerProviderStateMixin {
 
       if (data is Map) {
         await isarService.deleteTodo(todo.id!);
-        await isarService.getUserTodos(context);
-
         setState(() {
           isLoading = false;
           message = 'Todo deleted.';
         });
+        await isarService.getUserTodos(context);
+
       } else {
         setState(() {
           isLoading = false;
@@ -175,12 +160,19 @@ class _TodoItemState extends State<TodoItem> with TickerProviderStateMixin {
 
     return Card(
       elevation: 0.0,
-      color: kBgColor,
+      color: Colors.transparent,
       shadowColor: Colors.transparent,
       child: Column(
         children: [
           isLoading ? const Loader(size: 25.0, color: kGreenColor) : const SizedBox(),
           ListTile(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
+              side: BorderSide(
+                color: todo.isCompleted! ? const Color.fromARGB(255, 218, 218, 218) : borderColor, 
+                width: 2.0,
+              )
+            ),
             title: Text(
               '${todo.title}',
               // '${todo.title}',
@@ -188,12 +180,12 @@ class _TodoItemState extends State<TodoItem> with TickerProviderStateMixin {
                 fontSize: 16.0,
                 fontWeight: FontWeight.bold,
                 color: todo.isCompleted!
-                    ? const Color.fromARGB(255, 145, 145, 145)
-                    : Colors.black,
+                    ? const Color.fromARGB(255, 192, 192, 192)
+                    : kFontTheme(context),
               ),
             ),
             tileColor:
-                todo.isCompleted! ? const Color.fromARGB(255, 218, 218, 218) : color,
+                todo.isCompleted! ? const Color.fromARGB(255, 218, 218, 218).withOpacity(0.5) : color,
             leading: isLoading
                 ? const Loader(
                     size: 20.0,
@@ -201,9 +193,11 @@ class _TodoItemState extends State<TodoItem> with TickerProviderStateMixin {
                   )
                 : Checkbox(
                     checkColor: Colors.white,
-                    activeColor: const Color.fromARGB(255, 145, 145, 145),
+                    activeColor: kFontTheme(context),
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5.0)),
+                        borderRadius: BorderRadius.circular(5.0),
+                    ),
+                    side: BorderSide(color: kFontTheme(context)),
                     value: todo.isCompleted,
                     // onChanged: widget.isChecked! ? (value) {} : widget.onChanged,
                     onChanged: todo.isCompleted!
@@ -223,31 +217,30 @@ class _TodoItemState extends State<TodoItem> with TickerProviderStateMixin {
             trailing: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                IconButton(
+                todo.isCompleted! ? const SizedBox() :IconButton(
                   onPressed: () {
-                    todo.isCompleted!
-                        ? showSnackbar(
-                            context, 'You cannot edit a completed todo item')
-                        : showDialogBox(
-                            context: context,
-                            screen: EditTodoScreen(
-                              // backendTodoId: todoId,
-                              providerTodoId: widget.indexId,
-                            ),
-                            dismisible: false,
-                          );
+                    showDialogBox(
+                      context: context,
+                      screen: EditTodoScreen(
+                        // backendTodoId: todoId,
+                        providerTodoId: widget.indexId,
+                      ),
+                      dismisible: false,
+                    );
                   },
                   icon: const Icon(Icons.edit),
                   color: todo.isCompleted!
                       ? kGreyTextColor.withOpacity(0.3)
-                      : const Color.fromARGB(136, 0, 0, 0),
+                      : kFontTheme(context),
                 ),
                 IconButton(
                     onPressed: () {
                       deleteTodo();
+                      // showDialogBox(context: context, screen: DeleteTodoScreen(providerTodoId: widget.indexId-1));
                     },
                     icon: const Icon(Icons.delete),
-                    color: const Color.fromARGB(136, 0, 0, 0)),
+                    color: kFontTheme(context,)
+                ),
               ],
             ),
             subtitle: Text(
@@ -255,10 +248,7 @@ class _TodoItemState extends State<TodoItem> with TickerProviderStateMixin {
                   ? 'Completed'
                   : 'Expires ${todo.expire.toString().substring(0, 10)}',
               style: kNormalTextStyle.copyWith(
-                  fontSize: 12.0, color: Colors.black.withOpacity(0.6)),
-            ),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(5.0),
+                  fontSize: 12.0, color: kFontTheme(context)),
             ),
             contentPadding: const EdgeInsets.all(0.0),
             // onTap: onTap,

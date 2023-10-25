@@ -10,7 +10,6 @@ import 'package:provider/provider.dart';
 import 'package:todoey/provider/user_provider.dart';
 
 import 'package:todoey/screens/main/dialog_screens/upload_profile_picture.dart';
-import 'package:todoey/shared/animations.dart';
 import 'package:todoey/shared/constants.dart';
 import 'package:todoey/shared/widgets/button.dart';
 import 'package:todoey/shared/widgets/dialog.dart';
@@ -194,36 +193,32 @@ class _AddProfilePictureState extends State<AddProfilePicture>
                 const SizedBox(height: 30.0),
 
                 // Buttons
-                SlideTransition(
-                  position: slideTransitionAnimation(
-                      dx: 2, dy: 0, animation: _animation3),
-                  child: FadeTransition(
-                    opacity: _animation3,
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: ButtonIcon(
-                            buttonText: 'Gallery',
-                            onPressed: () {
-                              selectImageFromGallery();
-                            },
-                            buttonColor: kYellowColor,
-                            icon: Icons.photo_library,
-                          ),
+                FadeTransition(
+                  opacity: _animation3,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: ButtonIcon(
+                          buttonText: 'Gallery',
+                          onPressed: () {
+                            selectImageFromGallery();
+                          },
+                          buttonColor: kYellowColor,
+                          icon: Icons.photo_library,
                         ),
-                        const SizedBox(width: 10.0),
-                        Expanded(
-                          child: ButtonIcon(
-                            buttonText: 'Camera',
-                            onPressed: () {
-                              selectImageFromCamera();
-                            },
-                            buttonColor: kGreenColor,
-                            icon: FontAwesomeIcons.camera,
-                          ),
-                        )
-                      ],
-                    ),
+                      ),
+                      const SizedBox(width: 10.0),
+                      Expanded(
+                        child: ButtonIcon(
+                          buttonText: 'Camera',
+                          onPressed: () {
+                            selectImageFromCamera();
+                          },
+                          buttonColor: kGreenColor,
+                          icon: FontAwesomeIcons.camera,
+                        ),
+                      )
+                    ],
                   ),
                 ),
 

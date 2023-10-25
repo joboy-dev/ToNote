@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todoey/provider/device_prefs_provider.dart';
 
 bool kDarkMode = false;
 
@@ -17,8 +19,21 @@ const kButtonTextColor = Colors.white;
 Color kBgColor = Color.fromARGB(255, 250, 250, 250);
 const kRedColor = Color.fromARGB(255, 206, 15, 15);
 const kInactiveColor = Color.fromARGB(255, 199, 199, 199);
+kScaffoldBgColor(BuildContext context) =>Theme.of(context).scaffoldBackgroundColor;
+
+// THEME BASED FONT COLOR
+Color kFontTheme(BuildContext context) {
+  final darkMode = context.watch<DevicePrefsProvider>().isDarkMode;
+  return darkMode ? Color.fromARGB(255, 184, 184, 184).withOpacity(0.8) : Color.fromARGB(255, 116, 116, 116);
+}
+
+// RESPONSIVENESS
+kHeightWidth(BuildContext context) {
+  return MediaQuery.of(context).size;
+}
 
 // ANIMATION DURATION
+kAnimationDurationMs(int ms) => Duration(milliseconds: ms);
 const kAnimationDuration1 = Duration(seconds: 1);
 const kAnimationDuration2 = Duration(seconds: 2);
 const kAnimationDuration3 = Duration(seconds: 3);

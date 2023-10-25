@@ -25,7 +25,7 @@ class CarouselContainer extends StatelessWidget {
             //   ),
             // ],
           ),
-          height: 350.0,
+          height: kHeightWidth(context).height * 0.45,
           child: Image(
             image: AssetImage(image),
             fit: BoxFit.cover,

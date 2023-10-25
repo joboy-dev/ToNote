@@ -1,10 +1,12 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:todoey/backend/note/note_view.dart';
 import 'package:todoey/entities/note.dart';
 import 'package:todoey/services/isar_service.dart';
+import 'package:todoey/shared/animations.dart';
 import 'package:todoey/shared/constants.dart';
 import 'package:todoey/shared/loader.dart';
 import 'package:todoey/shared/navigator.dart';
@@ -148,7 +150,11 @@ class _AddNotesScreenState extends State<AddNotesScreen> {
                     errorTextStyleColor: kDarkYellowColor,
                     cursorColor: kYellowColor,
                   )
-                ],
+                ].animate(
+                  delay: kAnimationDurationMs(500),
+                  interval: kAnimationDurationMs(50),
+                  effects: MyEffects.fadeSlide(offset: const Offset(-0.05, 0))
+                ),
               ),
             ),
           ),

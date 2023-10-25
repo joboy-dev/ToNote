@@ -20,14 +20,11 @@ class LoadingScreen extends StatelessWidget {
             child: Center(
               child: Column(
                 children: [
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.35),
+                  SizedBox(height: kHeightWidth(context).height * 0.35),
                   Loader(size: 40.0, color: color),
                   const SizedBox(height: 10.0),
                   const Text(
-                    // _loadingTimer.isLoading
-                    // ?
                     'Fetching data',
-                    // : _loadingTimer.message,
                     style: kGreyNormalTextStyle,
                     textAlign: TextAlign.center,
                   ),

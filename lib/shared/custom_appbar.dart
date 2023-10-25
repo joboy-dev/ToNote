@@ -27,9 +27,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       leadingWidth: 0.0,
+      surfaceTintColor: kScaffoldBgColor(context),
       title: otherAppBarText == null
           ? Column(
               children: [
+                const SizedBox(height: 40.0),
                 Row(
                   children: [
                     Expanded(
@@ -71,8 +73,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
       elevation: 0,
       centerTitle: false,
-      foregroundColor: appBarColor ?? Theme.of(context).scaffoldBackgroundColor,
-      backgroundColor: appBarColor ?? Theme.of(context).scaffoldBackgroundColor,
+      foregroundColor: appBarColor ?? kScaffoldBgColor(context),
+      backgroundColor: appBarColor ?? kScaffoldBgColor(context),
       toolbarHeight: height ?? kToolbarHeight,
     );
   }

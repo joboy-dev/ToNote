@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
+import 'package:todoey/shared/constants.dart';
 
 showDialogBox(
     {required BuildContext context,
@@ -14,7 +16,7 @@ showDialogBox(
         elevation: 4.0,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.0)),
         scrollable: true,
-        content: screen,
+        content: screen.animate().fadeIn(duration: kAnimationDurationMs(200)),
       );
     },
   );

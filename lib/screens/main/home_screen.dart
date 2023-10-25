@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:todoey/provider/notes_provider.dart';
@@ -9,6 +10,7 @@ import 'package:todoey/provider/user_provider.dart';
 import 'package:todoey/screens/main/add_notes_screen.dart';
 import 'package:todoey/screens/main/dialog_screens/add_todo.dart';
 import 'package:todoey/services/timer.dart';
+import 'package:todoey/shared/animations.dart';
 import 'package:todoey/shared/constants.dart';
 import 'package:todoey/shared/custom_appbar.dart';
 import 'package:todoey/shared/loading_screen.dart';
@@ -63,7 +65,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 // ------------------TODOS-----------------------
                 CustomAppBar(
                   textColor: kGreyTextColor,
-                  // appBarColor: kBgColor,
                   dividerColor: kOrangeColor,
                   appBarText: ' My Latest Todos',
                   trailing: IconTextButton(
@@ -102,7 +103,10 @@ class _HomeScreenState extends State<HomeScreen> {
                               final reversedIndex = todos.length - 1 - index;
                               final todo = todos[reversedIndex];
                               isChecked = todo.isCompleted;
-                              return TodoItem(indexId: reversedIndex);
+                              return TodoItem(indexId: reversedIndex).animate(
+                                delay: kAnimationDurationMs(500),
+                                effects: MyEffects.fadeSlide(offset: const Offset(-0.05, 0))
+                              );
                             },
                           ),
                         ),
@@ -125,7 +129,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     fontSize: 17.0,
                     gap: 20.0,
                     onPressed: () {
-                      navigatorPushNamed(context, AddNotesScreen.id);
+                      navigatorPush(context, const AddNotesScreen());
                     },
                   ),
                 ),
@@ -149,14 +153,21 @@ class _HomeScreenState extends State<HomeScreen> {
                               // get individual notes
                               return NoteItem(
                                 indexId: reversedIndex,
+                              ).animate(
+                                delay: kAnimationDurationMs(500),
+                                effects: MyEffects.fadeSlide(offset: const Offset(-0.05, 0))
                               );
                             },
-                          ),
+                          )
                         ),
                       ),
 
                 const SizedBox(height: 70.0),
-              ],
+              ].animate(
+                delay: kAnimationDurationMs(200),
+                interval: kAnimationDurationMs(50),
+                effects: MyEffects.fadeSlide(offset: const Offset(-0.05, 0))
+              ),
             ),
           );
   }
