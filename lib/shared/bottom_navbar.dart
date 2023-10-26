@@ -56,26 +56,38 @@ class _BottomNavBarState extends State<BottomNavBar> {
         PersistentBottomNavBarItem(
           icon: Icon(Icons.home, size: 30.sp),
           title: "Home",
+          textStyle: TextStyle(
+            fontSize: 10.sp,
+          ),
           activeColorPrimary: kScaffoldBgColor(context),
-          inactiveColorPrimary: kScaffoldBgColor(context).withOpacity(0.3),
+          inactiveColorPrimary: kScaffoldBgColor(context).withOpacity(0.5),
         ),
         PersistentBottomNavBarItem(
           icon: Icon(Icons.checklist_rounded, size: 30.sp),
           title: "Todo",
+          textStyle: TextStyle(
+            fontSize: 10.sp
+          ),
           activeColorPrimary: kScaffoldBgColor(context),
-          inactiveColorPrimary: kScaffoldBgColor(context).withOpacity(0.3),
+          inactiveColorPrimary: kScaffoldBgColor(context).withOpacity(0.5),
         ),
         PersistentBottomNavBarItem(
           icon: Icon(FontAwesomeIcons.noteSticky, size: 30.sp),
           title: "Notes",
+          textStyle: TextStyle(
+            fontSize: 10.sp
+          ),
           activeColorPrimary: kScaffoldBgColor(context),
-          inactiveColorPrimary: kScaffoldBgColor(context).withOpacity(0.3),
+          inactiveColorPrimary: kScaffoldBgColor(context).withOpacity(0.5),
         ),
         PersistentBottomNavBarItem(
           icon: Icon(Icons.person, size: 30.sp),
           title: "Profile",
+          textStyle: TextStyle(
+            fontSize: 10.sp
+          ),
           activeColorPrimary: kScaffoldBgColor(context),
-          inactiveColorPrimary: kScaffoldBgColor(context).withOpacity(0.3),
+          inactiveColorPrimary: kScaffoldBgColor(context).withOpacity(0.5),
         ),
       ];
 
@@ -164,7 +176,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
               resizeToAvoidBottomInset: true,
               navBarHeight: MediaQuery.of(context).viewInsets.bottom > 0
                   ? 0.0
-                  : 50.h,
+                  : kHeightWidth(context).height > 1000 ? 70.h : 55.h,
               bottomScreenMargin: 0,
               backgroundColor: colors[_index],
               hideNavigationBar: _hideNavBar,

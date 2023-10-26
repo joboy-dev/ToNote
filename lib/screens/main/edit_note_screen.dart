@@ -14,7 +14,6 @@ import 'package:todoey/services/isar_service.dart';
 import 'package:todoey/shared/animations.dart';
 import 'package:todoey/shared/constants.dart';
 import 'package:todoey/shared/loader.dart';
-import 'package:todoey/shared/navigator.dart';
 import 'package:todoey/shared/widgets/button.dart';
 import 'package:todoey/shared/widgets/snackbar.dart';
 import 'package:todoey/shared/widgets/text_field.dart';

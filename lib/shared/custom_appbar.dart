@@ -27,7 +27,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      leadingWidth: 0.0,
+      leadingWidth: 0.w,
       surfaceTintColor: kScaffoldBgColor(context),
       title: otherAppBarText == null
           ? Column(

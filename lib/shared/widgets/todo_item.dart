@@ -191,28 +191,34 @@ class _TodoItemState extends State<TodoItem> with TickerProviderStateMixin {
                     size: 20.r,
                     color: Colors.white,
                   )
-                : Checkbox(
-                    checkColor: Colors.white,
-                    activeColor: Colors.grey,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5.r),
-                    ),
-                    side: BorderSide(color: kTextTheme(context)),
-                    value: todo.isCompleted,
-                    onChanged: todo.isCompleted!
-                        ? (value) {
-                            showSnackbar(context,
-                                // 'Go to completed todos to un-check this todo');
-                                'You cannot un-check a completed todo.');
-                          }
-                        : (value) async {
-                            await toggleCompletedStatus();
-                            setState(() {
-                              // widget.isChecked = value;
-                              todo.isCompleted = value;
-                            });
-                          },
+                : Transform.scale(
+                  scale: 1.r,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 5.r),
+                    child: Checkbox(
+                        checkColor: Colors.white,
+                        activeColor: Colors.grey,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(2.r),
+                        ),
+                        side: BorderSide(color: kTextTheme(context)),
+                        value: todo.isCompleted,
+                        onChanged: todo.isCompleted!
+                            ? (value) {
+                                showSnackbar(context,
+                                    // 'Go to completed todos to un-check this todo');
+                                    'You cannot un-check a completed todo.');
+                              }
+                            : (value) async {
+                                await toggleCompletedStatus();
+                                setState(() {
+                                  // widget.isChecked = value;
+                                  todo.isCompleted = value;
+                                });
+                              },
+                      ),
                   ),
+                ),
             trailing: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -232,6 +238,7 @@ class _TodoItemState extends State<TodoItem> with TickerProviderStateMixin {
                       ? kGreyTextColor.withOpacity(0.3)
                       : kTextTheme(context),
                 ),
+                SizedBox(width: 2.w),
                 IconButton(
                     onPressed: () {
                       deleteTodo();

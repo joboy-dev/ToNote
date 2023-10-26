@@ -9,13 +9,7 @@ import 'package:todoey/provider/auth_provider.dart';
 import 'package:todoey/provider/device_prefs_provider.dart';
 import 'package:todoey/provider/notes_provider.dart';
 import 'package:todoey/provider/todo_provider.dart';
-import 'package:todoey/screens/authentication/login.dart';
-import 'package:todoey/screens/authentication/signup.dart';
-import 'package:todoey/screens/main/loading_data_screen.dart';
-import 'package:todoey/screens/onboarding/get_started.dart';
 import 'package:todoey/screens/onboarding/onboarding.dart';
-import 'package:todoey/shared/bottom_navbar.dart';
-import 'package:todoey/wrapper.dart';
 import 'package:todoey/shared/constants.dart';
 
 import 'provider/user_provider.dart';
@@ -72,16 +66,7 @@ class _ToDoEyState extends State<ToDoEy> {
               useMaterial3: true,
               scaffoldBackgroundColor: const Color(0xff1E1E1E),
             ),
-            initialRoute: Onboarding.id,
-            routes: {
-              Wrapper.id: (context) => const Wrapper(),
-              Onboarding.id: (context) => const Onboarding(),
-              GetStarted.id: (context) => const GetStarted(),
-              SignUp.id: (context) => const SignUp(),
-              Login.id: (context) => const Login(),
-              LoadingDataScreen.id: (context) => const LoadingDataScreen(),
-              BottomNavBar.id: (context) => const BottomNavBar(),
-            },
+            home: const Onboarding(),
             themeAnimationDuration: kAnimationDurationMs(100),
             themeAnimationCurve: Curves.linear,
           ),
