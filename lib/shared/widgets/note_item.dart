@@ -8,11 +8,13 @@ import 'package:provider/provider.dart';
 import 'package:todoey/backend/note/note_view.dart';
 import 'package:todoey/entities/note.dart';
 import 'package:todoey/provider/notes_provider.dart';
+import 'package:todoey/screens/main/dialog_screens/delete_note_dialog.dart';
 import 'package:todoey/screens/main/edit_note_screen.dart';
 import 'package:todoey/services/isar_service.dart';
 import 'package:todoey/shared/constants.dart';
 import 'package:todoey/shared/loader.dart';
 import 'package:todoey/shared/navigator.dart';
+import 'package:todoey/shared/widgets/dialog.dart';
 import 'package:todoey/shared/widgets/snackbar.dart';
 
 class NoteItem extends StatefulWidget {
@@ -137,9 +139,10 @@ class _NoteItemState extends State<NoteItem> {
                 children: [
                   IconButton(
                     onPressed: () {
-                      deleteNote();
+                      // deleteNote();
+                      showDialogBox(context: context, screen: DeleteNoteScreen(providerTodoId: widget.indexId));
                     },
-                    icon: Icon(Icons.delete, size: 20.r,),
+                    icon: Icon(Icons.delete, size: 20.r, color: kRedColor,),
                     color: kTextTheme(context),
                   ),
                 ],

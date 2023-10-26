@@ -83,10 +83,11 @@ class _NotesScreenState extends State<NotesScreen> {
                                   final note = notes[reversedIndex];
                                   log('List view backend note id -- ${note.id}');
                                   return NoteItem(
-                                    // note id for backend todo id (update in backend)
-                                    // noteId: note.id!,
                                     // index id for list position (getting from provider)
                                     indexId: reversedIndex,
+                                    
+                                    // note id for backend todo id (update in backend)
+                                    // noteId: note.id!,
                                     // title: '${note.title}',
                                     // content: '${note.content}',
                                   ).animate(

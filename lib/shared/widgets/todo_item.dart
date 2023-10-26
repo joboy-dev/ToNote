@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 import 'package:todoey/backend/todo/todo_view.dart';
 import 'package:todoey/entities/todo.dart';
 import 'package:todoey/provider/todo_provider.dart';
+import 'package:todoey/screens/main/dialog_screens/delete_todo_dialog.dart';
 import 'package:todoey/screens/main/dialog_screens/edit_todo.dart';
 import 'package:todoey/services/isar_service.dart';
 import 'package:todoey/shared/constants.dart';
@@ -241,10 +242,11 @@ class _TodoItemState extends State<TodoItem> with TickerProviderStateMixin {
                 SizedBox(width: 2.w),
                 IconButton(
                     onPressed: () {
-                      deleteTodo();
-                      // showDialogBox(context: context, screen: DeleteTodoScreen(providerTodoId: widget.indexId-1));
+                      todo.isCompleted! 
+                        ? deleteTodo() 
+                        :showDialogBox(context: context, screen: DeleteTodoScreen(providerTodoId: widget.indexId));
                     },
-                    icon: Icon(Icons.delete, size: 20.r),
+                    icon: Icon(Icons.delete, size: 20.r, color: kRedColor,),
                     color: kTextTheme(context,)
                 ),
               ],
