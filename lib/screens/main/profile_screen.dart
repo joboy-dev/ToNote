@@ -110,7 +110,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
 
                       // SizedBox(),
-                      Divider(color: kGreyTextColor, thickness: 0.1.r),
+                      Divider(color: kGreyTextColor, thickness: 0.3.r),
                       SizedBox(height: 10.h),
 
                       Column(
@@ -160,12 +160,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
 
                           SizedBox(height: 10.h),
-                          Divider(color: kGreyTextColor, thickness: 0.5.r),
+                          Divider(color: kGreyTextColor, thickness: 0.2.r),
 
                           SizedBox(height: 20.h),
 
-
-                          
                           IconTextButton(
                             text: 'Edit Profile',
                             icon: FontAwesomeIcons.pencil,

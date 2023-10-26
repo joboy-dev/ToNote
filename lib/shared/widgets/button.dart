@@ -213,12 +213,14 @@ class IconTextButton extends StatelessWidget {
           children: [
             Icon(icon, color: iconColor, size: 25.r,),
             SizedBox(width: gap ?? 20.sp),
-            Text(
-              text,
-              style: kGreyNormalTextStyle(context).copyWith(
-                fontSize: fontSize ?? 17.sp,
-                color: textColor ?? kTextTheme(context).withOpacity(0.7),
-                fontWeight: fontWeight ?? FontWeight.normal,
+            Expanded(
+              child: Text(
+                text,
+                style: kGreyNormalTextStyle(context).copyWith(
+                  fontSize: fontSize ?? 17.sp,
+                  color: textColor ?? kTextTheme(context).withOpacity(0.7),
+                  fontWeight: fontWeight ?? FontWeight.normal,
+                ),
               ),
             ),
           ],

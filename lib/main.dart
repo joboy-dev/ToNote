@@ -67,8 +67,8 @@ class _ToDoEyState extends State<ToDoEy> {
               scaffoldBackgroundColor: const Color(0xff1E1E1E),
             ),
             home: const Onboarding(),
-            themeAnimationDuration: kAnimationDurationMs(100),
-            themeAnimationCurve: Curves.linear,
+            themeAnimationDuration: kAnimationDurationMs(200),
+            themeAnimationCurve: Curves.ease,
           ),
         );
       }
