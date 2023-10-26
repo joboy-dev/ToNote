@@ -20,7 +20,7 @@ const kButtonTextColor = Colors.white;
 Color kLightColor = Color.fromARGB(255, 250, 250, 250);
 const kRedColor = Color.fromARGB(255, 206, 15, 15);
 const kInactiveColor = Color.fromARGB(255, 199, 199, 199);
-kScaffoldBgColor(BuildContext context) =>Theme.of(context).scaffoldBackgroundColor;
+Color kScaffoldBgColor(BuildContext context) =>Theme.of(context).scaffoldBackgroundColor;
 
 // THEME BASED FONT COLOR
 Color kFontTheme(BuildContext context) {

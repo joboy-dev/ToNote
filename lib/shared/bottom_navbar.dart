@@ -57,25 +57,25 @@ class _BottomNavBarState extends State<BottomNavBar> {
           icon: Icon(Icons.home, size: 30.sp),
           title: "Home",
           activeColorPrimary: kScaffoldBgColor(context),
-          inactiveColorPrimary: kScaffoldBgColor(context).withOpacity(0.55),
+          inactiveColorPrimary: kScaffoldBgColor(context).withOpacity(0.3),
         ),
         PersistentBottomNavBarItem(
           icon: Icon(Icons.checklist_rounded, size: 30.sp),
           title: "Todo",
           activeColorPrimary: kScaffoldBgColor(context),
-          inactiveColorPrimary: kScaffoldBgColor(context).withOpacity(0.55),
+          inactiveColorPrimary: kScaffoldBgColor(context).withOpacity(0.3),
         ),
         PersistentBottomNavBarItem(
           icon: Icon(FontAwesomeIcons.noteSticky, size: 30.sp),
           title: "Notes",
           activeColorPrimary: kScaffoldBgColor(context),
-          inactiveColorPrimary: kScaffoldBgColor(context).withOpacity(0.55),
+          inactiveColorPrimary: kScaffoldBgColor(context).withOpacity(0.3),
         ),
         PersistentBottomNavBarItem(
           icon: Icon(Icons.person, size: 30.sp),
           title: "Profile",
           activeColorPrimary: kScaffoldBgColor(context),
-          inactiveColorPrimary: kScaffoldBgColor(context).withOpacity(0.55),
+          inactiveColorPrimary: kScaffoldBgColor(context).withOpacity(0.3),
         ),
       ];
 

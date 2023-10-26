@@ -103,59 +103,57 @@ class _NoteItemState extends State<NoteItem> {
       showSnackbar(context, message);
     }
 
-    return Card(
-      color: Colors.transparent,
-      elevation: 0.0,
-      shadowColor: Colors.transparent,
-      child: Column(
-        children: [
-          isLoading ? Loader(size: 25.r, color: kYellowColor) : const SizedBox(),
-          ListTile(
-            shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10.r),
-            side: BorderSide(
-              color: borderColor, 
-              width: 1.w,
-            )
-          ),
-            title: Text(
-              // '${widget.noteId}- ${widget.title}',
-              '${note.title}',
-              style: kNormalTextStyle().copyWith(
-                fontSize: 16.sp,
-                fontWeight: FontWeight.bold,
-                color: kTextTheme(context),
+    return GestureDetector(
+      onTap: () {
+        navigatorPush(context, EditNoteScreen(providerNoteId: widget.indexId));
+      },
+      child: Card(
+        color: Colors.transparent,
+        elevation: 0.0,
+        shadowColor: Colors.transparent,
+        child: Column(
+          children: [
+            isLoading ? Loader(size: 25.r, color: kYellowColor) : const SizedBox(),
+            ListTile(
+              shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.r),
+              side: BorderSide(
+                color: borderColor, 
+                width: 1.w,
+              )
+            ),
+              title: Text(
+                // '${widget.noteId}- ${widget.title}',
+                '${note.title}',
+                style: kNormalTextStyle().copyWith(
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.bold,
+                  color: kTextTheme(context),
+                ),
               ),
+              tileColor: color,
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      deleteNote();
+                    },
+                    icon: Icon(Icons.delete, size: 20.r,),
+                    color: kTextTheme(context),
+                  ),
+                ],
+              ),
+              subtitle: Text(
+                '${note.content?.substring(0, 15)}...',
+                style: kGreyNormalTextStyle(context).copyWith(
+                    fontSize: 12.sp,),
+              ),
+              contentPadding: EdgeInsets.only(left: 20.r),
             ),
-            tileColor: color,
-            trailing: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                IconButton(
-                  onPressed: () {
-                    navigatorPush(context, EditNoteScreen(providerNoteId: widget.indexId));
-                  },
-                  icon: Icon(Icons.edit, size: 20.r,),
-                  color: kTextTheme(context),
-                ),
-                IconButton(
-                  onPressed: () {
-                    deleteNote();
-                  },
-                  icon: Icon(Icons.delete, size: 20.r,),
-                  color: kTextTheme(context),
-                ),
-              ],
-            ),
-            subtitle: Text(
-              '${note.content?.substring(0, 15)}...',
-              style: kGreyNormalTextStyle(context).copyWith(
-                  fontSize: 12.sp,),
-            ),
-            contentPadding: EdgeInsets.only(left: 20.r),
-          ),
-          SizedBox(height: 3.h),
-        ],
+            SizedBox(height: 3.h),
+          ],
+        ),
       ),
     );
   }

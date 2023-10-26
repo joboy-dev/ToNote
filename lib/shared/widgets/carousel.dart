@@ -17,7 +17,7 @@ class CarouselContainer extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10.r),
           ),
-          height: kHeightWidth(context).height * 0.35,
+          height: kHeightWidth(context).height * 0.40,
           child: Image(
             image: AssetImage(image),
             fit: BoxFit.cover,
@@ -26,12 +26,6 @@ class CarouselContainer extends StatelessWidget {
         SizedBox(height: 20.h),
         Text(
           text,
-          // style: TextStyle(
-          //   color: kGreyTextColor,
-          //   fontSize: 20.sp,
-          //   fontFamily: 'Poppins',
-          //   fontWeight: FontWeight.bold,
-          // ),
           style: kGreyNormalTextStyle(context).copyWith(
             fontSize: 20.sp,
           ),

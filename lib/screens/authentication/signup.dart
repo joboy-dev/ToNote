@@ -177,6 +177,8 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                             ),
                           ),
 
+                          SizedBox(width: 10.w),
+
                           // Last Name
                           Expanded(
                             child: NameTextField(

@@ -138,7 +138,7 @@ class PasswordTextField extends StatelessWidget {
             ),
           ),
           suffixIcon: Padding(
-            padding: EdgeInsets.only(right: 5.r),
+            padding: EdgeInsets.only(right: 20.r),
             child: GestureDetector(
               onTap: onTap,
               child: obscureText

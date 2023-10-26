@@ -83,7 +83,7 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
               message = 'Note edited.';
             });
 
-            navigatorPop(context);
+            // navigatorPop(context);
           } else if (data == 400) {
             setState(() {
               _isLoading = false;
