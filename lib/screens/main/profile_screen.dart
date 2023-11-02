@@ -133,27 +133,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ),
                               Expanded(
                                 flex: 1,
-                                child: Switch.adaptive(
-                                  activeColor: kDarkYellowColor,
-                                  activeTrackColor:
-                                      kDarkYellowColor.withOpacity(0.5),
-                                  inactiveThumbColor:
-                                      kDarkYellowColor.withOpacity(0.5),
-                                  inactiveTrackColor: kDarkYellowColor,
-                                  value: theme,
-                                  onChanged: (value) async {
-                                    await themeSwitch.toggleThemeMode();
-                                    setState(() {
-                                      theme = value;
-                                      // kBgColor = kDarkMode
-                                      //     ? const Color(0xff1E1E1E)
-                                      //     : const Color.fromARGB(255, 250, 250, 250);
-                                    });
-                                    log('ProfileScreen switch Dark Mode - $kDarkMode');
-
-                                    var todos = await TodoView().getUserTodos();
-                                    log('User todos-- $todos');
-                                  },
+                                child: Transform.scale(
+                                  scale: 1.r,
+                                  child: Switch.adaptive(
+                                    activeColor: kDarkYellowColor,
+                                    activeTrackColor:
+                                        kDarkYellowColor.withOpacity(0.5),
+                                    inactiveThumbColor:
+                                        kDarkYellowColor.withOpacity(0.5),
+                                    inactiveTrackColor: kDarkYellowColor,
+                                    value: theme,
+                                    onChanged: (value) async {
+                                      await themeSwitch.toggleThemeMode();
+                                      setState(() {
+                                        theme = value;
+                                        // kBgColor = kDarkMode
+                                        //     ? const Color(0xff1E1E1E)
+                                        //     : const Color.fromARGB(255, 250, 250, 250);
+                                      });
+                                      log('ProfileScreen switch Dark Mode - $kDarkMode');
+                                
+                                      var todos = await TodoView().getUserTodos();
+                                      log('User todos-- $todos');
+                                    },
+                                  ),
                                 ),
                               )
                             ],

@@ -139,7 +139,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
             child: Column(
               children: [
                 SizedBox(
-                  height: 200.h,
+                  height: 300.h,
                   width: double.infinity,
                   child: const Image(
                     image: AssetImage('assets/images/login.png'),

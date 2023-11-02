@@ -59,7 +59,7 @@ class _GetStartedState extends State<GetStarted> with TickerProviderStateMixin {
                   );
                 }).toList(),
                 options: CarouselOptions(
-                  height: kHeightWidth(context).height * 0.75,
+                  height: kHeightWidth(context).height * 0.7,
                   enlargeCenterPage: true,
                   autoPlay: true,
                   aspectRatio: 16 / 9,
