@@ -2,7 +2,7 @@
 
 This is a mobile application built with Flutter. This application is designed for users to effectively create tasks and notes anytime anywhere.
 This application makes use of a backend server built with Django rest framework. The link to the github repository can be found here:
-[Backemd Repo](https://github.com/joboy-dev/todo-notes-api)
+[Backend Repo](https://github.com/joboy-dev/todo-notes-api)
 
 ### Features of the application
 1. Creating account and logging in.
